@@ -9,17 +9,17 @@ import Nav from "../components/Nav";
 
 // this is where we render all blog posts
 
-export default function Home({ blogs }) {
+export default function Home() {
   return (
-    <Container maxW="container.xl" py="auto" my="auto">
+    <>
       <Header />
       <Nav />
-    </Container>
+    </>
   );
 }
 
-Home.getInitialProps = async () => {
-  const res = await axios.get("http://localhost:1337/blogs");
-  const blogs = await res.data;
-  return { blogs };
-};
+// Home.getInitialProps = async () => {
+//   const res = await axios.get("http://localhost:1337/blogs");
+//   const blogs = await res.data;
+//   return { blogs };
+// };
