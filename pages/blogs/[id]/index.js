@@ -1,8 +1,10 @@
 import axios from "axios";
+import marked from "marked";
 
 const index = ({ blog }) => {
-  console.log(blog);
-  return <div>{blog.body}</div>;
+  const body = marked(blog.body);
+  console.log(typeof body);
+  return <div dangerouslySetInnerHTML={body}></div>;
 };
 
 //SSR option but static is more efficient & faster
