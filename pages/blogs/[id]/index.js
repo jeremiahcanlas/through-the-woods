@@ -1,11 +1,19 @@
+import { Container, Heading, Button } from "@chakra-ui/react";
+import Link from "next/link";
 import axios from "axios";
-import marked from "marked";
+import ReactMarkdown from "react-markdown";
 
-const index = ({ blog }) => {
-  const body = marked(blog.body);
-  console.log(typeof body);
-  return <div dangerouslySetInnerHTML={body}></div>;
-};
+const index = ({ blog }) => (
+  <Container w="80vw">
+    <Heading mb="1em">{blog.title}</Heading>
+    <ReactMarkdown>{blog.body}</ReactMarkdown>
+    <Button mt="1em">
+      <Link href="/blogs" passHref>
+        &larr; All Blogs
+      </Link>
+    </Button>
+  </Container>
+);
 
 //SSR option but static is more efficient & faster
 export const getServerSideProps = async (context) => {
