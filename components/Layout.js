@@ -2,6 +2,7 @@ import Footer from "./Footer";
 import { Container } from "@chakra-ui/react";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import backgroundImage from "../public/cover.jpg";
 
 const MotionContainer = motion(Container);
 
@@ -11,16 +12,17 @@ const Layout = ({ children }) => (
     h="100vh"
     centerContent
     backgroundColor="blackAlpha.800"
+    pos="relative"
   >
     <MotionContainer
       zIndex="0"
       opacity="0.2"
       initial={{ opacity: 0 }}
       animate={{ opacity: 0.2 }}
-      transition={{ delay: 1, duration: 3 }}
+      transition={{ delay: 0.5, duration: 1.5 }}
     >
       <Image
-        src="/cover.jpg"
+        src={backgroundImage}
         alt="cover image"
         layout="fill"
         objectFit="cover"

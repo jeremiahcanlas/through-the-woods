@@ -1,5 +1,6 @@
-import { ButtonGroup, Button, Flex, Stack } from "@chakra-ui/react";
+import { Button, Stack } from "@chakra-ui/react";
 import Link from "next/link";
+
 const Nav = () => (
   <Stack
     // flexDirection={["column", "row"]}
@@ -22,17 +23,18 @@ const Nav = () => (
         BLOGS
       </Button>
     </Link>
-
-    <Button
-      p="0.8em"
-      w={["80vw", "70vw", "15vw"]}
-      border="2px"
-      borderColor="#40916c"
-      variant="ghost"
-      fontWeight="300"
-    >
-      ABOUT
-    </Button>
+    <Link href="/about" passHref>
+      <Button
+        p="0.8em"
+        w={["80vw", "70vw", "15vw"]}
+        border="2px"
+        borderColor="#40916c"
+        variant="ghost"
+        fontWeight="300"
+      >
+        ABOUT
+      </Button>
+    </Link>
     <Button
       p="0.8em"
       w={["80vw", "70vw", "15vw"]}
