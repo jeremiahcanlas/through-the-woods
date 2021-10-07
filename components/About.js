@@ -1,4 +1,4 @@
-import { Container, Heading } from "@chakra-ui/react";
+import { Container, Heading, Text } from "@chakra-ui/react";
 
 const About = () => (
   <Container
@@ -9,6 +9,10 @@ const About = () => (
     borderRadius="1em"
   >
     <Heading as="h2">About</Heading>
+    <Text>
+      Hello Everyone! Welcome to our official hiking blog page. You will see
+      articles about our hiking journeys all across the world
+    </Text>
   </Container>
 );
 

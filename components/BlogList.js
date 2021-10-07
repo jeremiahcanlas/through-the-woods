@@ -1,5 +1,7 @@
 import { Box, Flex, Heading, Button, Container } from "@chakra-ui/react";
 import Link from "next/link";
+import Image from "next/image";
+import accentImage from "../public/blogs-pic.jpg";
 
 const BlogList = ({ blogs }) => (
   <Container
@@ -10,6 +12,15 @@ const BlogList = ({ blogs }) => (
     borderRadius="1em"
   >
     <Heading as="h2">Blogs</Heading>
+    <Box height="20vw" overflow="hidden">
+      <Image
+        src={accentImage}
+        alt="cover image"
+        sizes="50vw"
+        layout="responsive"
+      />
+    </Box>
+
     <Flex direction="column" p={["0", "2em"]} my="1em" justifyContent="center">
       {blogs.map((blog) => (
         <Link href={`/blogs/${blog.id}`} key={blog.id} passHref>

@@ -1,4 +1,5 @@
 import Head from "next/head";
+import icon from "../public/favicon.ico";
 
 const Meta = ({ title, keywords, description }) => (
   <Head>
@@ -6,7 +7,7 @@ const Meta = ({ title, keywords, description }) => (
     <meta name="description" content={description} />
     <meta name="keywords" content={keywords} />
     <meta charSet="utf-8" />
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
     <title>{title}</title>
   </Head>
 );
