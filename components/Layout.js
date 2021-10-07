@@ -30,7 +30,7 @@ const Layout = ({ children }) => (
       />
     </MotionContainer>
 
-    <Container maxW="container.xl" py="auto" my="auto">
+    <Container maxW="container.l" zIndex="10" py="auto" my="auto">
       {children}
     </Container>
 

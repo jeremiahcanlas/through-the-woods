@@ -1,26 +1,11 @@
-import { Box, Flex, Heading, Button, Container } from "@chakra-ui/react";
+import { Box, Flex, Heading } from "@chakra-ui/react";
 import Link from "next/link";
-import Image from "next/image";
+
 import accentImage from "../public/blogs-pic.jpg";
+import PageContainer from "./PageContainer";
 
 const BlogList = ({ blogs }) => (
-  <Container
-    textAlign="center"
-    backgroundColor="blackAlpha.900"
-    opacity="0.6"
-    p="1em"
-    borderRadius="1em"
-  >
-    <Heading as="h2">Blogs</Heading>
-    <Box height="20vw" overflow="hidden">
-      <Image
-        src={accentImage}
-        alt="cover image"
-        sizes="50vw"
-        layout="responsive"
-      />
-    </Box>
-
+  <PageContainer image={accentImage} title="Blogs">
     <Flex direction="column" p={["0", "2em"]} my="1em" justifyContent="center">
       {blogs.map((blog) => (
         <Link href={`/blogs/${blog.id}`} key={blog.id} passHref>
@@ -33,15 +18,12 @@ const BlogList = ({ blogs }) => (
             cursor="pointer"
             textAlign="left"
           >
-            <Heading fontSize={["0.8em", "1em"]}>{blog.title}</Heading>
+            <Heading fontSize={["1em", "1.2em"]}>{blog.title}</Heading>
           </Box>
         </Link>
       ))}
     </Flex>
-    <Link href="/" passHref>
-      <Button> &larr; Go back</Button>
-    </Link>
-  </Container>
+  </PageContainer>
 );
 
 export default BlogList;

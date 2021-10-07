@@ -5,7 +5,7 @@ import axios from "axios";
 const blogs = ({ blogs }) => (
   <>
     <Meta title="Through the Woods - Blogs" />
-    <BlogList blogs={blogs} />;
+    <BlogList blogs={blogs} />
   </>
 );
 blogs.getInitialProps = async () => {
