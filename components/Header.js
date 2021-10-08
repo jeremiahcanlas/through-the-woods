@@ -24,9 +24,9 @@ const Header = () => (
       THROUGH THE WOODS
     </Heading>
 
-    <Text fontSize="0.9em" fontWeight="400" mt="1em">
+    {/* <Text fontSize="0.9em" fontWeight="400" mt="1em">
       A HIKING BLOG
-    </Text>
+    </Text> */}
   </Container>
 );
 
