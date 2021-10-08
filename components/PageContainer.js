@@ -2,6 +2,7 @@ import { Container, Heading, Box, Button } from "@chakra-ui/react";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowBackIcon } from "@chakra-ui/icons";
+import defaultImage from "../public/about-pic.jpeg";
 
 const PageContainer = ({ children, image, title }) => (
   <Container
@@ -12,8 +13,14 @@ const PageContainer = ({ children, image, title }) => (
     borderRadius="1em"
   >
     <Heading as="h2">{title}</Heading>
-    <Box my="1.2em" height="20vw" overflow="hidden">
-      <Image src={image} alt="cover image" sizes="50vw" layout="responsive" />
+    <Box
+      my="1.2em"
+      height="20vw"
+      maxH="150px"
+      overflow="hidden"
+      // display={["none", "block"]}
+    >
+      <Image src={image} alt="cover image" sizes="40vw" layout="responsive" />
     </Box>
     {children}
     <Box textAlign="left">
@@ -25,5 +32,9 @@ const PageContainer = ({ children, image, title }) => (
     </Box>
   </Container>
 );
+
+PageContainer.defaultProps = {
+  image: defaultImage,
+};
 
 export default PageContainer;

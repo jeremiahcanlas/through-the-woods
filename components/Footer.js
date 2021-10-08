@@ -23,7 +23,7 @@ const Footer = () => (
       />
     </Link>
     <Text fontWeight="200" fontSize="0.8em" letterSpacing="1px">
-      {new Date().getFullYear()} THROUGH THE WOODS
+      {new Date().getFullYear()} Through the Woods
     </Text>
   </Box>
 );
