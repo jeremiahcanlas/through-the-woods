@@ -3,7 +3,7 @@ import { Stack, Input, Button } from "@chakra-ui/react";
 
 const LogIn = () => (
   <PageContainer title="Log In">
-    <Stack my="2em" px={["0", "2em", "4em"]} spacing={4}>
+    <Stack my="2em" px={["0", "2em", "4em"]} spacing={8}>
       <Input variant="flushed" placeholder="Email" isRequired />
       <Input
         variant="flushed"
