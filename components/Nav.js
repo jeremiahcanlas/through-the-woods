@@ -4,17 +4,18 @@ import Link from "next/link";
 const Nav = () => (
   <Stack
     // flexDirection={["column", "row"]}
-    // justifyContent="center"
     direction={["column", "row"]}
     justify="center"
+    alignContent="center"
+    p="none"
     mt="2em"
-    mx="auto"
     spacing={["3", "1"]}
+    className="nav-container"
   >
     <Link href="/login" passHref>
       <Button
         p="0.8em"
-        w={["80vw", "70vw", "15vw"]}
+        w={["100%", "70vw", "15vw"]}
         borderColor="#40916c"
         variant="outline"
         fontWeight="300"
@@ -26,7 +27,7 @@ const Nav = () => (
     <Link href="/blogs" passHref>
       <Button
         p="0.8em"
-        w={["80vw", "70vw", "15vw"]}
+        w={["100%", "70vw", "15vw"]}
         borderColor="#40916c"
         variant="outline"
         fontWeight="300"

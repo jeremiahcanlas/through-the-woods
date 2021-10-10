@@ -4,7 +4,7 @@ import Image from "next/image";
 import { ArrowBackIcon } from "@chakra-ui/icons";
 import defaultImage from "../public/about-pic.jpeg";
 
-const PageContainer = ({ children, image, title }) => (
+const PageContainer = ({ children, image, title, showImg }) => (
   <Container
     textAlign="center"
     backgroundColor="blackAlpha.900"
@@ -18,7 +18,7 @@ const PageContainer = ({ children, image, title }) => (
       height="20vw"
       maxH="150px"
       overflow="hidden"
-      // display={["none", "block"]}
+      display={showImg || "block"}
     >
       <Image src={image} alt="cover image" sizes="40vw" layout="responsive" />
     </Box>

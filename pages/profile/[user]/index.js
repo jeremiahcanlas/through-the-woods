@@ -1,7 +1,7 @@
-import UserProfile from "../../../components/UserProfile";
+import Profile from "../../../components/Profile";
 import axios from "axios";
 
-const index = ({ profile }) => <UserProfile profile={profile} />;
+const index = ({ profile }) => <Profile profile={profile} />;
 
 //SSR option but static is more efficient & faster
 export const getServerSideProps = async (context) => {
@@ -14,7 +14,11 @@ export const getServerSideProps = async (context) => {
       (prof) => context.params.user === prof.uuid
     );
 
-    // console.log(profile);
+    if (!profile.length) {
+      return {
+        notFound: true,
+      };
+    }
 
     return { props: { profile } };
   } catch {

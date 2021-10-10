@@ -7,13 +7,7 @@ import backgroundImage from "../public/cover.jpg";
 const MotionContainer = motion(Container);
 
 const Layout = ({ children }) => (
-  <Container
-    maxW="100vw"
-    h="100vh"
-    centerContent
-    backgroundColor="blackAlpha.800"
-    pos="relative"
-  >
+  <Container maxW="100%" bg="blackAlpha.700" h="100vh" centerContent>
     <MotionContainer
       zIndex="0"
       opacity="0.2"

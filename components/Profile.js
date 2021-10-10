@@ -1,7 +1,6 @@
 import { Container, Avatar, Heading, Text } from "@chakra-ui/react";
 
-const UserProfile = ({ profile }) => {
-  console.log(profile[0].name);
+const Profile = ({ profile }) => {
   return (
     <Container
       textAlign="center"
@@ -30,4 +29,4 @@ const UserProfile = ({ profile }) => {
 
 // }
 
-export default UserProfile;
+export default Profile;
