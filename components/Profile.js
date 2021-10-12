@@ -1,4 +1,4 @@
-import { Container, Avatar, Heading, Text } from "@chakra-ui/react";
+import { Container, Avatar, Heading, Text, Button } from "@chakra-ui/react";
 
 const Profile = ({ profile }) => {
   return (
@@ -20,6 +20,9 @@ const Profile = ({ profile }) => {
         <Text letterSpacing="0.5px" fontSize="0.7em">
           {profile[0].location}
         </Text>
+        <Button mt="1.5em" variant="outline" size="sm">
+          Follow
+        </Button>
       </Container>
     </Container>
   );
