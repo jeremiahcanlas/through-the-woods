@@ -19,9 +19,15 @@ const RegisterForm = () => {
             //   setSubmitting(false);
             // }, 3000);
 
-            await axios.post("http://localhost:1337/hikers", {
-              data: JSON.stringify(values),
-            });
+            await axios.post(
+              "http://localhost:1337/hikers",
+              JSON.stringify(values),
+              {
+                headers: {
+                  "Content-Type": "application/json",
+                },
+              }
+            );
           }}
         >
           {({
