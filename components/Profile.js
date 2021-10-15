@@ -15,7 +15,8 @@ const Profile = ({ profile }) => {
           {profile[0].name}
         </Heading>
         <Text mt="0.4em" fontSize="0.7em" letterSpacing="0.5px">
-          {profile[0].followers} Followers | {profile[0].following} Following
+          {profile[0].followers || "0"} Followers |{" "}
+          {profile[0].following || "0"} Following
         </Text>
         <Text letterSpacing="0.5px" fontSize="0.7em">
           {profile[0].location}

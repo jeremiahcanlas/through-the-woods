@@ -35,6 +35,17 @@ const Nav = () => (
         BLOGS
       </Button>
     </Link>
+    <Link href="/profiles" passHref>
+      <Button
+        p="0.8em"
+        w={["100%", "70vw", "15vw"]}
+        borderColor="#40916c"
+        variant="outline"
+        fontWeight="300"
+      >
+        USERS
+      </Button>
+    </Link>
     {/* <Link href="/about" passHref>
       <Button
         p="0.8em"

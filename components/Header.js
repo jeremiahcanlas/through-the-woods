@@ -16,7 +16,7 @@ const Header = () => (
 
     <Heading
       fontSize={["2em", "2em"]}
-      bgGradient="linear(to-l, #2d6a4f 30%,#40916c 70%)"
+      bgGradient="linear(to-t, #2d6a4f 30%,#40916c 70%)"
       bgClip="text"
       letterSpacing="0.2em"
       fontWeight="700"

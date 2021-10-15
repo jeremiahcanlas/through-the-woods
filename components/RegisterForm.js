@@ -1,11 +1,64 @@
-import { Container, Text } from "@chakra-ui/layout";
+import { Container, Text, Input, Button } from "@chakra-ui/react";
 import PageContainer from "./PageContainer";
+import { Formik, Field } from "formik";
+import axios from "axios";
 
 const RegisterForm = () => {
   return (
     <PageContainer showImg={false} title="Register">
       <Container>
-        <Text>This is where the register form will be</Text>
+        <Formik
+          initialValues={{
+            name: "",
+            followers: 0,
+            following: 0,
+          }}
+          onSubmit={async (values, { setSubmitting }) => {
+            // setTimeout(() => {
+            //   console.log({ data: JSON.stringify(data) });
+            //   setSubmitting(false);
+            // }, 3000);
+
+            await axios.post("http://localhost:1337/hikers", {
+              data: JSON.stringify(values),
+            });
+          }}
+        >
+          {({
+            values,
+            isSubmitting,
+            handleChange,
+            handleBlur,
+            handleSubmit,
+          }) => (
+            <form onSubmit={handleSubmit}>
+              <Field
+                placeholder="name"
+                name="name"
+                variant="flushed"
+                type="input"
+                as={Input}
+              />
+              <Field
+                name="followers"
+                variant="flushed"
+                type="input"
+                as={Input}
+              />
+              <Field
+                name="following"
+                variant="flushed"
+                type="input"
+                as={Input}
+              />
+              <div />
+              <Button disabled={isSubmitting} size="sm" type="submit">
+                Submit
+              </Button>
+              <pre>{JSON.stringify(values, null, 2)}</pre>
+            </form>
+          )}
+        </Formik>
       </Container>
     </PageContainer>
   );

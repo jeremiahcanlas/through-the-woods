@@ -27,6 +27,7 @@ const PageContainer = ({ children, image, title, showImg }) => (
       maxH="150px"
       overflow="hidden"
       display={!showImg ? "none" : "block"}
+      position="relative"
     >
       <Image src={image} alt="cover image" sizes="40vw" layout="responsive" />
     </Box>
@@ -36,6 +37,7 @@ const PageContainer = ({ children, image, title, showImg }) => (
 
 PageContainer.defaultProps = {
   image: defaultImage,
+  showImg: true,
 };
 
 export default PageContainer;
