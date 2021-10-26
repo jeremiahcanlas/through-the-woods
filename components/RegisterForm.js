@@ -18,10 +18,17 @@ const RegisterForm = () => {
             //   console.log({ data: JSON.stringify(data) });
             //   setSubmitting(false);
             // }, 3000);
+            const { name, followers, following } = values;
 
+            console.log(name);
             await axios.post(
               "http://localhost:1337/hikers",
-              JSON.stringify(values),
+              {
+                name: name,
+                followers: followers,
+                following: following,
+                uuid: name.split(" ").join("-"),
+              },
               {
                 headers: {
                   "Content-Type": "application/json",
