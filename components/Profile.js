@@ -1,4 +1,14 @@
-import { Container, Avatar, Heading, Text, Button } from "@chakra-ui/react";
+import {
+  Container,
+  Avatar,
+  Heading,
+  Text,
+  Button,
+  Icon,
+  Box,
+} from "@chakra-ui/react";
+import Link from "next/link";
+import { ImCross } from "react-icons/im";
 
 const Profile = ({ profile }) => {
   return (
@@ -10,9 +20,16 @@ const Profile = ({ profile }) => {
       borderRadius="1em"
     >
       <Container centerContent>
-        <Avatar name={profile[0].name} size="xl" />
+        <Box textAlign="left" w="100%">
+          <Link my="1.2em" href="/" passHref>
+            <Button variant="ghost" size="sm" p="0.1em">
+              <Icon as={ImCross} fontSize="1em" color="white" />
+            </Button>
+          </Link>
+        </Box>
+        <Avatar name={profile[0].firstName} size="xl" />
         <Heading letterSpacing="1px" mt="0.8em" fontSize="1.4em">
-          {profile[0].name}
+          {profile[0].firstName}
         </Heading>
         <Text mt="0.4em" fontSize="0.7em" letterSpacing="0.5px">
           {profile[0].followers || "0"} Followers |{" "}

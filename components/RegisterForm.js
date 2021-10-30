@@ -9,32 +9,40 @@ const RegisterForm = () => {
       <Container>
         <Formik
           initialValues={{
-            name: "",
-            followers: 0,
-            following: 0,
+            firstName: "",
+            lastName: "",
+            email: "",
+            username: "",
+            password: "",
+            confirm: "",
           }}
           onSubmit={async (values, { setSubmitting }) => {
             // setTimeout(() => {
             //   console.log({ data: JSON.stringify(data) });
             //   setSubmitting(false);
             // }, 3000);
-            const { name, followers, following } = values;
+            const { firstName, lastName, email, username, password, confirm } =
+              values;
 
-            console.log(name);
-            await axios.post(
-              "http://localhost:1337/hikers",
-              {
-                name: name,
-                followers: followers,
-                following: following,
-                uuid: name.split(" ").join("-"),
-              },
-              {
-                headers: {
-                  "Content-Type": "application/json",
+            if (password === confirm) {
+              await axios.post(
+                "http://localhost:1337/profiles",
+                {
+                  firstName: firstName,
+                  lastName: lastName,
+                  email: email,
+                  username: username,
+                  password: password,
                 },
-              }
-            );
+                {
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                }
+              );
+            } else {
+              throw new Error("Passwords do not match");
+            }
           }}
         >
           {({
@@ -46,22 +54,45 @@ const RegisterForm = () => {
           }) => (
             <form onSubmit={handleSubmit}>
               <Field
-                placeholder="name"
-                name="name"
+                placeholder="First Name"
+                name="firstName"
                 variant="flushed"
                 type="input"
                 as={Input}
               />
               <Field
-                name="followers"
+                placeholder="Last Name"
+                name="lastName"
                 variant="flushed"
                 type="input"
                 as={Input}
               />
               <Field
-                name="following"
+                placeholder="Username"
+                name="username"
                 variant="flushed"
                 type="input"
+                as={Input}
+              />
+              <Field
+                placeholder="Email"
+                name="email"
+                variant="flushed"
+                type="email"
+                as={Input}
+              />
+              <Field
+                placeholder="Password"
+                name="password"
+                variant="flushed"
+                type="password"
+                as={Input}
+              />
+              <Field
+                placeholder="Confirm Password"
+                name="confirm"
+                variant="flushed"
+                type="password"
                 as={Input}
               />
               <div />
