@@ -46,6 +46,17 @@ const Nav = () => (
         USERS
       </Button>
     </Link>
+    <Link href="/register" passHref>
+      <Button
+        p="0.8em"
+        w={["100%", "70vw", "15vw"]}
+        borderColor="#40916c"
+        variant="outline"
+        fontWeight="300"
+      >
+        Register
+      </Button>
+    </Link>
     {/* <Link href="/about" passHref>
       <Button
         p="0.8em"

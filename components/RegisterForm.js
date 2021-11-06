@@ -1,9 +1,30 @@
 import { Container, Text, Input, Button } from "@chakra-ui/react";
 import PageContainer from "./PageContainer";
-import { Formik, Field } from "formik";
+import { Formik, Field, Form } from "formik";
+import TextField from "./TextField";
 import axios from "axios";
+import * as Yup from "yup";
 
 const RegisterForm = () => {
+  const validateForm = Yup.object({
+    firstName: Yup.string()
+      .required("First Name is Required")
+      .max(15, "Must be 15 character or less"),
+    lastName: Yup.string()
+      .required("Last Name is Required")
+      .max(15, "Must be 15 character or less"),
+    username: Yup.string().required("Username is required"),
+    email: Yup.string()
+      .required("Email is required")
+      .email("Must be a valid email homie"),
+    password: Yup.string()
+      .required("Password is required!")
+      .min(5, "Password must be 5 characters or more"),
+    confirm: Yup.string()
+      .oneOf([Yup.ref("password"), null], "Both passwords must match")
+      .required("Please confirm password!"),
+  });
+
   return (
     <PageContainer showImg={false} title="Register">
       <Container>
@@ -16,33 +37,25 @@ const RegisterForm = () => {
             password: "",
             confirm: "",
           }}
+          validationSchema={validateForm}
           onSubmit={async (values, { setSubmitting }) => {
-            // setTimeout(() => {
-            //   console.log({ data: JSON.stringify(data) });
-            //   setSubmitting(false);
-            // }, 3000);
-            const { firstName, lastName, email, username, password, confirm } =
-              values;
+            const { firstName, lastName, email, username, password } = values;
 
-            if (password === confirm) {
-              await axios.post(
-                "http://localhost:1337/profiles",
-                {
-                  firstName: firstName,
-                  lastName: lastName,
-                  email: email,
-                  username: username,
-                  password: password,
+            await axios.post(
+              "http://localhost:1337/profiles",
+              {
+                firstName: firstName,
+                lastName: lastName,
+                email: email,
+                username: username,
+                password: password,
+              },
+              {
+                headers: {
+                  "Content-Type": "application/json",
                 },
-                {
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                }
-              );
-            } else {
-              throw new Error("Passwords do not match");
-            }
+              }
+            );
           }}
         >
           {({
@@ -50,57 +63,32 @@ const RegisterForm = () => {
             isSubmitting,
             handleChange,
             handleBlur,
+            errors,
+            touched,
+            validateOnBlur,
+            validate,
             handleSubmit,
           }) => (
-            <form onSubmit={handleSubmit}>
-              <Field
-                placeholder="First Name"
-                name="firstName"
-                variant="flushed"
-                type="input"
-                as={Input}
-              />
-              <Field
-                placeholder="Last Name"
-                name="lastName"
-                variant="flushed"
-                type="input"
-                as={Input}
-              />
-              <Field
-                placeholder="Username"
-                name="username"
-                variant="flushed"
-                type="input"
-                as={Input}
-              />
-              <Field
-                placeholder="Email"
-                name="email"
-                variant="flushed"
-                type="email"
-                as={Input}
-              />
-              <Field
+            <Form onSubmit={handleSubmit}>
+              <TextField placeholder="First Name" name="firstName" />
+              <TextField placeholder="Last Name" name="lastName" />
+              <TextField placeholder="Username" name="username" />
+              <TextField placeholder="Email" name="email" type="email" />
+              <TextField
                 placeholder="Password"
                 name="password"
-                variant="flushed"
                 type="password"
-                as={Input}
               />
-              <Field
+              <TextField
                 placeholder="Confirm Password"
                 name="confirm"
-                variant="flushed"
                 type="password"
-                as={Input}
               />
-              <div />
-              <Button disabled={isSubmitting} size="sm" type="submit">
+
+              <Button isLoading={isSubmitting} size="sm" type="submit">
                 Submit
               </Button>
-              <pre>{JSON.stringify(values, null, 2)}</pre>
-            </form>
+            </Form>
           )}
         </Formik>
       </Container>
