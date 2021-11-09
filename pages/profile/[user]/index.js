@@ -1,22 +1,18 @@
 import Profile from "../../../components/Profile";
 import axios from "axios";
 
-const index = ({ profile }) => <Profile profile={profile} />;
+const index = ({ profile }) => <Profile profile={profile[0]} />;
 
 //SSR option but static is more efficient & faster
 export const getServerSideProps = async (context) => {
-  console.log(context.params.user);
   try {
-    const res = await axios.get(`http://localhost:1337/profiles`);
-
-    const profiles = await res.data;
-
-    const profile = profiles.filter(
-      (prof) => context.params.user === prof.username
+    const res = await axios.get(
+      `http://localhost:1337/profiles?username=${context.params.user}`
     );
 
-    console.log(profile);
+    const profile = await res.data;
 
+    console.log(profile);
     if (!profile.length) {
       return {
         notFound: true,
@@ -24,7 +20,7 @@ export const getServerSideProps = async (context) => {
     }
 
     return { props: { profile } };
-  } catch {
+  } catch (err) {
     return {
       notFound: true,
     };

@@ -76,20 +76,24 @@ const RegisterForm = () => {
 
               await router.push(`/profile/${username}`);
             } catch (error) {
-              let users = await axios.get("http://localhost:1337/profiles");
+              let users = await axios.get(
+                `http://localhost:1337/profiles?username=${username}`
+              );
 
-              if (
-                users.data.filter((user) => user.username === username).length >
-                0
-              ) {
-                setError("username already exists");
-              }
+              console.log(users);
 
-              if (
-                users.data.filter((user) => user.email === email).length > 0
-              ) {
-                setError("email already exists");
-              }
+              // if (
+              //   users.data.filter((user) => user.username === username).length >
+              //   0
+              // ) {
+              //   setError("username already exists");
+              // }
+
+              // if (
+              //   users.data.filter((user) => user.email === email).length > 0
+              // ) {
+              //   setError("email already exists");
+              // }
             }
           }}
         >

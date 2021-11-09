@@ -7,10 +7,26 @@ import {
   Icon,
   Box,
 } from "@chakra-ui/react";
+import axios from "axios";
 import Link from "next/link";
 import { ImCross } from "react-icons/im";
 
 const Profile = ({ profile }) => {
+  console.log(profile.followers);
+  const follow = async () => {
+    await axios.put(
+      `http://localhost:1337/profiles/${profile.id}`,
+      {
+        followers: [...profile.followers, { uid: 5 }],
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+  };
+
   return (
     <Container
       textAlign="center"
@@ -27,18 +43,18 @@ const Profile = ({ profile }) => {
             </Button>
           </Link>
         </Box>
-        <Avatar name={profile[0].firstName} size="xl" />
+        <Avatar name={profile.firstName} size="xl" />
         <Heading letterSpacing="1px" mt="0.8em" fontSize="1.4em">
-          {profile[0].firstName}
+          {profile.firstName}
         </Heading>
         <Text mt="0.4em" fontSize="0.7em" letterSpacing="0.5px">
-          {profile[0].followers || "0"} Followers |{" "}
-          {profile[0].following || "0"} Following
+          {profile.followers.length || "0"} Followers |{" "}
+          {profile.following.length || "0"} Following
         </Text>
         <Text letterSpacing="0.5px" fontSize="0.7em">
-          {profile[0].location}
+          {profile.location}
         </Text>
-        <Button mt="1.5em" variant="outline" size="sm">
+        <Button mt="1.5em" variant="outline" size="sm" onClick={follow}>
           Follow
         </Button>
       </Container>
