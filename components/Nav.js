@@ -35,7 +35,7 @@ const Nav = () => (
         BLOGS
       </Button>
     </Link>
-    <Link href="/profiles" passHref>
+    {/* <Link href="/profiles" passHref>
       <Button
         p="0.8em"
         w={["100%", "70vw", "15vw"]}
@@ -45,8 +45,8 @@ const Nav = () => (
       >
         USERS
       </Button>
-    </Link>
-    <Link href="/register" passHref>
+    </Link> */}
+    {/* <Link href="/register" passHref>
       <Button
         p="0.8em"
         w={["100%", "70vw", "15vw"]}
@@ -56,7 +56,7 @@ const Nav = () => (
       >
         Register
       </Button>
-    </Link>
+    </Link> */}
     {/* <Link href="/about" passHref>
       <Button
         p="0.8em"
