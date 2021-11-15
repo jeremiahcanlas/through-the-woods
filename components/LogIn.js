@@ -1,37 +1,39 @@
 import PageContainer from "./PageContainer";
-import { Stack, Input, Button, Container } from "@chakra-ui/react";
+import { useState, useEffect } from "react";
+import { Stack, Button, Container, Text } from "@chakra-ui/react";
 import { Formik, Form } from "formik";
 import TextField from "./TextField";
 import * as Yup from "yup";
 import axios from "axios";
 
 const LogIn = () => {
+  const [apiError, setErrorMsg] = useState("");
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setErrorMsg("");
+    }, 3000);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [apiError]);
+
   const validateLogin = Yup.object({
     identifier: Yup.string().required("Username or Email is Required"),
     password: Yup.string().required("Password is required"),
   });
 
-  const handleLogin = async (values) => {
+  const handleSubmit = async (values) => {
     const { identifier, password } = values;
 
     try {
-      const res = await axios.post(
-        "http://localhost:1337/auth/local",
-        {
-          identifier: identifier,
-          password: password,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      // await router.push(`/profile/${res.data.user.username}`);
-      console.log(res.data.user.username);
+      await axios.post("/api/login", {
+        identifier: identifier,
+        password: password,
+      });
     } catch (error) {
-      throw new Error("Username or Password invalid");
+      setErrorMsg("Username or Password invalid");
     }
   };
 
@@ -44,19 +46,27 @@ const LogIn = () => {
             password: "",
           }}
           validationSchema={validateLogin}
-          onSubmit={handleLogin}
+          onSubmit={handleSubmit}
         >
-          {({ values, isSubmitting, handleSubmit }) => (
+          {({ isSubmitting, handleSubmit }) => (
             <Form onSubmit={handleSubmit}>
-              {/* {error && <Text>{error}</Text>} */}
+              {apiError && (
+                <Text color="red.300" fontSize="0.8em">
+                  {apiError}
+                </Text>
+              )}
               <Stack my="2em" px={["0", "2em", "4em"]} spacing={8}>
-                <TextField placeholder="Email or Username" name="identifier" />
+                <TextField
+                  placeholder="Email or Username"
+                  name="identifier"
+                  apiError={apiError}
+                />
                 <TextField
                   placeholder="Password"
                   name="password"
                   type="password"
+                  apiError={apiError}
                 />
-
                 <Button isLoading={isSubmitting} size="sm" type="submit">
                   Login
                 </Button>

@@ -1,5 +1,5 @@
-import { Field, ErrorMessage } from "formik";
-import { Input, Text, FormErrorMessage, FormControl } from "@chakra-ui/react";
+import { Field } from "formik";
+import { Input, FormErrorMessage, FormControl } from "@chakra-ui/react";
 // import { useState, useEffect } from "react";
 
 const TextField = ({ placeholder, name, type }) => {
