@@ -1,5 +1,6 @@
 import PageContainer from "./PageContainer";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import { Stack, Button, Container, Text } from "@chakra-ui/react";
 import { Formik, Form } from "formik";
 import TextField from "./TextField";
@@ -7,17 +8,24 @@ import * as Yup from "yup";
 import axios from "axios";
 
 const LogIn = () => {
-  const [apiError, setErrorMsg] = useState("");
+  const [message, setMessage] = useState({
+    text: "",
+    color: "",
+  });
+  const router = useRouter();
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setErrorMsg("");
+      setMessage({
+        text: "",
+        color: "",
+      });
     }, 3000);
 
     return () => {
       clearTimeout(timer);
     };
-  }, [apiError]);
+  }, [message]);
 
   const validateLogin = Yup.object({
     identifier: Yup.string().required("Username or Email is Required"),
@@ -28,12 +36,21 @@ const LogIn = () => {
     const { identifier, password } = values;
 
     try {
-      await axios.post("/api/login", {
+      const res = await axios.post("/api/login", {
         identifier: identifier,
         password: password,
       });
+
+      setMessage({
+        text: `Welcome ${res.data.user.username}`,
+        color: "green.400",
+      });
+      router.push("/");
     } catch (error) {
-      setErrorMsg("Username or Password invalid");
+      setMessage({
+        text: "Incorrect username or password",
+        color: "red.300",
+      });
     }
   };
 
@@ -49,23 +66,18 @@ const LogIn = () => {
           onSubmit={handleSubmit}
         >
           {({ isSubmitting, handleSubmit }) => (
-            <Form onSubmit={handleSubmit}>
-              {apiError && (
-                <Text color="red.300" fontSize="0.8em">
-                  {apiError}
+            <Form onSubmit={handleSubmit} method="POST">
+              {message && (
+                <Text color={message.color} fontSize="0.8em">
+                  {message.text}
                 </Text>
               )}
               <Stack my="2em" px={["0", "2em", "4em"]} spacing={8}>
-                <TextField
-                  placeholder="Email or Username"
-                  name="identifier"
-                  apiError={apiError}
-                />
+                <TextField placeholder="Email or Username" name="identifier" />
                 <TextField
                   placeholder="Password"
                   name="password"
                   type="password"
-                  apiError={apiError}
                 />
                 <Button isLoading={isSubmitting} size="sm" type="submit">
                   Login

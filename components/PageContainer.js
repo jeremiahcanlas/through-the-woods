@@ -1,15 +1,14 @@
 import { Container, Heading, Box, Button, Icon } from "@chakra-ui/react";
 import Link from "next/link";
 import Image from "next/image";
-// import { ArrowBackIcon } from "@chakra-ui/icons";
 import defaultImage from "../public/about-pic.jpeg";
 import { ImCross } from "react-icons/im";
 
 const PageContainer = ({ children, image, title, showImg }) => (
   <Container
     textAlign="center"
-    backgroundColor="blackAlpha.900"
-    opacity="0.8"
+    backgroundColor="blackAlpha.800"
+    opacity="1"
     py="1em"
     borderRadius="1em"
   >
