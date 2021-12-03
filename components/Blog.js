@@ -1,20 +1,21 @@
-import { WrapItem, Container, Heading, Text, Center } from "@chakra-ui/react";
+import { Container, Heading, Text, Button } from "@chakra-ui/react";
+import Link from "next/link";
+import ReactMarkdown from "react-markdown";
+import PageContainer from "./PageContainer";
 
 const Blog = ({ blog }) => (
-  <WrapItem>
-    <Container
-      border="0.1em solid #40916c"
-      borderRadius="lg"
-      p="3"
-      maxW={["90vw", "90vw", "30vw"]}
-      h="35vh"
-    >
-      <Heading fontSize="2em" mb="0.5em">
-        {blog.title}
-      </Heading>
-      <Text>{blog.body.substring(0, 150)}...</Text>
+  <PageContainer>
+    <Container maxW="100vw" p="0" m="0">
+      <Heading mb="1em">{blog.title}</Heading>
+      <Text>by {blog.user.username}</Text>
+      <ReactMarkdown>{blog.body}</ReactMarkdown>
+      <Button mt="1em">
+        <Link href="/blogs" passHref>
+          &larr; All Blogs
+        </Link>
+      </Button>
     </Container>
-  </WrapItem>
+  </PageContainer>
 );
 
 export default Blog;

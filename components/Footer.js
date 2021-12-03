@@ -1,16 +1,12 @@
-import { Box, Text, Container, Link, Icon } from "@chakra-ui/react";
+import { Text, Container, Link, Icon } from "@chakra-ui/react";
 import { ImInstagram } from "react-icons/im";
 
 const Footer = () => (
-  <Box textAlign="center" py="0.8em" zIndex="2">
-    <Text fontWeight="200" fontSize="0.8em" mb="0.3em" letterSpacing="1px">
-      Follow us
-    </Text>
+  <Container textAlign="center" py="0.8em" maxW="100vw" my="1px">
     <Link
       href="https://instagram.com/_through_the_woods"
       isExternal
       cursor="pointer"
-      zIndex="999"
       _focus={{ outline: "none" }}
     >
       <Icon
@@ -25,7 +21,7 @@ const Footer = () => (
     <Text fontWeight="200" fontSize="0.8em" letterSpacing="1px">
       {new Date().getFullYear()} Through the Woods
     </Text>
-  </Box>
+  </Container>
 );
 
 export default Footer;

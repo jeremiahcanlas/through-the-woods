@@ -1,7 +1,7 @@
 import PageContainer from "./PageContainer";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { Stack, Button, Container, Text } from "@chakra-ui/react";
+import { Stack, Button, Container, Text, Heading } from "@chakra-ui/react";
 import { Formik, Form } from "formik";
 import TextField from "./TextField";
 import * as Yup from "yup";
@@ -12,6 +12,7 @@ const LogIn = () => {
     text: "",
     color: "",
   });
+
   const router = useRouter();
 
   useEffect(() => {
@@ -55,7 +56,7 @@ const LogIn = () => {
   };
 
   return (
-    <PageContainer title="Log In">
+    <PageContainer>
       <Container>
         <Formik
           initialValues={{
@@ -73,6 +74,8 @@ const LogIn = () => {
                 </Text>
               )}
               <Stack my="2em" px={["0", "2em", "4em"]} spacing={8}>
+                <Heading as="h2">Login</Heading>
+
                 <TextField placeholder="Email or Username" name="identifier" />
                 <TextField
                   placeholder="Password"

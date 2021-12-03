@@ -3,14 +3,22 @@ import Nav from "../components/Nav";
 import Meta from "../components/Meta";
 import nookies from "nookies";
 import axios from "axios";
+import { Box, Container, Flex } from "@chakra-ui/react";
 
 export default function Home({ user }) {
   return (
-    <>
+    <Flex
+      h="100vh"
+      minW="100vw"
+      p="0"
+      flexDirection="column"
+      justifyContent="center"
+    >
       <Meta />
+
       <Header user={user} />
       <Nav isLoggedIn={user ? user.confirmed : false} />
-    </>
+    </Flex>
   );
 }
 

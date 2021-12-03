@@ -6,7 +6,7 @@ import PageContainer from "./PageContainer";
 
 const BlogList = ({ blogs }) => (
   <PageContainer image={accentImage} title="Blogs">
-    <Flex direction="column" p={["0", "2em"]} my="1em" justifyContent="center">
+    <Flex direction="column" p="0" my="1em" justifyContent="center">
       {blogs.map((blog) => (
         <Link href={`/blogs/${blog.id}`} key={blog.id} passHref>
           <Box
@@ -17,6 +17,7 @@ const BlogList = ({ blogs }) => (
             _hover={{ backgroundColor: "#343a40" }}
             cursor="pointer"
             textAlign="left"
+            opacity="0.5"
           >
             <Heading fontSize={["1em", "1.2em"]}>{blog.title}</Heading>
           </Box>

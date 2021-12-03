@@ -15,18 +15,12 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     // sets the cookie when logged in
     setCookie({ res }, "jwt", response.data.jwt, {
       httpOnly: true,
-      // secure: process.env.NODE_ENV !== 'development',
       maxAge: 30 * 24 * 60 * 60,
       path: "/",
     });
 
-    console.log(response.data);
-
     res.status(200).json(response.data);
   } catch (e) {
-    res
-      // .json({ message: "Please provide the correct identifier and password" })
-      .status(404)
-      .end();
+    res.status(404).end();
   }
 };

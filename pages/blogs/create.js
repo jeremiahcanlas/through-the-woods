@@ -1,16 +1,14 @@
-import LogIn from "../components/LogIn";
+import CreateBlog from "../../components/CreateBlog";
 import nookies from "nookies";
 
-const login = () => <LogIn />;
+const create = ({ cookies }) => <CreateBlog cookies={cookies} />;
 
-export default login;
+export default create;
 
 export const getServerSideProps = async (ctx) => {
   const cookies = nookies.get(ctx);
 
-  console.log(cookies);
-
-  if (cookies?.jwt) {
+  if (!cookies.jwt) {
     return {
       redirect: {
         destination: "/",
@@ -20,6 +18,6 @@ export const getServerSideProps = async (ctx) => {
   }
 
   return {
-    props: {},
+    props: { cookies },
   };
 };

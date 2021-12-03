@@ -11,6 +11,7 @@ const blogs = ({ blogs }) => (
 blogs.getInitialProps = async () => {
   const res = await axios.get("http://localhost:1337/blogs");
   const blogs = await res.data;
+
   return { blogs };
 };
 

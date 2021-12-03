@@ -5,14 +5,11 @@ const Layout = ({ children }) => (
   <Container
     maxW="100vw"
     px="0"
-    backgroundColor="gray.900"
-    h="100vh"
-    centerContent
+    height="100%"
+    className="main-layout"
+    backgroundColor="blackAlpha.400"
   >
-    <Container maxW="container.l" zIndex="0" py="auto" my="auto" p="0">
-      {children}
-    </Container>
-
+    {children}
     <Footer />
   </Container>
 );
