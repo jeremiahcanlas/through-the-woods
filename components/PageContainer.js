@@ -8,11 +8,10 @@ const PageContainer = ({ children, image, title, showImg }) => (
   <Container
     maxH="100%"
     minH="100vh"
-    minW="100vw"
+    minW="100%"
     textAlign="left"
     opacity="1"
     mb="1.5rem"
-
     // border="3px solid red"
   >
     <Link href="/" passHref>

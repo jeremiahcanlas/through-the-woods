@@ -1,5 +1,6 @@
 import Footer from "./Footer";
 import { Container } from "@chakra-ui/react";
+import Alert from "./Alert";
 
 const Layout = ({ children }) => (
   <Container
@@ -9,6 +10,7 @@ const Layout = ({ children }) => (
     className="main-layout"
     backgroundColor="blackAlpha.400"
   >
+    <Alert />
     {children}
     <Footer />
   </Container>

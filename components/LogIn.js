@@ -1,37 +1,30 @@
 import PageContainer from "./PageContainer";
-import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { Stack, Button, Container, Text, Heading } from "@chakra-ui/react";
+import { Stack, Button, Container, Heading } from "@chakra-ui/react";
 import { Formik, Form } from "formik";
 import TextField from "./TextField";
 import * as Yup from "yup";
 import axios from "axios";
 
+import { useDispatch } from "react-redux";
+import { setAlert, removeAlert } from "../features/alert";
+import { login } from "../features/user";
+
 const LogIn = () => {
-  const [message, setMessage] = useState({
-    text: "",
-    color: "",
-  });
+  const dispatch = useDispatch();
 
   const router = useRouter();
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setMessage({
-        text: "",
-        color: "",
-      });
-    }, 3000);
-
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [message]);
 
   const validateLogin = Yup.object({
     identifier: Yup.string().required("Username or Email is Required"),
     password: Yup.string().required("Password is required"),
   });
+
+  const clearAlert = () => {
+    setTimeout(() => {
+      dispatch(removeAlert());
+    }, 3000);
+  };
 
   const handleSubmit = async (values) => {
     const { identifier, password } = values;
@@ -42,17 +35,31 @@ const LogIn = () => {
         password: password,
       });
 
-      setMessage({
-        text: `Welcome ${res.data.user.username}`,
-        color: "green.400",
-      });
+      dispatch(
+        login({
+          username: res.data.user.username,
+          jwt: res.data.jwt,
+        })
+      );
+
+      dispatch(
+        setAlert({
+          msg: `Welcome ${res.data.user.username}`,
+          alertType: "success",
+        })
+      );
+
       router.push("/");
     } catch (error) {
-      setMessage({
-        text: "Incorrect username or password",
-        color: "red.300",
-      });
+      dispatch(
+        setAlert({
+          msg: "Incorrect username or password",
+          alertType: "error",
+        })
+      );
     }
+
+    clearAlert();
   };
 
   return (
@@ -68,11 +75,6 @@ const LogIn = () => {
         >
           {({ isSubmitting, handleSubmit }) => (
             <Form onSubmit={handleSubmit} method="POST">
-              {message && (
-                <Text color={message.color} fontSize="0.8em">
-                  {message.text}
-                </Text>
-              )}
               <Stack my="2em" px={["0", "2em", "4em"]} spacing={8}>
                 <Heading as="h2">Login</Heading>
 

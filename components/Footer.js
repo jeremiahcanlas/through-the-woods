@@ -2,7 +2,7 @@ import { Text, Container, Link, Icon } from "@chakra-ui/react";
 import { ImInstagram } from "react-icons/im";
 
 const Footer = () => (
-  <Container textAlign="center" py="0.8em" maxW="100vw" my="1px">
+  <Container textAlign="center" py="0.8em" minW="100%" my="1px">
     <Link
       href="https://instagram.com/_through_the_woods"
       isExternal

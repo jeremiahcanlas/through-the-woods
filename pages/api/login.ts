@@ -5,9 +5,10 @@ import { NextApiRequest, NextApiResponse } from "next";
 /* eslint import/no-anonymous-default-export: [2, {"allowArrowFunction": true}] */
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const { identifier, password } = req.body;
+  const server = process.env.PRODUCTION;
 
   try {
-    const response = await axios.post("http://localhost:1337/auth/local", {
+    const response = await axios.post(`${server}/auth/local`, {
       identifier: identifier,
       password: password,
     });
@@ -21,6 +22,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
     res.status(200).json(response.data);
   } catch (e) {
+    console.log("login error");
     res.status(404).end();
   }
 };
