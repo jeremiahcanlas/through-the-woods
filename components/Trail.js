@@ -7,26 +7,27 @@ import PageContainer from "./PageContainer";
 import { useSelector } from "react-redux";
 import axios from "axios";
 
-const Blog = ({ blog }) => {
+const Trail = ({ trail }) => {
   const user = useSelector((state) => state.user);
 
   const router = useRouter();
 
   const userButtons = () => {
-    if (blog.user.username === user.username) {
+    if (trail.user.username === user.username) {
       return <Button onClick={() => deletePost()}>Delete</Button>;
     }
   };
 
   const deletePost = async () => {
     try {
-      await axios.delete(`http://localhost:1337/blogs/${blog.id}`, {
+      await axios.delete(`http://localhost:1337/trails/${trail.id}`, {
         headers: {
           Authorization: `Bearer ${user.jwt}`,
         },
       });
 
-      router.push("/blogs");
+      // router.push("/");
+      router.push("/trails");
     } catch (e) {
       console.log("error");
     }
@@ -35,12 +36,12 @@ const Blog = ({ blog }) => {
   return (
     <PageContainer>
       <Container maxW="100vw" p="0" m="0">
-        <Heading mb="1em">{blog.title}</Heading>
-        <Text>by {blog.user.username}</Text>
-        <ReactMarkdown>{blog.body}</ReactMarkdown>
+        <Heading mb="1em">{trail.title}</Heading>
+        <Text>by {trail.user.username}</Text>
+        <ReactMarkdown>{trail.description}</ReactMarkdown>
         <Button mt="1em">
-          <Link href="/blogs" passHref>
-            &larr; All Blogs
+          <Link href="/trails" passHref>
+            &larr; All trails
           </Link>
         </Button>
         {userButtons()}
@@ -49,4 +50,4 @@ const Blog = ({ blog }) => {
   );
 };
 
-export default Blog;
+export default Trail;

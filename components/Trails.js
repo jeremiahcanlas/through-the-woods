@@ -4,11 +4,11 @@ import Link from "next/link";
 import accentImage from "../public/blogs-pic.jpg";
 import PageContainer from "./PageContainer";
 
-const BlogList = ({ blogs }) => (
-  <PageContainer image={accentImage} title="Blogs">
+const Trails = ({ trails }) => (
+  <PageContainer image={accentImage} title="Trails">
     <Flex direction="column" p="0" my="1em" justifyContent="center">
-      {blogs.map((blog) => (
-        <Link href={`/blogs/${blog.id}`} key={blog.id} passHref>
+      {trails.map((trail) => (
+        <Link href={`/trails/${trail.id}`} key={trail.id} passHref>
           <Box
             p="1em"
             borderRadius="1em"
@@ -19,7 +19,7 @@ const BlogList = ({ blogs }) => (
             textAlign="left"
             opacity="0.5"
           >
-            <Heading fontSize={["1em", "1.2em"]}>{blog.title}</Heading>
+            <Heading fontSize={["1em", "1.2em"]}>{trail.title}</Heading>
           </Box>
         </Link>
       ))}
@@ -27,4 +27,4 @@ const BlogList = ({ blogs }) => (
   </PageContainer>
 );
 
-export default BlogList;
+export default Trails;

@@ -45,7 +45,7 @@ const Nav = ({ isLoggedIn }) => {
       spacing={["3", "1"]}
       className="nav-container"
     >
-      <Link href="/blogs" passHref>
+      <Link href="/trails" passHref>
         <Button
           p="0.8em"
           w={["100%", "70vw", "15vw"]}
@@ -59,12 +59,12 @@ const Nav = ({ isLoggedIn }) => {
           }}
           rightIcon={<GiMountaintop size="1.2em" />}
         >
-          BLOGS
+          TRAILS
         </Button>
       </Link>
       {isLoggedIn ? (
         <>
-          <Link href="/blogs/create" passHref>
+          <Link href="/trails/create" passHref>
             <Button
               p="0.8em"
               w={["100%", "70vw", "15vw"]}

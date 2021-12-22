@@ -18,8 +18,8 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "components/CreateBlog.tsx",
-    "pages/blogs/create.ts"
+    "components/CreateTrail.tsx",
+    "pages/trail/create.ts"
   ],
   "exclude": ["node_modules"]
 }

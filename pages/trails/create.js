@@ -1,7 +1,7 @@
-import CreateBlog from "../../components/CreateBlog";
+import CreateTrail from "../../components/CreateTrail";
 import nookies from "nookies";
 
-const create = ({ cookies }) => <CreateBlog cookies={cookies} />;
+const create = ({ cookies }) => <CreateTrail cookies={cookies} />;
 
 export default create;
 

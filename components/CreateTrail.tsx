@@ -9,7 +9,7 @@ import TextField from "./TextField";
 import axios from "axios";
 import * as Yup from "yup";
 
-const CreateBlog = ({ cookies }) => {
+const CreateTrail = ({ cookies }) => {
   const [error, setError] = useState("");
   const router = useRouter();
 
@@ -22,15 +22,15 @@ const CreateBlog = ({ cookies }) => {
   }, [error]);
 
   const handleCreate = async (values) => {
-    const { title, location, body } = values;
+    const { title, location, description } = values;
 
     try {
       const res = await axios.post(
-        "http://localhost:1337/blogs",
+        "http://localhost:1337/trails",
         {
           title: title,
           location: location,
-          body: body,
+          description: description,
         },
         {
           headers: {
@@ -40,7 +40,8 @@ const CreateBlog = ({ cookies }) => {
         }
       );
 
-      router.push(`/blogs/${res.data.id}`);
+      router.push("/");
+      // router.push(`/blogs/${res.data.id}`);
     } catch (error) {
       console.log(error);
     }
@@ -49,11 +50,11 @@ const CreateBlog = ({ cookies }) => {
   const validateForm = Yup.object({
     title: Yup.string().required("Title is Required"),
     location: Yup.string().required("Location is Required"),
-    body: Yup.string().required("Body is Required"),
+    description: Yup.string().required("Description is Required"),
   });
 
   return (
-    <PageContainer showImg={false} title="Create a Blog">
+    <PageContainer showImg={false} title="Create a Trail">
       <Container p="0">
         <Formik
           initialValues={{
@@ -69,7 +70,11 @@ const CreateBlog = ({ cookies }) => {
               {error && <Text>{error}</Text>}
               <TextField placeholder="Title" name="title" />
               <TextField placeholder="Location" name="location" />
-              <TextField placeholder="Body" name="body" textbox={true} />
+              <TextField
+                placeholder="Descriptiob"
+                name="description"
+                textbox={true}
+              />
               <Stack direction="row" justifyContent="space-between">
                 <Button
                   isLoading={isSubmitting}
@@ -98,4 +103,4 @@ const CreateBlog = ({ cookies }) => {
   );
 };
 
-export default CreateBlog;
+export default CreateTrail;
