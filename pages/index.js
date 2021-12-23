@@ -41,18 +41,28 @@ export default function Home({ user, cookies }) {
 export const getServerSideProps = async (ctx) => {
   const cookies = nookies.get(ctx);
 
+  const json = JSON.stringify({
+    token: cookies.jwt,
+  });
+
   if (cookies?.jwt) {
     try {
-      const response = await axios.get(`${process.env.PRODUCTION}/users/me`, {
-        headers: {
-          Authorization: `Bearer ${cookies.jwt}`,
-        },
-      });
+      // const response = await axios.get(`${server}/users/me`, {
+      //   headers: {
+      //     Authorization: `Bearer ${cookies.jwt}`,
+      //   },
+      // });
 
       // https://stackoverflow.com/questions/65752932/internal-api-fetch-with-getserversideprops-next-js
-      // const response = await axios.get("/api/user/me", {
-      //   token: cookies.jwt,
-      // });
+      const response = await axios.post(
+        "http://localhost:3000/api/user/me",
+        json,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       const user = await response.data;
 

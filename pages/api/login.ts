@@ -1,11 +1,11 @@
 import axios from "axios";
 import { setCookie } from "nookies";
 import { NextApiRequest, NextApiResponse } from "next";
+import { server } from "../../server";
 
 /* eslint import/no-anonymous-default-export: [2, {"allowArrowFunction": true}] */
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const { identifier, password } = req.body;
-  const server = process.env.PRODUCTION;
 
   try {
     const response = await axios.post(`${server}/auth/local`, {
