@@ -40,6 +40,21 @@ const CreateTrail = ({ cookies }) => {
         }
       );
 
+      // const res = await axios.post(
+      //   "/api/trail/create",
+      //   JSON.stringify({
+      //     title:title,
+      //     location:location,
+      //     description:description,
+      //     jwt:cookies.jwt
+      //   }),
+      //   {
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //     },
+      //   }
+      // )
+
       router.push("/");
       // router.push(`/blogs/${res.data.id}`);
     } catch (error) {
