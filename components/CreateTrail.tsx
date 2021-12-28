@@ -1,5 +1,4 @@
-import { Container, Text, Button, Stack } from "@chakra-ui/react";
-import { useState, useEffect } from "react";
+import { Container, Button, Stack } from "@chakra-ui/react";
 import { Formik, Form } from "formik";
 import { useRouter } from "next/router";
 
@@ -10,55 +9,44 @@ import axios from "axios";
 import * as Yup from "yup";
 
 const CreateTrail = ({ cookies }) => {
-  const [error, setError] = useState("");
   const router = useRouter();
-
-  useEffect(() => {
-    let timer = setTimeout(() => {
-      setError("");
-    }, 4000);
-
-    return () => clearTimeout(timer);
-  }, [error]);
 
   const handleCreate = async (values) => {
     const { title, location, description } = values;
 
-    try {
-      const res = await axios.post(
-        "http://localhost:1337/trails",
-        {
-          title: title,
-          location: location,
-          description: description,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${cookies.jwt}`,
-          },
-        }
-      );
+    const json = JSON.stringify({
+      title: title,
+      location: location,
+      description: description,
+      jwt: cookies.jwt,
+    });
 
+    try {
       // const res = await axios.post(
-      //   "/api/trail/create",
-      //   JSON.stringify({
-      //     title:title,
-      //     location:location,
-      //     description:description,
-      //     jwt:cookies.jwt
-      //   }),
+      //   "http://localhost:1337/trails",
+      //   {
+      //     title: title,
+      //     location: location,
+      //     description: description,
+      //   },
       //   {
       //     headers: {
       //       "Content-Type": "application/json",
+      //       Authorization: `Bearer ${cookies.jwt}`,
       //     },
       //   }
-      // )
+      // );
+
+      const res = await axios.post("/api/trail/create", json, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
       router.push("/");
       // router.push(`/blogs/${res.data.id}`);
     } catch (error) {
-      console.log(error);
+      console.log("Create trail failed");
     }
   };
 
@@ -82,7 +70,7 @@ const CreateTrail = ({ cookies }) => {
         >
           {({ isSubmitting, handleSubmit, handleReset }) => (
             <Form onSubmit={handleSubmit}>
-              {error && <Text>{error}</Text>}
+              {/* {error && <Text>{error}</Text>} */}
               <TextField placeholder="Title" name="title" />
               <TextField placeholder="Location" name="location" />
               <TextField

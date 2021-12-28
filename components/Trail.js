@@ -1,11 +1,11 @@
 import { Container, Heading, Text, Button } from "@chakra-ui/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-
 import ReactMarkdown from "react-markdown";
 import PageContainer from "./PageContainer";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import { server } from "../server";
 
 const Trail = ({ trail }) => {
   const user = useSelector((state) => state.user);
@@ -20,7 +20,7 @@ const Trail = ({ trail }) => {
 
   const deletePost = async () => {
     try {
-      await axios.delete(`http://localhost:1337/trails/${trail.id}`, {
+      await axios.delete(`${server}/trails/${trail.id}`, {
         headers: {
           Authorization: `Bearer ${user.jwt}`,
         },

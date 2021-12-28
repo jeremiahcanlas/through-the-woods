@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 
 const MotionContainer = motion(Container);
 
-const Header = ({ user }) => (
+const Header = () => (
   <Container
     textAlign="center"
     height="35vh"

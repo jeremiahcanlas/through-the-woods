@@ -3,13 +3,16 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import Link from "next/link";
 import { IoIosLogIn, IoIosLogOut, IoIosCreate } from "react-icons/io";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setAlert, removeAlert } from "../features/alert";
 import { clearUser } from "../features/user";
 import { GiMountaintop } from "react-icons/gi";
 
-const Nav = ({ isLoggedIn }) => {
+const Nav = () => {
   const dispatch = useDispatch();
+  const isLoggedIn = useSelector((state) =>
+    state.user.username ? true : false
+  );
   const router = useRouter();
 
   const clearAlert = () => {
