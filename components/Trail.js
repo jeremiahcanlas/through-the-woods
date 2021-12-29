@@ -3,12 +3,14 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import ReactMarkdown from "react-markdown";
 import PageContainer from "./PageContainer";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { setAlert, removeAlert } from "../features/alert";
 import axios from "axios";
 import { server } from "../server";
 
 const Trail = ({ trail }) => {
   const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
   const router = useRouter();
 
@@ -18,6 +20,12 @@ const Trail = ({ trail }) => {
     }
   };
 
+  const clearAlert = () => {
+    setTimeout(() => {
+      dispatch(removeAlert());
+    }, 3000);
+  };
+
   const deletePost = async () => {
     try {
       await axios.delete(`${server}/trails/${trail.id}`, {
@@ -25,12 +33,25 @@ const Trail = ({ trail }) => {
           Authorization: `Bearer ${user.jwt}`,
         },
       });
-
+      dispatch(
+        setAlert({
+          msg: "Successfully deleted",
+          alertType: "success",
+        })
+      );
       // router.push("/");
       router.push("/trails");
     } catch (e) {
+      dispatch(
+        setAlert({
+          msg: "Deleting failed",
+          alertType: "error",
+        })
+      );
       console.log("error");
     }
+
+    clearAlert();
   };
 
   return (

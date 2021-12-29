@@ -12,19 +12,18 @@ import { login } from "../features/user";
 
 const LogIn = () => {
   const dispatch = useDispatch();
-
   const router = useRouter();
-
-  const validateLogin = Yup.object({
-    identifier: Yup.string().required("Username or Email is Required"),
-    password: Yup.string().required("Password is required"),
-  });
 
   const clearAlert = () => {
     setTimeout(() => {
       dispatch(removeAlert());
     }, 3000);
   };
+
+  const validateLogin = Yup.object({
+    identifier: Yup.string().required("Username or Email is Required"),
+    password: Yup.string().required("Password is required"),
+  });
 
   const handleSubmit = async (values) => {
     const { identifier, password } = values;
@@ -35,16 +34,18 @@ const LogIn = () => {
         password: password,
       });
 
+      const { username } = res.data.user;
+
       dispatch(
         login({
-          username: res.data.user.username,
+          username: username,
           jwt: res.data.jwt,
         })
       );
 
       dispatch(
         setAlert({
-          msg: `Welcome ${res.data.user.username}`,
+          msg: `Welcome ${username}`,
           alertType: "success",
         })
       );

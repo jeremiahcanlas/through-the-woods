@@ -1,6 +1,8 @@
 import { Container, Button, Stack } from "@chakra-ui/react";
 import { Formik, Form } from "formik";
 import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
+import { setAlert, removeAlert } from "../features/alert";
 
 import PageContainer from "./PageContainer";
 import TextField from "./TextField";
@@ -10,6 +12,13 @@ import * as Yup from "yup";
 
 const CreateTrail = ({ cookies }) => {
   const router = useRouter();
+  const dispatch = useDispatch();
+
+  const clearAlert = () => {
+    setTimeout(() => {
+      dispatch(removeAlert());
+    }, 3000);
+  };
 
   const handleCreate = async (values) => {
     const { title, location, description } = values;
@@ -22,32 +31,30 @@ const CreateTrail = ({ cookies }) => {
     });
 
     try {
-      // const res = await axios.post(
-      //   "http://localhost:1337/trails",
-      //   {
-      //     title: title,
-      //     location: location,
-      //     description: description,
-      //   },
-      //   {
-      //     headers: {
-      //       "Content-Type": "application/json",
-      //       Authorization: `Bearer ${cookies.jwt}`,
-      //     },
-      //   }
-      // );
-
       const res = await axios.post("/api/trail/create", json, {
         headers: {
           "Content-Type": "application/json",
         },
       });
 
-      router.push("/");
-      // router.push(`/blogs/${res.data.id}`);
+      dispatch(
+        setAlert({
+          msg: "Successfully posted!",
+          alertType: "success",
+        })
+      );
+
+      router.push(`/trails/${res.data.id}`);
     } catch (error) {
-      console.log("Create trail failed");
+      dispatch(
+        setAlert({
+          msg: "Post error, try again.",
+          alertType: "error",
+        })
+      );
     }
+
+    clearAlert();
   };
 
   const validateForm = Yup.object({
@@ -63,7 +70,7 @@ const CreateTrail = ({ cookies }) => {
           initialValues={{
             title: "",
             location: "",
-            body: "",
+            description: "",
           }}
           validationSchema={validateForm}
           onSubmit={handleCreate}
@@ -74,7 +81,7 @@ const CreateTrail = ({ cookies }) => {
               <TextField placeholder="Title" name="title" />
               <TextField placeholder="Location" name="location" />
               <TextField
-                placeholder="Descriptiob"
+                placeholder="Description"
                 name="description"
                 textbox={true}
               />
