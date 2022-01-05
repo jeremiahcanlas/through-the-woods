@@ -60,6 +60,7 @@ const CreateTrail = ({ cookies }) => {
   const validateForm = Yup.object({
     title: Yup.string().required("Title is Required"),
     location: Yup.string().required("Location is Required"),
+    images: Yup.array(),
     description: Yup.string().required("Description is Required"),
   });
 
@@ -70,21 +71,24 @@ const CreateTrail = ({ cookies }) => {
           initialValues={{
             title: "",
             location: "",
+            images: [],
             description: "",
           }}
           validationSchema={validateForm}
           onSubmit={handleCreate}
         >
-          {({ isSubmitting, handleSubmit, handleReset }) => (
+          {({ isSubmitting, handleSubmit, handleReset, values }) => (
             <Form onSubmit={handleSubmit}>
               {/* {error && <Text>{error}</Text>} */}
               <TextField placeholder="Title" name="title" />
               <TextField placeholder="Location" name="location" />
               <TextField
-                placeholder="Description"
-                name="description"
-                textbox={true}
+                placeholder="Images"
+                name="images"
+                type="file"
+                multiple={true}
               />
+              <TextField name="description" textbox={true} />
               <Stack direction="row" justifyContent="space-between">
                 <Button
                   isLoading={isSubmitting}
@@ -104,7 +108,7 @@ const CreateTrail = ({ cookies }) => {
                 </Button>
               </Stack>
 
-              {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
+              <pre>{JSON.stringify(values, null, 2)}</pre>
             </Form>
           )}
         </Formik>

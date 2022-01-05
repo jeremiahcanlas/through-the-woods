@@ -1,10 +1,13 @@
-import { Box, Flex, Heading, Button } from "@chakra-ui/react";
+import { Box, Flex, Heading, Button, Container } from "@chakra-ui/react";
 import Link from "next/link";
+import Image from "next/image";
 import { useSelector } from "react-redux";
 import { ImPencil2 } from "react-icons/im";
 
 import accentImage from "../public/blogs-pic.jpg";
 import PageContainer from "./PageContainer";
+
+import styles from "../styles/Trails.module.scss";
 
 const Trails = ({ trails }) => {
   const isLoggedIn = useSelector((state) =>
@@ -54,14 +57,24 @@ const Trails = ({ trails }) => {
             <Box
               p="1em"
               borderRadius="1em"
-              backgroundColor="blackAlpha.900"
+              backgroundColor={trail.images.length === 0 && "blackAlpha.900"}
               my="0.5em"
-              _hover={{ backgroundColor: "#343a40" }}
+              _hover={{ backgroundColor: "#343a40", opacity: 0.2 }}
               cursor="pointer"
               textAlign="left"
-              opacity="0.5"
+              position="relative"
             >
               <Heading fontSize={["1em", "1.2em"]}>{trail.title}</Heading>
+              {trail.images.length >= 1 && (
+                <Image
+                  src={trail.images[0].formats.medium.url}
+                  alt="trail image"
+                  layout="fill"
+                  objectFit="cover"
+                  objectPosition="center top"
+                  className={styles.image}
+                />
+              )}
             </Box>
           </Link>
         ))}

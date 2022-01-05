@@ -6,7 +6,7 @@ import {
   Textarea,
 } from "@chakra-ui/react";
 
-const TextField = ({ placeholder, name, type, textbox }) => {
+const TextField = ({ placeholder, name, type, textbox, multiple }) => {
   return (
     <Field name={name}>
       {({ field, meta }) => {
@@ -27,6 +27,7 @@ const TextField = ({ placeholder, name, type, textbox }) => {
                 id={name}
                 placeholder={placeholder}
                 type={type}
+                multiple={multiple}
               />
             )}
             <FormErrorMessage fontSize="0.8em">{meta.error}</FormErrorMessage>
@@ -41,6 +42,7 @@ TextField.defaultProps = {
   placeholder: "",
   type: "text",
   textbox: false,
+  multiple: false,
 };
 
 export default TextField;
