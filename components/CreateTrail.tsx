@@ -3,6 +3,7 @@ import { Formik, Form } from "formik";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { setAlert, removeAlert } from "../features/alert";
+import { useState } from "react";
 
 import PageContainer from "./PageContainer";
 import TextField from "./TextField";
@@ -13,6 +14,7 @@ import * as Yup from "yup";
 const CreateTrail = ({ cookies }) => {
   const router = useRouter();
   const dispatch = useDispatch();
+  const [images, setImages] = useState([]);
 
   const clearAlert = () => {
     setTimeout(() => {
@@ -20,8 +22,25 @@ const CreateTrail = ({ cookies }) => {
     }, 3000);
   };
 
+  const uploadImages = async () => {
+    const data = new FormData();
+    images.forEach((img) => {
+      return data.append("files", img);
+    });
+
+    const res = await axios.post("http://localhost:1337/upload", data, {
+      headers: {
+        Authorization: `Bearer ${cookies.jwt}`,
+      },
+    });
+
+    console.log(res.data);
+  };
+
   const handleCreate = async (values) => {
     const { title, location, description } = values;
+
+    await uploadImages();
 
     const json = JSON.stringify({
       title: title,
@@ -60,7 +79,6 @@ const CreateTrail = ({ cookies }) => {
   const validateForm = Yup.object({
     title: Yup.string().required("Title is Required"),
     location: Yup.string().required("Location is Required"),
-    images: Yup.array(),
     description: Yup.string().required("Description is Required"),
   });
 
@@ -71,7 +89,6 @@ const CreateTrail = ({ cookies }) => {
           initialValues={{
             title: "",
             location: "",
-            images: [],
             description: "",
           }}
           validationSchema={validateForm}
@@ -82,11 +99,38 @@ const CreateTrail = ({ cookies }) => {
               {/* {error && <Text>{error}</Text>} */}
               <TextField placeholder="Title" name="title" />
               <TextField placeholder="Location" name="location" />
+              {/* file upload here
               <TextField
                 placeholder="Images"
                 name="images"
                 type="file"
                 multiple={true}
+              /> */}
+              {/* <Field name={name}>
+
+          <FormControl isInvalid={meta.error && meta.touched} my="6">
+      
+              <Input
+                {...field}
+                variant="flushed"
+                id={name}
+                placeholder={placeholder}
+                type={type}
+                multiple={multiple}
+              />
+        
+            <FormErrorMessage fontSize="0.8em">{meta.error}</FormErrorMessage>
+          </FormControl>
+        
+      
+    </Field> */}
+              <input
+                type="file"
+                name="images"
+                onChange={(e) => {
+                  setImages([...images, ...e.target.files]);
+                }}
+                multiple
               />
               <TextField name="description" textbox={true} />
               <Stack direction="row" justifyContent="space-between">
