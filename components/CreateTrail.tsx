@@ -22,49 +22,59 @@ const CreateTrail = ({ cookies }) => {
     }, 3000);
   };
 
-  const uploadImages = async () => {
-    const data = new FormData();
-    images.forEach((img) => {
-      return data.append("files", img);
-    });
-
-    const res = await axios.post("http://localhost:1337/upload", data, {
-      headers: {
-        Authorization: `Bearer ${cookies.jwt}`,
-      },
-    });
-
-    console.log(res.data);
-  };
-
   const handleCreate = async (values) => {
     const { title, location, description } = values;
 
-    await uploadImages();
-
-    const json = JSON.stringify({
-      title: title,
-      location: location,
-      description: description,
-      jwt: cookies.jwt,
-    });
-
     try {
-      const res = await axios.post("/api/trail/create", json, {
+      const data = new FormData();
+      images.forEach((img) => {
+        return data.append("files", img);
+      });
+
+      //uploads images to strapi media library
+      const res = await axios.post("http://localhost:1337/upload", data, {
         headers: {
-          "Content-Type": "application/json",
+          Authorization: `Bearer ${cookies.jwt}`,
         },
       });
 
-      dispatch(
-        setAlert({
-          msg: "Successfully posted!",
-          alertType: "success",
-        })
-      );
+      let files = [];
+      //this sets the image id in an array
+      await res.data.forEach((file) => {
+        files.push(file.id);
+      });
 
-      router.push(`/trails/${res.data.id}`);
-    } catch (error) {
+      const json = JSON.stringify({
+        title: title,
+        location: location,
+        description: description,
+        images: files,
+        jwt: cookies.jwt,
+      });
+      try {
+        const response = await axios.post("/api/trail/create", json, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        dispatch(
+          setAlert({
+            msg: "Successfully posted!",
+            alertType: "success",
+          })
+        );
+
+        router.push(`/trails/${response.data.id}`);
+      } catch (error) {
+        dispatch(
+          setAlert({
+            msg: "Post error, try again.",
+            alertType: "error",
+          })
+        );
+      }
+    } catch (e) {
       dispatch(
         setAlert({
           msg: "Post error, try again.",
@@ -99,31 +109,6 @@ const CreateTrail = ({ cookies }) => {
               {/* {error && <Text>{error}</Text>} */}
               <TextField placeholder="Title" name="title" />
               <TextField placeholder="Location" name="location" />
-              {/* file upload here
-              <TextField
-                placeholder="Images"
-                name="images"
-                type="file"
-                multiple={true}
-              /> */}
-              {/* <Field name={name}>
-
-          <FormControl isInvalid={meta.error && meta.touched} my="6">
-      
-              <Input
-                {...field}
-                variant="flushed"
-                id={name}
-                placeholder={placeholder}
-                type={type}
-                multiple={multiple}
-              />
-        
-            <FormErrorMessage fontSize="0.8em">{meta.error}</FormErrorMessage>
-          </FormControl>
-        
-      
-    </Field> */}
               <input
                 type="file"
                 name="images"
@@ -152,7 +137,7 @@ const CreateTrail = ({ cookies }) => {
                 </Button>
               </Stack>
 
-              <pre>{JSON.stringify(values, null, 2)}</pre>
+              {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
             </Form>
           )}
         </Formik>

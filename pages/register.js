@@ -1,5 +1,5 @@
-import RegisterForm from "../components/RegisterForm";
+// import RegisterForm from "../components/RegisterForm";
 
-const register = () => <RegisterForm />;
+// const register = () => <RegisterForm />;
 
-export default register;
+// export default register;

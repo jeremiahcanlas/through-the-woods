@@ -39,7 +39,7 @@ const Trail = ({ trail }) => {
           alertType: "success",
         })
       );
-      // router.push("/");
+
       router.push("/trails");
     } catch (e) {
       dispatch(
@@ -48,7 +48,6 @@ const Trail = ({ trail }) => {
           alertType: "error",
         })
       );
-      console.log("error");
     }
 
     clearAlert();

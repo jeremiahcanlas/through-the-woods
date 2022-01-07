@@ -4,7 +4,7 @@ import { server } from "../../../server";
 
 /* eslint import/no-anonymous-default-export: [2, {"allowArrowFunction": true}] */
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-  const { jwt, title, location, description } = req.body;
+  const { jwt, title, location, description, images } = req.body;
 
   try {
     const response = await axios.post(
@@ -13,6 +13,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         title,
         location,
         description,
+        images,
       },
       {
         headers: {
