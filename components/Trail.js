@@ -1,4 +1,4 @@
-import { Container, Heading, Text, Button } from "@chakra-ui/react";
+import { Container, Heading, Text, Button, Box } from "@chakra-ui/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import ReactMarkdown from "react-markdown";
@@ -16,7 +16,21 @@ const Trail = ({ trail }) => {
 
   const userButtons = () => {
     if (trail.user.username === user.username) {
-      return <Button onClick={() => deletePost()}>Delete</Button>;
+      return (
+        <>
+          <Button
+            m="1em"
+            backgroundColor={"red.500"}
+            _hover={{ backgroundColor: "red.300" }}
+            onClick={() => deletePost()}
+          >
+            Delete
+          </Button>
+          <Link href={`/trails/${trail.id}/edit`} passHref>
+            <Button m="1em">Edit</Button>
+          </Link>
+        </>
+      );
     }
   };
 
@@ -28,7 +42,12 @@ const Trail = ({ trail }) => {
 
   const deletePost = async () => {
     try {
-      await axios.delete(`${server}/trails/${trail.id}`, {
+      // await axios.delete(`${server}/trails/${trail.id}`, {
+      //   headers: {
+      //     Authorization: `Bearer ${user.jwt}`,
+      //   },
+      // });
+      await axios.post(`/api/trail/delete`, {
         headers: {
           Authorization: `Bearer ${user.jwt}`,
         },
@@ -59,11 +78,9 @@ const Trail = ({ trail }) => {
         <Heading mb="1em">{trail.title}</Heading>
         <Text>by {trail.user.username}</Text>
         <ReactMarkdown>{trail.description}</ReactMarkdown>
-        <Button mt="1em">
-          <Link href="/trails" passHref>
-            &larr; All trails
-          </Link>
-        </Button>
+        <Link href="/trails" passHref>
+          <Button mt="1em">&larr; All trails</Button>
+        </Link>
         {userButtons()}
       </Container>
     </PageContainer>

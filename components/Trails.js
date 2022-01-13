@@ -52,32 +52,37 @@ const Trails = ({ trails }) => {
             </Button>
           </Link>
         )}
-        {trails.map((trail) => (
-          <Link href={`/trails/${trail.id}`} key={trail.id} passHref>
-            <Box
-              p="1em"
-              borderRadius="1em"
-              backgroundColor={trail.images.length === 0 && "blackAlpha.900"}
-              my="0.5em"
-              _hover={{ backgroundColor: "#343a40", opacity: 0.2 }}
-              cursor="pointer"
-              textAlign="left"
-              position="relative"
-            >
-              <Heading fontSize={["1em", "1.2em"]}>{trail.title}</Heading>
-              {trail.images.length >= 1 && (
-                <Image
-                  src={trail.images[0].formats.medium.url}
-                  alt="trail image"
-                  layout="fill"
-                  objectFit="cover"
-                  objectPosition="center top"
-                  className={styles.image}
-                />
-              )}
-            </Box>
-          </Link>
-        ))}
+        {trails.map((trail) => {
+          let num = Math.floor(Math.random() * trail.images.length);
+
+          return (
+            <Link href={`/trails/${trail.id}`} key={trail.id} passHref>
+              <Box
+                p="1em"
+                borderRadius="1em"
+                backgroundColor={trail.images.length === 0 && "blackAlpha.900"}
+                my="0.5em"
+                _hover={{ backgroundColor: "#343a40", opacity: 0.2 }}
+                cursor="pointer"
+                textAlign="left"
+                position="relative"
+              >
+                <Heading fontSize={["1em", "1.2em"]}>{trail.title}</Heading>
+                {trail.images.length >= 1 && (
+                  <Image
+                    src={trail.images[num].formats.small.url}
+                    alt="trail image"
+                    layout="fill"
+                    objectFit="cover"
+                    objectPosition="center top"
+                    quality={30}
+                    className={styles.image}
+                  />
+                )}
+              </Box>
+            </Link>
+          );
+        })}
       </Flex>
     </PageContainer>
   );
