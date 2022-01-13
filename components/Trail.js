@@ -1,4 +1,4 @@
-import { Container, Heading, Text, Button, Box } from "@chakra-ui/react";
+import { Container, Heading, Text, Button } from "@chakra-ui/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import ReactMarkdown from "react-markdown";
@@ -6,7 +6,7 @@ import PageContainer from "./PageContainer";
 import { useSelector, useDispatch } from "react-redux";
 import { setAlert, removeAlert } from "../features/alert";
 import axios from "axios";
-import { server } from "../server";
+// import { server } from "../server";
 
 const Trail = ({ trail }) => {
   const user = useSelector((state) => state.user);
