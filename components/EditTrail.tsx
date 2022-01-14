@@ -26,33 +26,34 @@ const EditTrail = ({ trail, cookies }) => {
     const { title, location, description } = values;
 
     try {
-      const data = new FormData();
-      images.forEach((img) => {
-        return data.append("files", img);
-      });
+      // const data = new FormData();
+      // images.forEach((img) => {
+      //   return data.append("files", img);
+      // });
 
-      //uploads images to strapi media library
-      const res = await axios.post("http://localhost:1337/upload", data, {
-        headers: {
-          Authorization: `Bearer ${cookies.jwt}`,
-        },
-      });
+      // //uploads images to strapi media library
+      // const res = await axios.post("http://localhost:1337/upload", data, {
+      //   headers: {
+      //     Authorization: `Bearer ${cookies.jwt}`,
+      //   },
+      // });
 
-      let files = [];
-      //this sets the image id in an array
-      await res.data.forEach((file) => {
-        files.push(file.id);
-      });
+      // let files = [];
+      // //this sets the image id in an array
+      // await res.data.forEach((file) => {
+      //   files.push(file.id);
+      // });
 
       const json = JSON.stringify({
         title: title,
         location: location,
         description: description,
-        images: files,
+        id: trail.id,
+        // images: files,
         jwt: cookies.jwt,
       });
       try {
-        const response = await axios.post("/api/trail/create", json, {
+        const response = await axios.put("/api/trail/edit", json, {
           headers: {
             "Content-Type": "application/json",
           },
@@ -60,7 +61,7 @@ const EditTrail = ({ trail, cookies }) => {
 
         dispatch(
           setAlert({
-            msg: "Successfully posted!",
+            msg: "Successfully edited!",
             alertType: "success",
           })
         );
@@ -118,6 +119,7 @@ const EditTrail = ({ trail, cookies }) => {
                 multiple
               />
               <TextField name="description" textbox={true} />
+
               <Stack direction="row" justifyContent="space-between">
                 <Button
                   isLoading={isSubmitting}

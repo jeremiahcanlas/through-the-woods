@@ -23,4 +23,13 @@ function MyApp({ Component, pageProps }) {
   );
 }
 
+// persistor.subscribe(() => {
+//   /* Hydrate React components when persistor has synced with redux store */
+//   const { bootstrapped } = persistor.getState();
+
+//   if (bootstrapped) {
+//     ReactDOM.hydrate(<MyApp />, document.getElementById("root"));
+//   }
+// });
+
 export default MyApp;

@@ -1,7 +1,7 @@
 import { Container, Heading, Text, Button } from "@chakra-ui/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import ReactMarkdown from "react-markdown";
+// import ReactMarkdown from "react-markdown";
 import PageContainer from "./PageContainer";
 import { useSelector, useDispatch } from "react-redux";
 import { setAlert, removeAlert } from "../features/alert";
@@ -77,7 +77,7 @@ const Trail = ({ trail }) => {
       <Container maxW="100vw" p="0" m="0">
         <Heading mb="1em">{trail.title}</Heading>
         <Text>by {trail.user.username}</Text>
-        <ReactMarkdown>{trail.description}</ReactMarkdown>
+        <Text>{trail.description}</Text>
         <Link href="/trails" passHref>
           <Button mt="1em">&larr; All trails</Button>
         </Link>

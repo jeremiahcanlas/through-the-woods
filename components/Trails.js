@@ -77,6 +77,7 @@ const Trails = ({ trails }) => {
                     objectPosition="center top"
                     quality={30}
                     className={styles.image}
+                    priority
                   />
                 )}
               </Box>
