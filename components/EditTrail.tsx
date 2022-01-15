@@ -10,6 +10,7 @@ import TextField from "./TextField";
 
 import axios from "axios";
 import * as Yup from "yup";
+import Image from "next/image";
 
 const EditTrail = ({ trail, cookies }) => {
   const router = useRouter();
@@ -119,7 +120,18 @@ const EditTrail = ({ trail, cookies }) => {
                 multiple
               />
               <TextField name="description" textbox={true} />
-
+              {/* {trail.images && ( */}
+              {/* <Container>
+                {trail.images.forEach((img) => (
+                  <Image
+                    src={img.formats.small.url}
+                    alt="trail image"
+                    width="50px"
+                    height="50px"
+                  />
+                ))}
+              </Container> */}
+              {/* )} */}
               <Stack direction="row" justifyContent="space-between">
                 <Button
                   isLoading={isSubmitting}
