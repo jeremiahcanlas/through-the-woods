@@ -6,7 +6,7 @@ import PageContainer from "./PageContainer";
 import { useSelector, useDispatch } from "react-redux";
 import { setAlert, removeAlert } from "../features/alert";
 import axios from "axios";
-// import { server } from "../server";
+import { server } from "../server";
 
 const Trail = ({ trail }) => {
   const user = useSelector((state) => state.user);
@@ -42,16 +42,16 @@ const Trail = ({ trail }) => {
 
   const deletePost = async () => {
     try {
-      // await axios.delete(`${server}/trails/${trail.id}`, {
-      //   headers: {
-      //     Authorization: `Bearer ${user.jwt}`,
-      //   },
-      // });
-      await axios.post(`/api/trail/delete`, {
+      await axios.delete(`${server}/trails/${trail.id}`, {
         headers: {
           Authorization: `Bearer ${user.jwt}`,
         },
       });
+      // await axios.post(`/api/trail/delete`, {
+      //   headers: {
+      //     Authorization: `Bearer ${user.jwt}`,
+      //   },
+      // });
       dispatch(
         setAlert({
           msg: "Successfully deleted",

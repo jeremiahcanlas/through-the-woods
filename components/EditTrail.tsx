@@ -1,4 +1,13 @@
-import { Container, Button, Stack } from "@chakra-ui/react";
+import {
+  Container,
+  Button,
+  Stack,
+  Text,
+  Box,
+  Wrap,
+  WrapItem,
+  Checkbox,
+} from "@chakra-ui/react";
 import { Formik, Form } from "formik";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
@@ -92,16 +101,18 @@ const EditTrail = ({ trail, cookies }) => {
     title: Yup.string().required("Title is Required"),
     location: Yup.string().required("Location is Required"),
     description: Yup.string().required("Description is Required"),
+    // deleted:Yup.array()
   });
 
   return (
-    <PageContainer showImg={false} title="Create a Trail">
+    <PageContainer showImg={false} title="Edit Trail">
       <Container p="0">
         <Formik
           initialValues={{
             title: trail.title,
             location: trail.location,
             description: trail.description,
+            // deleted:[]
           }}
           validationSchema={validateForm}
           onSubmit={handleCreate}
@@ -120,18 +131,32 @@ const EditTrail = ({ trail, cookies }) => {
                 multiple
               />
               <TextField name="description" textbox={true} />
-              {/* {trail.images && ( */}
-              {/* <Container>
-                {trail.images.forEach((img) => (
-                  <Image
-                    src={img.formats.small.url}
-                    alt="trail image"
-                    width="50px"
-                    height="50px"
-                  />
-                ))}
-              </Container> */}
-              {/* )} */}
+              {trail.images && (
+                <Wrap my="1em" spacing="20px" align="center">
+                  {trail.images.map((img) => {
+                    return (
+                      <WrapItem position="relative" key={img.id}>
+                        <Checkbox
+                          size="sm"
+                          position="absolute"
+                          colorScheme="red"
+                          zIndex={10}
+                          top="1"
+                          left="2"
+                        >
+                          Delete
+                        </Checkbox>
+                        <Image
+                          src={img.formats.small.url}
+                          alt="picture"
+                          height="140px"
+                          width="140px"
+                        />
+                      </WrapItem>
+                    );
+                  })}
+                </Wrap>
+              )}
               <Stack direction="row" justifyContent="space-between">
                 <Button
                   isLoading={isSubmitting}
@@ -139,16 +164,16 @@ const EditTrail = ({ trail, cookies }) => {
                   size="lg"
                   type="submit"
                 >
-                  Submit
+                  Update
                 </Button>
-                <Button
+                {/* <Button
                   size="sm"
                   colorScheme="red"
                   onClick={handleReset}
                   disabled={isSubmitting}
                 >
                   CLEAR
-                </Button>
+                </Button> */}
               </Stack>
 
               {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
