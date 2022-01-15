@@ -4,14 +4,29 @@ import {
   FormErrorMessage,
   FormControl,
   Textarea,
+  Checkbox,
+  position,
 } from "@chakra-ui/react";
 
-const TextField = ({ placeholder, name, type, textbox, multiple }) => {
+const TextField = ({
+  placeholder,
+  value,
+  name,
+  type,
+  textbox,
+  multiple,
+  checkbox,
+}) => {
   return (
     <Field name={name}>
       {({ field, meta }) => {
         return (
-          <FormControl isInvalid={meta.error && meta.touched} my="6">
+          <FormControl
+            isInvalid={meta.error && meta.touched}
+            my="6"
+            // position={checkbox && "absolute"}
+            style={{ position: checkbox && "absolute" }}
+          >
             {textbox ? (
               <Textarea
                 {...field}
@@ -20,6 +35,18 @@ const TextField = ({ placeholder, name, type, textbox, multiple }) => {
                 placeholder={placeholder}
                 height="300px"
               />
+            ) : checkbox ? (
+              <Checkbox
+                {...field}
+                size="sm"
+                position="absolute"
+                colorScheme="red"
+                zIndex={10}
+                // name="delete"
+                value={value}
+              >
+                Delete
+              </Checkbox>
             ) : (
               <Input
                 {...field}
@@ -43,6 +70,8 @@ TextField.defaultProps = {
   type: "text",
   textbox: false,
   multiple: false,
+  checkbox: false,
+  value: "",
 };
 
 export default TextField;

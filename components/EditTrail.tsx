@@ -8,7 +8,7 @@ import {
   WrapItem,
   Checkbox,
 } from "@chakra-ui/react";
-import { Formik, Form } from "formik";
+import { Formik, Form, Field } from "formik";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { setAlert, removeAlert } from "../features/alert";
@@ -25,6 +25,7 @@ const EditTrail = ({ trail, cookies }) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const [images, setImages] = useState([]);
+  // const [disposed, setDispose] = useState([]);
 
   const clearAlert = () => {
     setTimeout(() => {
@@ -32,8 +33,12 @@ const EditTrail = ({ trail, cookies }) => {
     }, 3000);
   };
 
+  // console.log(disposed);
+
   const handleCreate = async (values) => {
-    const { title, location, description } = values;
+    const { title, location, description, deleted } = values;
+
+    console.log(deleted); //deleted array isnt being used but only displaying ids of chosen deleted images
 
     try {
       // const data = new FormData();
@@ -101,7 +106,7 @@ const EditTrail = ({ trail, cookies }) => {
     title: Yup.string().required("Title is Required"),
     location: Yup.string().required("Location is Required"),
     description: Yup.string().required("Description is Required"),
-    // deleted:Yup.array()
+    deleted: Yup.array(),
   });
 
   return (
@@ -112,7 +117,7 @@ const EditTrail = ({ trail, cookies }) => {
             title: trail.title,
             location: trail.location,
             description: trail.description,
-            // deleted:[]
+            deleted: [],
           }}
           validationSchema={validateForm}
           onSubmit={handleCreate}
@@ -136,16 +141,11 @@ const EditTrail = ({ trail, cookies }) => {
                   {trail.images.map((img) => {
                     return (
                       <WrapItem position="relative" key={img.id}>
-                        <Checkbox
-                          size="sm"
-                          position="absolute"
-                          colorScheme="red"
-                          zIndex={10}
-                          top="1"
-                          left="2"
-                        >
-                          Delete
-                        </Checkbox>
+                        <TextField
+                          name="deleted"
+                          checkbox={true}
+                          value={img.id}
+                        />
                         <Image
                           src={img.formats.small.url}
                           alt="picture"
