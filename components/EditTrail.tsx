@@ -25,7 +25,6 @@ const EditTrail = ({ trail, cookies }) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const [images, setImages] = useState([]);
-  // const [disposed, setDispose] = useState([]);
 
   const clearAlert = () => {
     setTimeout(() => {
@@ -33,38 +32,40 @@ const EditTrail = ({ trail, cookies }) => {
     }, 3000);
   };
 
-  // console.log(disposed);
-
   const handleCreate = async (values) => {
     const { title, location, description, deleted } = values;
 
     console.log(deleted); //deleted array isnt being used but only displaying ids of chosen deleted images
-
+    // console.log(trail.images);
     try {
-      // const data = new FormData();
-      // images.forEach((img) => {
-      //   return data.append("files", img);
-      // });
+      const data = new FormData();
+      images.forEach((img) => {
+        return data.append("files", img);
+      });
 
-      // //uploads images to strapi media library
-      // const res = await axios.post("http://localhost:1337/upload", data, {
-      //   headers: {
-      //     Authorization: `Bearer ${cookies.jwt}`,
-      //   },
-      // });
+      //uploads images to strapi media library
+      const res = await axios.post("http://localhost:1337/upload", data, {
+        headers: {
+          Authorization: `Bearer ${cookies.jwt}`,
+        },
+      });
 
-      // let files = [];
-      // //this sets the image id in an array
-      // await res.data.forEach((file) => {
-      //   files.push(file.id);
-      // });
+      let files = [];
+      // trail.images.forEach(id => {
+
+      // })
+      //this sets the image id in an array
+      await res.data.forEach((file) => {
+        files.push(file.id);
+        console.log(files);
+      });
 
       const json = JSON.stringify({
         title: title,
         location: location,
         description: description,
         id: trail.id,
-        // images: files,
+        images: files,
         jwt: cookies.jwt,
       });
       try {

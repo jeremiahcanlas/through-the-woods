@@ -14,7 +14,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
           title,
           location,
           description,
-          // images,
+          images,
         },
         {
           headers: {
