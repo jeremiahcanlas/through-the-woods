@@ -1,31 +1,31 @@
 import { Container, Heading, Text, Button } from "@chakra-ui/react";
 import Link from "next/link";
-import { useRouter } from "next/router";
+// import { useRouter } from "next/router";
 // import ReactMarkdown from "react-markdown";
 import PageContainer from "./PageContainer";
 import { useSelector, useDispatch } from "react-redux";
 import { setAlert, removeAlert } from "../features/alert";
-import axios from "axios";
-import { server } from "../server";
+// import axios from "axios";
+// import { server } from "../server";
 
 const Trail = ({ trail }) => {
   const user = useSelector((state) => state.user);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  const router = useRouter();
+  // const router = useRouter();
 
   const userButtons = () => {
     if (trail.user.username === user.username) {
       return (
         <>
-          <Button
+          {/* <Button
             m="1em"
             backgroundColor={"red.500"}
             _hover={{ backgroundColor: "red.300" }}
             onClick={() => deletePost()}
           >
             Delete
-          </Button>
+          </Button> */}
           <Link href={`/trails/${trail.id}/edit`} passHref>
             <Button m="1em">Edit</Button>
           </Link>
@@ -34,43 +34,43 @@ const Trail = ({ trail }) => {
     }
   };
 
-  const clearAlert = () => {
-    setTimeout(() => {
-      dispatch(removeAlert());
-    }, 3000);
-  };
+  // const clearAlert = () => {
+  //   setTimeout(() => {
+  //     dispatch(removeAlert());
+  //   }, 3000);
+  // };
 
-  const deletePost = async () => {
-    try {
-      await axios.delete(`${server}/trails/${trail.id}`, {
-        headers: {
-          Authorization: `Bearer ${user.jwt}`,
-        },
-      });
-      // await axios.post(`/api/trail/delete`, {
-      //   headers: {
-      //     Authorization: `Bearer ${user.jwt}`,
-      //   },
-      // });
-      dispatch(
-        setAlert({
-          msg: "Successfully deleted",
-          alertType: "success",
-        })
-      );
+  // const deletePost = async () => {
+  //   try {
+  //     await axios.delete(`${server}/trails/${trail.id}`, {
+  //       headers: {
+  //         Authorization: `Bearer ${user.jwt}`,
+  //       },
+  //     });
+  //     // await axios.post(`/api/trail/delete`, {
+  //     //   headers: {
+  //     //     Authorization: `Bearer ${user.jwt}`,
+  //     //   },
+  //     // });
+  //     dispatch(
+  //       setAlert({
+  //         msg: "Successfully deleted",
+  //         alertType: "success",
+  //       })
+  //     );
 
-      router.push("/trails");
-    } catch (e) {
-      dispatch(
-        setAlert({
-          msg: "Deleting failed",
-          alertType: "error",
-        })
-      );
-    }
+  //     router.push("/trails");
+  //   } catch (e) {
+  //     dispatch(
+  //       setAlert({
+  //         msg: "Deleting failed",
+  //         alertType: "error",
+  //       })
+  //     );
+  //   }
 
-    clearAlert();
-  };
+  //   clearAlert();
+  // };
 
   return (
     <PageContainer>

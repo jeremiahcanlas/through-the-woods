@@ -1,14 +1,5 @@
-import {
-  Container,
-  Button,
-  Stack,
-  Text,
-  Box,
-  Wrap,
-  WrapItem,
-  Checkbox,
-} from "@chakra-ui/react";
-import { Formik, Form, Field } from "formik";
+import { Container, Button, Stack, Wrap, WrapItem } from "@chakra-ui/react";
+import { Formik, Form } from "formik";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { setAlert, removeAlert } from "../features/alert";
@@ -20,6 +11,7 @@ import TextField from "./TextField";
 import axios from "axios";
 import * as Yup from "yup";
 import Image from "next/image";
+import { server } from "../server";
 
 const EditTrail = ({ trail, cookies }) => {
   const router = useRouter();
@@ -32,11 +24,43 @@ const EditTrail = ({ trail, cookies }) => {
     }, 3000);
   };
 
+  //delete trail
+  const deletePost = async () => {
+    try {
+      await axios.delete(`${server}/trails/${trail.id}`, {
+        headers: {
+          Authorization: `Bearer ${cookies.jwt}`,
+        },
+      });
+      // await axios.post(`/api/trail/delete`, {
+      //   headers: {
+      //     Authorization: `Bearer ${user.jwt}`,
+      //   },
+      // });
+      dispatch(
+        setAlert({
+          msg: "Successfully deleted",
+          alertType: "success",
+        })
+      );
+
+      router.push("/trails");
+    } catch (e) {
+      dispatch(
+        setAlert({
+          msg: "Deleting failed",
+          alertType: "error",
+        })
+      );
+    }
+
+    clearAlert();
+  };
+
+  //To submit edited file
   const handleCreate = async (values) => {
     const { title, location, description, deleted } = values;
 
-    // console.log(deleted); //deleted array isnt being used but only displaying ids of chosen deleted images
-    // console.log(trail.images);
     try {
       let files = [];
 
@@ -76,6 +100,7 @@ const EditTrail = ({ trail, cookies }) => {
         jwt: cookies.jwt,
         deleted,
       });
+
       try {
         const response = await axios.put("/api/trail/edit", json, {
           headers: {
@@ -175,16 +200,15 @@ const EditTrail = ({ trail, cookies }) => {
                 >
                   Update
                 </Button>
-                {/* <Button
-                  size="sm"
-                  colorScheme="red"
-                  onClick={handleReset}
-                  disabled={isSubmitting}
+                <Button
+                  m="1em"
+                  backgroundColor={"red.500"}
+                  _hover={{ backgroundColor: "red.300" }}
+                  onClick={() => deletePost()}
                 >
-                  CLEAR
-                </Button> */}
+                  Delete
+                </Button>
               </Stack>
-
               {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
             </Form>
           )}
