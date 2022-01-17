@@ -35,29 +35,36 @@ const EditTrail = ({ trail, cookies }) => {
   const handleCreate = async (values) => {
     const { title, location, description, deleted } = values;
 
-    console.log(deleted); //deleted array isnt being used but only displaying ids of chosen deleted images
+    // console.log(deleted); //deleted array isnt being used but only displaying ids of chosen deleted images
     // console.log(trail.images);
     try {
-      const data = new FormData();
-      images.forEach((img) => {
-        return data.append("files", img);
-      });
-
-      //uploads images to strapi media library
-      const res = await axios.post("http://localhost:1337/upload", data, {
-        headers: {
-          Authorization: `Bearer ${cookies.jwt}`,
-        },
-      });
-
       let files = [];
-      // trail.images.forEach(id => {
 
-      // })
-      //this sets the image id in an array
-      await res.data.forEach((file) => {
-        files.push(file.id);
-        console.log(files);
+      //if there are uploaded images then
+      if (images.length >= 1) {
+        const data = new FormData();
+        images.forEach((img) => {
+          return data.append("files", img);
+        });
+        console.log("triggered");
+
+        //uploads images to strapi media library
+        const res = await axios.post("http://localhost:1337/upload", data, {
+          headers: {
+            Authorization: `Bearer ${cookies.jwt}`,
+          },
+        });
+        //this sets the image id in an array
+        await res.data.forEach((file) => {
+          files.push(file.id);
+        });
+      }
+
+      await trail.images.forEach((img) => {
+        if (!deleted.includes(img.id)) {
+          files.push(img.id);
+        }
+        //if all images are deleted then will just return empty
       });
 
       const json = JSON.stringify({
@@ -67,6 +74,7 @@ const EditTrail = ({ trail, cookies }) => {
         id: trail.id,
         images: files,
         jwt: cookies.jwt,
+        deleted,
       });
       try {
         const response = await axios.put("/api/trail/edit", json, {
@@ -86,7 +94,7 @@ const EditTrail = ({ trail, cookies }) => {
       } catch (error) {
         dispatch(
           setAlert({
-            msg: "Post error, try again.",
+            msg: "Post error1, try again.",
             alertType: "error",
           })
         );
@@ -94,7 +102,7 @@ const EditTrail = ({ trail, cookies }) => {
     } catch (e) {
       dispatch(
         setAlert({
-          msg: "Post error, try again.",
+          msg: "Post error2, try again.",
           alertType: "error",
         })
       );

@@ -4,7 +4,7 @@ import { server } from "../../../server";
 
 /* eslint import/no-anonymous-default-export: [2, {"allowArrowFunction": true}] */
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-  const { jwt, title, location, description, id, images } = req.body;
+  const { jwt, title, location, description, id, images, deleted } = req.body;
 
   if (req.method === "PUT") {
     try {
@@ -15,6 +15,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
           location,
           description,
           images,
+          deleted,
         },
         {
           headers: {
@@ -23,7 +24,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
           },
         }
       );
-      console.log(response.data);
+      // console.log(response.data);
       res.status(200).json(response.data);
     } catch (e) {
       res.status(404).end();
