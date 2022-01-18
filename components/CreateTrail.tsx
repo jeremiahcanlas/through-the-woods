@@ -10,6 +10,7 @@ import TextField from "./TextField";
 
 import axios from "axios";
 import * as Yup from "yup";
+import { server } from "../server";
 
 const CreateTrail = ({ cookies }) => {
   const router = useRouter();
@@ -26,23 +27,27 @@ const CreateTrail = ({ cookies }) => {
     const { title, location, description } = values;
 
     try {
-      const data = new FormData();
-      images.forEach((img) => {
-        return data.append("files", img);
-      });
-
-      //uploads images to strapi media library
-      const res = await axios.post("http://localhost:1337/upload", data, {
-        headers: {
-          Authorization: `Bearer ${cookies.jwt}`,
-        },
-      });
-
       let files = [];
-      //this sets the image id in an array
-      await res.data.forEach((file) => {
-        files.push(file.id);
-      });
+
+      //will upload to strapi backend
+      if (images.length >= 1) {
+        const data = new FormData();
+        images.forEach((img) => {
+          return data.append("files", img);
+        });
+
+        //uploads images to strapi media library
+        const res = await axios.post(`${server}/upload`, data, {
+          headers: {
+            Authorization: `Bearer ${cookies.jwt}`,
+          },
+        });
+
+        //this sets the image id in an array
+        await res.data.forEach((file) => {
+          files.push(file.id);
+        });
+      }
 
       const json = JSON.stringify({
         title: title,
@@ -51,30 +56,22 @@ const CreateTrail = ({ cookies }) => {
         images: files,
         jwt: cookies.jwt,
       });
-      try {
-        const response = await axios.post("/api/trail/create", json, {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
 
-        dispatch(
-          setAlert({
-            msg: "Successfully posted!",
-            alertType: "success",
-          })
-        );
+      const response = await axios.post("/api/trail/create", json, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-        router.push(`/trails/${response.data.id}`);
-      } catch (error) {
-        dispatch(
-          setAlert({
-            msg: "Post error, try again.",
-            alertType: "error",
-          })
-        );
-      }
-    } catch (e) {
+      dispatch(
+        setAlert({
+          msg: "Successfully posted!",
+          alertType: "success",
+        })
+      );
+
+      router.push(`/trails/${response.data.id}`);
+    } catch (error) {
       dispatch(
         setAlert({
           msg: "Post error, try again.",
@@ -122,6 +119,7 @@ const CreateTrail = ({ cookies }) => {
                 <Button
                   isLoading={isSubmitting}
                   disabled={isSubmitting}
+                  loadingText="Submitting"
                   size="lg"
                   type="submit"
                 >

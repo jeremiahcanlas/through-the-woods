@@ -27,16 +27,11 @@ const EditTrail = ({ trail, cookies }) => {
   //delete trail
   const deletePost = async () => {
     try {
-      await axios.delete(`${server}/trails/${trail.id}`, {
-        headers: {
-          Authorization: `Bearer ${cookies.jwt}`,
-        },
+      await axios.post(`/api/trail/delete`, {
+        id: trail.id,
+        jwt: cookies.jwt,
       });
-      // await axios.post(`/api/trail/delete`, {
-      //   headers: {
-      //     Authorization: `Bearer ${user.jwt}`,
-      //   },
-      // });
+
       dispatch(
         setAlert({
           msg: "Successfully deleted",
@@ -70,10 +65,9 @@ const EditTrail = ({ trail, cookies }) => {
         images.forEach((img) => {
           return data.append("files", img);
         });
-        console.log("triggered");
 
         //uploads images to strapi media library
-        const res = await axios.post("http://localhost:1337/upload", data, {
+        const res = await axios.post(`${server}/upload`, data, {
           headers: {
             Authorization: `Bearer ${cookies.jwt}`,
           },
@@ -101,33 +95,24 @@ const EditTrail = ({ trail, cookies }) => {
         deleted,
       });
 
-      try {
-        const response = await axios.put("/api/trail/edit", json, {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
+      const response = await axios.put("/api/trail/edit", json, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-        dispatch(
-          setAlert({
-            msg: "Successfully edited!",
-            alertType: "success",
-          })
-        );
-
-        router.push(`/trails/${response.data.id}`);
-      } catch (error) {
-        dispatch(
-          setAlert({
-            msg: "Post error1, try again.",
-            alertType: "error",
-          })
-        );
-      }
-    } catch (e) {
       dispatch(
         setAlert({
-          msg: "Post error2, try again.",
+          msg: "Successfully edited!",
+          alertType: "success",
+        })
+      );
+
+      router.push(`/trails/${response.data.id}`);
+    } catch (error) {
+      dispatch(
+        setAlert({
+          msg: "Post error1, try again.",
           alertType: "error",
         })
       );
@@ -171,7 +156,7 @@ const EditTrail = ({ trail, cookies }) => {
               />
               <TextField name="description" textbox={true} />
               {trail.images && (
-                <Wrap my="1em" spacing="20px" align="center">
+                <Wrap my="1em" spacing="20px">
                   {trail.images.map((img) => {
                     return (
                       <WrapItem position="relative" key={img.id}>
@@ -183,26 +168,35 @@ const EditTrail = ({ trail, cookies }) => {
                         <Image
                           src={img.formats.small.url}
                           alt="picture"
-                          height="140px"
-                          width="140px"
+                          height="130px"
+                          width="130px"
                         />
                       </WrapItem>
                     );
                   })}
                 </Wrap>
               )}
-              <Stack direction="row" justifyContent="space-between">
+              <Stack
+                direction="column"
+                justifyContent="space-between"
+                maxW="100%"
+                spacing="4em"
+              >
                 <Button
                   isLoading={isSubmitting}
                   disabled={isSubmitting}
+                  loadingText="Updating"
+                  width={["95%", "30%"]}
+                  alignSelf={["center", "start"]}
                   size="lg"
                   type="submit"
                 >
                   Update
                 </Button>
                 <Button
-                  m="1em"
                   backgroundColor={"red.500"}
+                  maxW={["40%", "30%"]}
+                  loadingText="Deleting"
                   _hover={{ backgroundColor: "red.300" }}
                   onClick={() => deletePost()}
                 >

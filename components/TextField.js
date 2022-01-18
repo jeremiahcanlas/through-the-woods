@@ -33,7 +33,7 @@ const TextField = ({
                 variant="flushed"
                 id={name}
                 placeholder={placeholder}
-                height="300px"
+                height={["400px", "300px"]}
               />
             ) : checkbox ? (
               <Checkbox
