@@ -112,7 +112,7 @@ const EditTrail = ({ trail, cookies }) => {
     } catch (error) {
       dispatch(
         setAlert({
-          msg: "Post error1, try again.",
+          msg: "Post error, try again.",
           alertType: "error",
         })
       );
