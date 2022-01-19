@@ -7,6 +7,7 @@ import { useState } from "react";
 
 import PageContainer from "./PageContainer";
 import TextField from "./TextField";
+import UploadFile from "./UploadFile";
 
 import axios from "axios";
 import * as Yup from "yup";
@@ -146,14 +147,15 @@ const EditTrail = ({ trail, cookies }) => {
               {/* {error && <Text>{error}</Text>} */}
               <TextField placeholder="Title" name="title" />
               <TextField placeholder="Location" name="location" />
-              <input
+              {/* <input
                 type="file"
                 name="images"
                 onChange={(e) => {
                   setImages([...images, ...e.target.files]);
                 }}
                 multiple
-              />
+              /> */}
+              {/* <UploadFile /> */}
               <TextField name="description" textbox={true} />
               {trail.images && (
                 <Wrap my="1em" spacing="20px">
