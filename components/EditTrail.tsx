@@ -62,6 +62,7 @@ const EditTrail = ({ trail, cookies }) => {
 
       //if there are uploaded images then
       if (images.length >= 1) {
+        console.log(images);
         const data = new FormData();
         images.forEach((img) => {
           return data.append("files", img);
@@ -147,14 +148,14 @@ const EditTrail = ({ trail, cookies }) => {
               {/* {error && <Text>{error}</Text>} */}
               <TextField placeholder="Title" name="title" />
               <TextField placeholder="Location" name="location" />
-              {/* <input
+              <input
                 type="file"
                 name="images"
                 onChange={(e) => {
                   setImages([...images, ...e.target.files]);
                 }}
                 multiple
-              /> */}
+              />
               {/* <UploadFile /> */}
               <TextField name="description" textbox={true} />
               {trail.images && (

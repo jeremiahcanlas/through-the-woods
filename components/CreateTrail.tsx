@@ -1,4 +1,4 @@
-import { Container, Button, Stack } from "@chakra-ui/react";
+import { Container, Button, Stack, Box } from "@chakra-ui/react";
 import { Formik, Form } from "formik";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
@@ -7,6 +7,7 @@ import { useState } from "react";
 
 import PageContainer from "./PageContainer";
 import TextField from "./TextField";
+import UploadFile from "./UploadFile";
 
 import axios from "axios";
 import * as Yup from "yup";
@@ -26,14 +27,17 @@ const CreateTrail = ({ cookies }) => {
   const handleCreate = async (values) => {
     const { title, location, description } = values;
 
+    // console.log(images);
+
     try {
       let files = [];
 
       //will upload to strapi backend
       if (images.length >= 1) {
         const data = new FormData();
-        images.forEach((img) => {
-          return data.append("files", img);
+
+        images.forEach(async (img) => {
+          return data.append("files", img.originFileObj);
         });
 
         //uploads images to strapi media library
@@ -106,15 +110,19 @@ const CreateTrail = ({ cookies }) => {
               {/* {error && <Text>{error}</Text>} */}
               <TextField placeholder="Title" name="title" />
               <TextField placeholder="Location" name="location" />
-              <input
+              {/* <input
                 type="file"
                 name="images"
                 onChange={(e) => {
                   setImages([...images, ...e.target.files]);
                 }}
                 multiple
-              />
+              /> */}
               <TextField name="description" textbox={true} />
+              <Box my="2em">
+                <UploadFile images={images} setImages={setImages} />
+              </Box>
+
               <Stack direction="row" justifyContent="space-between">
                 <Button
                   isLoading={isSubmitting}

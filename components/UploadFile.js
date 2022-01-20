@@ -1,12 +1,13 @@
 import React from "react";
 
-import "antd/dist/antd.css";
+import "antd/dist/antd.dark.css";
 import { useState } from "react";
 
 import { Upload, Modal } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
+// import { useRef } from "react";
 
-import { Image } from "antd";
+import { Image as AntImage } from "antd";
 
 function getBase64(file) {
   return new Promise((resolve, reject) => {
@@ -17,11 +18,10 @@ function getBase64(file) {
   });
 }
 
-const UploadFile = () => {
+const UploadFile = ({ images, setImages }) => {
   const [previewVisible, setPreviewVisible] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
-  const [imgList, setImg] = useState([]);
 
   const handleCancel = () => setPreviewVisible(false);
 
@@ -31,13 +31,15 @@ const UploadFile = () => {
     }
 
     setPreviewVisible(true);
+
     setPreviewImage(file.url || file.preview);
+
     setPreviewTitle(
       file.name || file.url.substring(file.url.lastIndexOf("/") + 1)
     );
   };
 
-  const handleChange = ({ fileList }) => setImg(fileList);
+  const handleChange = ({ fileList }) => setImages(fileList);
 
   const uploadButton = (
     <div>
@@ -49,13 +51,12 @@ const UploadFile = () => {
   return (
     <>
       <Upload
-        // action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
         listType="picture-card"
-        fileList={imgList}
+        fileList={images}
         onPreview={handlePreview}
         onChange={handleChange}
       >
-        {imgList.length >= 8 ? null : uploadButton}
+        {images.length >= 8 ? null : uploadButton}
       </Upload>
 
       <Modal
@@ -64,7 +65,7 @@ const UploadFile = () => {
         footer={null}
         onCancel={handleCancel}
       >
-        <Image alt="image" src={previewImage} />
+        <AntImage alt="image" src={previewImage} />
       </Modal>
     </>
   );
