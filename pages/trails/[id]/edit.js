@@ -22,6 +22,7 @@ export const getServerSideProps = async (ctx) => {
   try {
     const res = await axios.get(`${server}/trails/${ctx.params.id}`);
     const trail = await res.data;
+
     return { props: { trail, cookies } };
   } catch {
     console.log("trail error");

@@ -1,12 +1,8 @@
 import React from "react";
-
 import "antd/dist/antd.dark.css";
 import { useState } from "react";
-
 import { Upload, Modal } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-// import { useRef } from "react";
-
 import { Image as AntImage } from "antd";
 
 function getBase64(file) {
@@ -39,7 +35,9 @@ const UploadFile = ({ images, setImages }) => {
     );
   };
 
-  const handleChange = ({ fileList }) => setImages(fileList);
+  const handleChange = ({ fileList }) => {
+    setImages(fileList);
+  };
 
   const uploadButton = (
     <div>
@@ -64,8 +62,9 @@ const UploadFile = ({ images, setImages }) => {
         title={previewTitle}
         footer={null}
         onCancel={handleCancel}
+        centered
       >
-        <AntImage alt="image" src={previewImage} />
+        <AntImage alt="image" preview={false} src={previewImage} placeholder />
       </Modal>
     </>
   );

@@ -1,9 +1,9 @@
-import { Container, Button, Stack, Wrap, WrapItem } from "@chakra-ui/react";
+import { Container, Button, Stack } from "@chakra-ui/react";
 import { Formik, Form } from "formik";
 import { useRouter } from "next/router";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setAlert, removeAlert } from "../features/alert";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import PageContainer from "./PageContainer";
 import TextField from "./TextField";
@@ -11,13 +11,14 @@ import UploadFile from "./UploadFile";
 
 import axios from "axios";
 import * as Yup from "yup";
-import Image from "next/image";
+
 import { server } from "../server";
 
 const EditTrail = ({ trail, cookies }) => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const [images, setImages] = useState([]);
+  // const user = useSelector((state) => state.user);
+  const [images, setInitialImages] = useState(trail.images);
 
   const clearAlert = () => {
     setTimeout(() => {
@@ -55,17 +56,25 @@ const EditTrail = ({ trail, cookies }) => {
 
   //To submit edited file
   const handleCreate = async (values) => {
-    const { title, location, description, deleted } = values;
+    const { title, location, description } = values;
 
     try {
       let files = [];
+      let newImages = await images.filter(
+        (img) => img.provider !== "cloudinary"
+      );
+      let existingImages = await images.filter(
+        (img) => img.provider === "cloudinary"
+      );
+      let deleted = await trail.images.filter(
+        (img) => !existingImages.includes(img)
+      );
 
       //if there are uploaded images then
-      if (images.length >= 1) {
-        console.log(images);
+      if (newImages.length >= 1) {
         const data = new FormData();
-        images.forEach((img) => {
-          return data.append("files", img);
+        newImages.forEach((img) => {
+          return data.append("files", img.originFileObj);
         });
 
         //uploads images to strapi media library
@@ -80,12 +89,7 @@ const EditTrail = ({ trail, cookies }) => {
         });
       }
 
-      await trail.images.forEach((img) => {
-        if (!deleted.includes(img.id)) {
-          files.push(img.id);
-        }
-        //if all images are deleted then will just return empty
-      });
+      await existingImages.forEach((img) => files.push(img.id));
 
       const json = JSON.stringify({
         title: title,
@@ -94,7 +98,7 @@ const EditTrail = ({ trail, cookies }) => {
         id: trail.id,
         images: files,
         jwt: cookies.jwt,
-        deleted,
+        deleted: deleted,
       });
 
       const response = await axios.put("/api/trail/edit", json, {
@@ -130,6 +134,10 @@ const EditTrail = ({ trail, cookies }) => {
     deleted: Yup.array(),
   });
 
+  // if (trail.user.username === user.username) {
+  //   router.push("/");
+  // }}
+
   return (
     <PageContainer showImg={false} title="Edit Trail">
       <Container p="0">
@@ -148,37 +156,9 @@ const EditTrail = ({ trail, cookies }) => {
               {/* {error && <Text>{error}</Text>} */}
               <TextField placeholder="Title" name="title" />
               <TextField placeholder="Location" name="location" />
-              <input
-                type="file"
-                name="images"
-                onChange={(e) => {
-                  setImages([...images, ...e.target.files]);
-                }}
-                multiple
-              />
-              {/* <UploadFile /> */}
+
               <TextField name="description" textbox={true} />
-              {trail.images && (
-                <Wrap my="1em" spacing="20px">
-                  {trail.images.map((img) => {
-                    return (
-                      <WrapItem position="relative" key={img.id}>
-                        <TextField
-                          name="deleted"
-                          checkbox={true}
-                          value={img.id}
-                        />
-                        <Image
-                          src={img.formats.small.url}
-                          alt="picture"
-                          height="130px"
-                          width="130px"
-                        />
-                      </WrapItem>
-                    );
-                  })}
-                </Wrap>
-              )}
+              <UploadFile images={images} setImages={setInitialImages} />
               <Stack
                 direction="column"
                 justifyContent="space-between"
