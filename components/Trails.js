@@ -19,23 +19,6 @@ const Trails = ({ trails }) => {
       <Flex direction="column" p="0" my="1em" justifyContent="center">
         {isLoggedIn && (
           <Link href={`/trails/create`} passHref>
-            {/* <Box
-              p="1em"
-              borderRadius="1em"
-              backgroundColor="blackAlpha.900"
-              my="0.5em"
-              _hover={{ backgroundColor: "#343a40" }}
-              cursor="pointer"
-              textAlign="center"
-              opacity="0.5"
-              direction="row"
-            >
-              <ImPencil2 />
-              <Heading fontSize={["1em", "1.2em"]} direction="row">
-                New trail
-              </Heading>
-            </Box> */}
-
             <Button
               p="1em"
               borderColor="#40916c"
@@ -76,6 +59,10 @@ const Trails = ({ trails }) => {
                     objectFit="cover"
                     objectPosition="center top"
                     quality={30}
+                    blurDataURL={
+                      "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mM8c/ToUgAHuAL9y9RxDwAAAABJRU5ErkJggg=="
+                    }
+                    placeholder="blur"
                     className={styles.image}
                     priority
                   />

@@ -15,7 +15,7 @@ const Header = () => (
   >
     <MotionContainer
       zIndex="-1"
-      opacity="0.5"
+      opacity="0.2"
       maxW="100vw"
       maxH="100vh"
       initial={{ opacity: 0 }}
@@ -27,17 +27,19 @@ const Header = () => (
         alt="cover image"
         layout="fill"
         objectFit="cover"
-        quality={60}
+        quality={10}
+        placeholder="blur"
         priority
       />
     </MotionContainer>
     <Center width="100%" height="100%" flexDirection="column">
-      <Container opacity="0.8" width="220px">
+      <Container opacity="1" width="220px">
         <Image src="/trees.svg" alt="trees" width="160px" height="80px" />
       </Container>
       <Heading
         fontSize={["2em", "2em"]}
         bgGradient="linear(to-t, #2d6a4f 30%,#40916c 70%)"
+        opacity="1"
         bgClip="text"
         letterSpacing="0.2em"
         fontWeight="700"

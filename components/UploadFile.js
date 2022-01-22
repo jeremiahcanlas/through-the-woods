@@ -1,5 +1,4 @@
 import React from "react";
-import "antd/dist/antd.dark.css";
 import { useState } from "react";
 import { Upload, Modal } from "antd";
 import { PlusOutlined } from "@ant-design/icons";

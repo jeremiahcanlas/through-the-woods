@@ -1,6 +1,7 @@
 import Footer from "./Footer";
 import { Container } from "@chakra-ui/react";
 import Alert from "./Alert";
+import "antd/dist/antd.dark.css";
 
 const Layout = ({ children }) => (
   <Container
