@@ -3,23 +3,26 @@ import Layout from "../components/Layout";
 import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
 import { PersistGate } from "redux-persist/integration/react";
 import { persistStore } from "redux-persist";
-import { Provider } from "react-redux";
+import { Provider as StoreProvider } from "react-redux";
+import { SessionProvider } from "next-auth/react";
 import store from "../store";
 
 let persistor = persistStore(store);
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   return (
-    <Provider store={store}>
-      <ChakraProvider>
-        <ColorModeScript initialColorMode={"dark"} />
-        <PersistGate loading={null} persistor={persistor}>
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
-        </PersistGate>
-      </ChakraProvider>
-    </Provider>
+    <SessionProvider session={session}>
+      <StoreProvider store={store}>
+        <ChakraProvider>
+          <ColorModeScript initialColorMode={"dark"} />
+          <PersistGate loading={null} persistor={persistor}>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </PersistGate>
+        </ChakraProvider>
+      </StoreProvider>
+    </SessionProvider>
   );
 }
 

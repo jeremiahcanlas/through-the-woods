@@ -9,6 +9,7 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { setAlert, removeAlert } from "../features/alert";
 import { login } from "../features/user";
+import { signIn } from "next-auth/react";
 
 const LogIn = () => {
   const dispatch = useDispatch();
@@ -29,26 +30,26 @@ const LogIn = () => {
     const { identifier, password } = values;
 
     try {
-      const res = await axios.post("/api/login", {
-        identifier: identifier,
-        password: password,
-      });
+      // const res = await axios.post("/api/login", {
+      //   identifier: identifier,
+      //   password: password,
+      // });
 
-      const { username } = res.data.user;
+      // const { username } = res.data.user;
+      signIn("credentials", { identifier, password });
+      // dispatch(
+      //   login({
+      //     username: username,
+      //     jwt: res.data.jwt,
+      //   })
+      // );
 
-      dispatch(
-        login({
-          username: username,
-          jwt: res.data.jwt,
-        })
-      );
-
-      dispatch(
-        setAlert({
-          msg: `Welcome ${username}`,
-          alertType: "success",
-        })
-      );
+      // dispatch(
+      //   setAlert({
+      //     msg: `Welcome ${username}`,
+      //     alertType: "success",
+      //   })
+      // );
 
       router.push("/");
     } catch (error) {
