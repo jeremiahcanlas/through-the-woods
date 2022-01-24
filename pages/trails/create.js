@@ -1,14 +1,15 @@
 import CreateTrail from "../../components/CreateTrail";
-import nookies from "nookies";
 
-const create = ({ cookies }) => <CreateTrail cookies={cookies} />;
+import { getSession } from "next-auth/react";
+
+const create = () => <CreateTrail />;
 
 export default create;
 
 export const getServerSideProps = async (ctx) => {
-  const cookies = nookies.get(ctx);
+  const session = await getSession(ctx);
 
-  if (!cookies.jwt) {
+  if (!session) {
     return {
       redirect: {
         destination: "/",
@@ -18,6 +19,6 @@ export const getServerSideProps = async (ctx) => {
   }
 
   return {
-    props: { cookies },
+    props: {},
   };
 };

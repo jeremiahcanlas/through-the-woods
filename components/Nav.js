@@ -7,8 +7,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { setAlert, removeAlert } from "../features/alert";
 import { clearUser } from "../features/user";
 import { GiMountaintop } from "react-icons/gi";
+import { useSession, signOut } from "next-auth/react";
 
 const Nav = () => {
+  const { data: session } = useSession();
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) =>
     state.user.username ? true : false
@@ -23,9 +25,7 @@ const Nav = () => {
 
   const logout = async () => {
     try {
-      await axios.get("/api/logout");
-      router.push("/");
-      dispatch(clearUser());
+      await signOut({ redirect: false });
       dispatch(
         setAlert({
           msg: "Successfully Logged Out",
@@ -33,7 +33,12 @@ const Nav = () => {
         })
       );
     } catch (e) {
-      console.log(e);
+      dispatch(
+        setAlert({
+          msg: "Error Logging Out, Try Again.",
+          alertType: "error",
+        })
+      );
     }
     clearAlert();
   };
@@ -65,7 +70,7 @@ const Nav = () => {
           TRAILS
         </Button>
       </Link>
-      {isLoggedIn ? (
+      {session ? (
         <>
           <Link href="/trails/create" passHref>
             <Button

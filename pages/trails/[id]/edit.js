@@ -1,29 +1,29 @@
 import axios from "axios";
 import EditTrail from "../../../components/EditTrail";
 import { server } from "../../../server";
-import nookies from "nookies";
+import { getSession } from "next-auth/react";
 
-const edit = ({ trail, cookies }) => (
-  <EditTrail trail={trail} cookies={cookies} />
-);
+const edit = ({ trail }) => <EditTrail trail={trail} />;
 
 export const getServerSideProps = async (ctx) => {
-  const cookies = nookies.get(ctx);
-
-  if (!cookies.jwt) {
-    return {
-      redirect: {
-        destination: "/",
-        permanent: false,
-      },
-    };
-  }
-
   try {
     const res = await axios.get(`${server}/trails/${ctx.params.id}`);
     const trail = await res.data;
 
-    return { props: { trail, cookies } };
+    const session = await getSession(ctx);
+
+    console.log(session);
+
+    if (!session || session.username !== trail.user.username) {
+      return {
+        redirect: {
+          destination: "/",
+          permanent: false,
+        },
+      };
+    }
+
+    return { props: { trail } };
   } catch {
     console.log("trail error");
     return {

@@ -18,24 +18,20 @@ const options = {
             password: credentials.password,
           });
           if (data) {
-            // console.log(data);
             return data;
-          } else {
-            return null;
           }
+
+          return null;
         } catch (e) {
-          // console.log('caught error');
-          // const errorMessage = e.response.data.message
-          // Redirecting to the login page with error message          in the URL
-          // throw new Error(errorMessage + '&email=' + credentials.email)
           return null;
         }
       },
     }),
   ],
-  secret: process.env.AUTH_SECRET,
+
   jwt: {
     maxAge: 60 * 60 * 24 * 30,
+    secret: "test",
   },
   session: {
     jwt: true,
@@ -43,25 +39,28 @@ const options = {
     updateAge: 24 * 60 * 60, //24h
   },
   pages: {
-    signIn: "/login",
+    signIn: "login",
   },
   callbacks: {
     // Getting the JWT token from API response
     async jwt({ token, user }) {
       if (user) {
-        console.log(user);
         token.jwt = user.jwt;
+        token.name = user.user.username;
       }
       return token;
     },
 
-    async session({ session, user, token }) {
-      session.jwt = token.jwt;
-      //   session.username = token.name;
-      //   console.log(session);
-      return session;
+    async session({ session, token }) {
+      if (token) {
+        session.jwt = token.jwt;
+        session.username = token.name;
+        return session;
+      }
+      return null;
     },
   },
+  secret: "test",
 };
 
 /* eslint import/no-anonymous-default-export: [2, {"allowArrowFunction": true}] */

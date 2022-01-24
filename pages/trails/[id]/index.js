@@ -9,7 +9,7 @@ export const getServerSideProps = async (context) => {
   try {
     const res = await axios.get(`${server}/trails/${context.params.id}`);
     const trail = await res.data;
-    // console.log(trail);
+
     return { props: { trail } };
   } catch {
     console.log("trail error");

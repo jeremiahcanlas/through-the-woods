@@ -1,14 +1,14 @@
 import LogIn from "../components/LogIn";
-import nookies from "nookies";
+import { getSession } from "next-auth/react";
 
 const login = () => <LogIn />;
 
 export default login;
 
 export const getServerSideProps = async (ctx) => {
-  const cookies = nookies.get(ctx);
+  const session = await getSession(ctx);
 
-  if (cookies?.jwt) {
+  if (session) {
     return {
       redirect: {
         destination: "/",

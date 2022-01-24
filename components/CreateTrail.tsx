@@ -13,7 +13,7 @@ import axios from "axios";
 import * as Yup from "yup";
 import { server } from "../server";
 
-const CreateTrail = ({ cookies }) => {
+const CreateTrail = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const [images, setImages] = useState([]);
@@ -27,8 +27,6 @@ const CreateTrail = ({ cookies }) => {
   const handleCreate = async (values) => {
     const { title, location, description } = values;
 
-    // console.log(images);
-
     try {
       let files = [];
 
@@ -41,16 +39,16 @@ const CreateTrail = ({ cookies }) => {
         });
 
         //uploads images to strapi media library
-        const res = await axios.post(`${server}/upload`, data, {
-          headers: {
-            Authorization: `Bearer ${cookies.jwt}`,
-          },
-        });
+        // const res = await axios.post(`${server}/upload`, data, {
+        //   headers: {
+        //     Authorization: `Bearer ${cookies.jwt}`,
+        //   },
+        // });
 
         //this sets the image id in an array
-        await res.data.forEach((file) => {
-          files.push(file.id);
-        });
+        // await res.data.forEach((file) => {
+        //   files.push(file.id);
+        // });
       }
 
       const json = JSON.stringify({
@@ -58,7 +56,7 @@ const CreateTrail = ({ cookies }) => {
         location: location,
         description: description,
         images: files,
-        jwt: cookies.jwt,
+        // jwt: cookies.jwt,
       });
 
       const response = await axios.post("/api/trail/create", json, {

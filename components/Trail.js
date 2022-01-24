@@ -1,21 +1,19 @@
 import { Container, Heading, Text, Button } from "@chakra-ui/react";
 import Link from "next/link";
 import PageContainer from "./PageContainer";
-import { useSelector } from "react-redux";
+import { useSession } from "next-auth/react";
 
 const Trail = ({ trail }) => {
-  const user = useSelector((state) => state.user);
+  const { data: session } = useSession();
 
-  const userButtons = () => {
-    if (trail.user.username === user.username) {
-      return (
-        <>
-          <Link href={`/trails/${trail.id}/edit`} passHref>
-            <Button m="1em">Edit</Button>
-          </Link>
-        </>
-      );
-    }
+  const authorButtons = () => {
+    return (
+      <>
+        <Link href={`/trails/${trail.id}/edit`} passHref>
+          <Button m="1em">Edit</Button>
+        </Link>
+      </>
+    );
   };
 
   return (
@@ -27,7 +25,7 @@ const Trail = ({ trail }) => {
         <Link href="/trails" passHref>
           <Button mt="1em">&larr; All trails</Button>
         </Link>
-        {userButtons()}
+        {session && trail.user.username === session.username && authorButtons()}
       </Container>
     </PageContainer>
   );

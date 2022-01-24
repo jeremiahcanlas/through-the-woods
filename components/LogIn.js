@@ -4,12 +4,9 @@ import { Stack, Button, Container, Heading } from "@chakra-ui/react";
 import { Formik, Form } from "formik";
 import TextField from "./TextField";
 import * as Yup from "yup";
-import axios from "axios";
-
 import { useDispatch } from "react-redux";
 import { setAlert, removeAlert } from "../features/alert";
-import { login } from "../features/user";
-import { signIn } from "next-auth/react";
+import { signIn, getSession } from "next-auth/react";
 
 const LogIn = () => {
   const dispatch = useDispatch();
@@ -21,35 +18,24 @@ const LogIn = () => {
     }, 3000);
   };
 
-  const validateLogin = Yup.object({
-    identifier: Yup.string().required("Username or Email is Required"),
-    password: Yup.string().required("Password is required"),
-  });
-
   const handleSubmit = async (values) => {
     const { identifier, password } = values;
 
     try {
-      // const res = await axios.post("/api/login", {
-      //   identifier: identifier,
-      //   password: password,
-      // });
+      await signIn("credentials", {
+        redirect: false,
+        identifier,
+        password,
+      });
 
-      // const { username } = res.data.user;
-      signIn("credentials", { identifier, password });
-      // dispatch(
-      //   login({
-      //     username: username,
-      //     jwt: res.data.jwt,
-      //   })
-      // );
+      const session = await getSession();
 
-      // dispatch(
-      //   setAlert({
-      //     msg: `Welcome ${username}`,
-      //     alertType: "success",
-      //   })
-      // );
+      dispatch(
+        setAlert({
+          msg: `Welcome ${session.username}`,
+          alertType: "success",
+        })
+      );
 
       router.push("/");
     } catch (error) {
@@ -63,6 +49,11 @@ const LogIn = () => {
 
     clearAlert();
   };
+
+  const validateLogin = Yup.object({
+    identifier: Yup.string().required("Username or Email is Required"),
+    password: Yup.string().required("Password is required"),
+  });
 
   return (
     <PageContainer>

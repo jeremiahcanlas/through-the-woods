@@ -1,23 +1,25 @@
 import { Container, Button, Stack } from "@chakra-ui/react";
 import { Formik, Form } from "formik";
 import { useRouter } from "next/router";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setAlert, removeAlert } from "../features/alert";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 import PageContainer from "./PageContainer";
 import TextField from "./TextField";
 import UploadFile from "./UploadFile";
+import { useSession } from "next-auth/react";
 
 import axios from "axios";
 import * as Yup from "yup";
 
 import { server } from "../server";
 
-const EditTrail = ({ trail, cookies }) => {
+const EditTrail = ({ trail }) => {
+  const { data: session } = useSession();
+
   const router = useRouter();
   const dispatch = useDispatch();
-  // const user = useSelector((state) => state.user);
   const [images, setInitialImages] = useState(trail.images);
 
   const clearAlert = () => {
@@ -31,7 +33,7 @@ const EditTrail = ({ trail, cookies }) => {
     try {
       await axios.post(`/api/trail/delete`, {
         id: trail.id,
-        jwt: cookies.jwt,
+        jwt: session.jwt,
       });
 
       dispatch(
@@ -80,7 +82,7 @@ const EditTrail = ({ trail, cookies }) => {
         //uploads images to strapi media library
         const res = await axios.post(`${server}/upload`, data, {
           headers: {
-            Authorization: `Bearer ${cookies.jwt}`,
+            Authorization: `Bearer ${session.jwt}`,
           },
         });
         //this sets the image id in an array
@@ -97,7 +99,7 @@ const EditTrail = ({ trail, cookies }) => {
         description: description,
         id: trail.id,
         images: files,
-        jwt: cookies.jwt,
+        jwt: session.jwt,
         deleted: deleted,
       });
 
