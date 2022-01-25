@@ -17,7 +17,4 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   } catch (e) {
     res.status(404).end();
   }
-  // console.log(token);
-
-  // res.json({ msg: `${token ? token : "no token"}` });
 };

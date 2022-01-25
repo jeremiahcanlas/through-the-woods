@@ -1,26 +1,35 @@
-import { Box, Flex, Heading, Button, Container } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Heading,
+  Button,
+  Tag,
+  TagLabel,
+  TagLeftIcon,
+  HStack,
+} from "@chakra-ui/react";
 import Link from "next/link";
 import Image from "next/image";
-import { useSelector } from "react-redux";
-import { ImPencil2 } from "react-icons/im";
+import { TiLocation, TiChartArea } from "react-icons/ti";
+import { AiOutlinePlusSquare } from "react-icons/ai";
+import { GiPathDistance } from "react-icons/gi";
 
 import accentImage from "../public/blogs-pic.jpg";
 import PageContainer from "./PageContainer";
 
 import styles from "../styles/Trails.module.scss";
+import { useSession } from "next-auth/react";
 
 const Trails = ({ trails }) => {
-  const isLoggedIn = useSelector((state) =>
-    state.user.username ? true : false
-  );
+  const { data: session } = useSession();
 
   return (
     <PageContainer image={accentImage} title="Trails">
       <Flex direction="column" p="0" my="1em" justifyContent="center">
-        {isLoggedIn && (
+        {session && (
           <Link href={`/trails/create`} passHref>
             <Button
-              p="1em"
+              p="1px"
               borderColor="#40916c"
               variant="outline"
               fontWeight="300"
@@ -29,9 +38,9 @@ const Trails = ({ trails }) => {
                 textColor: "blackAlpha.800",
                 backgroundColor: "whiteAlpha.500",
               }}
-              leftIcon={<ImPencil2 />}
+              leftIcon={<AiOutlinePlusSquare />}
             >
-              New trail
+              Create New trail
             </Button>
           </Link>
         )}
@@ -50,7 +59,39 @@ const Trails = ({ trails }) => {
                 textAlign="left"
                 position="relative"
               >
-                <Heading fontSize={["1em", "1.2em"]}>{trail.title}</Heading>
+                <Heading fontSize={["md", "lg"]} letterSpacing={"1px"}>
+                  {trail.title}
+                </Heading>
+
+                <Tag variant={"outline"} my="0.5em" size={("sm", "md")}>
+                  <TagLeftIcon as={TiLocation} m={0} />
+                  <TagLabel ml="0.2em" fontSize={"0.9em"} letterSpacing={"1px"}>
+                    {trail.location}
+                  </TagLabel>
+                </Tag>
+                <HStack>
+                  <Tag variant={"outline"} my="0.5em" size={("sm", "md")}>
+                    <TagLeftIcon as={GiPathDistance} m={0} fontSize={"1.8em"} />
+                    <TagLabel
+                      ml="0.2em"
+                      fontSize={"0.9em"}
+                      letterSpacing={"1px"}
+                    >
+                      2.4km
+                    </TagLabel>
+                  </Tag>
+                  <Tag variant={"outline"} my="0.5em" size={("sm", "md")}>
+                    <TagLeftIcon as={TiChartArea} m={0} />
+                    <TagLabel
+                      ml="0.2em"
+                      fontSize={"0.9em"}
+                      letterSpacing={"1px"}
+                    >
+                      531m
+                    </TagLabel>
+                  </Tag>
+                </HStack>
+
                 {trail.images.length >= 1 && (
                   <Image
                     src={trail.images[num].formats.small.url}

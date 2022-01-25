@@ -11,7 +11,7 @@ const trails = ({ trails }) => (
 );
 trails.getInitialProps = async () => {
   const res = await axios.get(`${server}/trails`);
-  const trails = await res.data;
+  const trails = await res.data.reverse();
 
   return { trails };
 };

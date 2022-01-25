@@ -9,10 +9,7 @@ export const getServerSideProps = async (ctx) => {
   try {
     const res = await axios.get(`${server}/trails/${ctx.params.id}`);
     const trail = await res.data;
-
     const session = await getSession(ctx);
-
-    console.log(session);
 
     if (!session || session.username !== trail.user.username) {
       return {

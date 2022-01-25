@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { setAlert, removeAlert } from "../features/alert";
 import { useState } from "react";
+import { useSession } from "next-auth/react";
 
 import PageContainer from "./PageContainer";
 import TextField from "./TextField";
@@ -14,6 +15,8 @@ import * as Yup from "yup";
 import { server } from "../server";
 
 const CreateTrail = () => {
+  const { data: session } = useSession();
+
   const router = useRouter();
   const dispatch = useDispatch();
   const [images, setImages] = useState([]);
@@ -38,17 +41,17 @@ const CreateTrail = () => {
           return data.append("files", img.originFileObj);
         });
 
-        //uploads images to strapi media library
-        // const res = await axios.post(`${server}/upload`, data, {
-        //   headers: {
-        //     Authorization: `Bearer ${cookies.jwt}`,
-        //   },
-        // });
+        // uploads images to strapi media library
+        const res = await axios.post(`${server}/upload`, data, {
+          headers: {
+            Authorization: `Bearer ${session.jwt}`,
+          },
+        });
 
-        //this sets the image id in an array
-        // await res.data.forEach((file) => {
-        //   files.push(file.id);
-        // });
+        // this sets the image id in an array
+        await res.data.forEach((file) => {
+          files.push(file.id);
+        });
       }
 
       const json = JSON.stringify({
@@ -56,7 +59,7 @@ const CreateTrail = () => {
         location: location,
         description: description,
         images: files,
-        // jwt: cookies.jwt,
+        jwt: session.jwt,
       });
 
       const response = await axios.post("/api/trail/create", json, {
@@ -105,17 +108,8 @@ const CreateTrail = () => {
         >
           {({ isSubmitting, handleSubmit, handleReset, values }) => (
             <Form onSubmit={handleSubmit}>
-              {/* {error && <Text>{error}</Text>} */}
               <TextField placeholder="Title" name="title" />
               <TextField placeholder="Location" name="location" />
-              {/* <input
-                type="file"
-                name="images"
-                onChange={(e) => {
-                  setImages([...images, ...e.target.files]);
-                }}
-                multiple
-              /> */}
               <TextField name="description" textbox={true} />
               <Box my="2em">
                 <UploadFile images={images} setImages={setImages} />

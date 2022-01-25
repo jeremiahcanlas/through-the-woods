@@ -24,7 +24,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
           },
         }
       );
-      // console.log(response.data);
+
       res.status(200).json(response.data);
     } catch (e) {
       res.status(404).end();
