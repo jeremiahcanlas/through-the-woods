@@ -5,14 +5,13 @@ import defaultImage from "../public/about-pic.jpeg";
 import { RiHome2Fill } from "react-icons/ri";
 
 const PageContainer = ({ children, image, title, showImg }) => (
-  <Container
+  <Box
     maxH="100%"
     minH="100vh"
     minW="100%"
     textAlign="left"
     opacity="1"
     mb="1.5rem"
-    // border="3px solid red"
   >
     <Link href="/" passHref>
       <Heading
@@ -30,7 +29,7 @@ const PageContainer = ({ children, image, title, showImg }) => (
       </Heading>
     </Link>
 
-    <Container maxH="100%" minH="100vh" textAlign="left" mt="2rem">
+    <Box maxH="100%" minH="100vh" maxW="100vw" textAlign="left" mt="2rem">
       <Heading as="h2" fontSize="2rem" letterSpacing="2px">
         {title}
       </Heading>
@@ -47,8 +46,8 @@ const PageContainer = ({ children, image, title, showImg }) => (
     </Box> */}
 
       {children}
-    </Container>
-  </Container>
+    </Box>
+  </Box>
 );
 
 PageContainer.defaultProps = {

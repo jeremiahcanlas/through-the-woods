@@ -1,12 +1,15 @@
 import {
   Box,
+  Button,
+  Container,
   Flex,
   Heading,
-  Button,
+  HStack,
   Tag,
   TagLabel,
   TagLeftIcon,
-  HStack,
+  Wrap,
+  WrapItem,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import Image from "next/image";
@@ -25,10 +28,11 @@ const Trails = ({ trails }) => {
 
   return (
     <PageContainer image={accentImage} title="Trails">
-      <Flex direction="column" p="0" my="1em" justifyContent="center">
+      <Flex direction="column" px="2em" my="1em" align={"center"}>
         {session && (
           <Link href={`/trails/create`} passHref>
             <Button
+              width={["100%", "70%", "50%"]}
               p="1px"
               borderColor="#40916c"
               variant="outline"
@@ -44,74 +48,83 @@ const Trails = ({ trails }) => {
             </Button>
           </Link>
         )}
-        {trails.map((trail) => {
-          let num = Math.floor(Math.random() * trail.images.length);
+        <Wrap spacing={"0.5em"} my="2em" justify={"center"}>
+          {trails.map((trail) => {
+            let num = Math.floor(Math.random() * trail.images.length);
 
-          return (
-            <Link href={`/trails/${trail.id}`} key={trail.id} passHref>
-              <Box
-                p="1em"
-                borderRadius="1em"
-                backgroundColor={trail.images.length === 0 && "blackAlpha.900"}
-                my="0.5em"
-                _hover={{ backgroundColor: "#343a40", opacity: 0.2 }}
-                cursor="pointer"
-                textAlign="left"
-                position="relative"
-              >
-                <Heading fontSize={["md", "lg"]} letterSpacing={"1px"}>
-                  {trail.title}
-                </Heading>
+            return (
+              <Link href={`/trails/${trail.id}`} key={trail.id} passHref>
+                <Container
+                  p={[
+                    "1em 10em 1em 1em",
+                    "2em 15em 2em 1em",
+                    "2em 20em 2em 1em",
+                  ]}
+                  borderRadius="1em"
+                  backgroundColor={
+                    trail.images.length === 0 && "blackAlpha.900"
+                  }
+                  _hover={{ backgroundColor: "#343a40", opacity: 0.8 }}
+                  spacing="1em"
+                  cursor="pointer"
+                  textAlign="left"
+                  position="relative"
+                >
+                  <Heading fontSize={["md", "lg"]} letterSpacing={"1px"}>
+                    {trail.title}
+                  </Heading>
 
-                <Tag variant={"outline"} my="0.5em" size={("sm", "md")}>
-                  <TagLeftIcon as={TiLocation} m={0} />
-                  <TagLabel ml="0.2em" fontSize={"0.9em"} letterSpacing={"1px"}>
-                    {trail.location}
-                  </TagLabel>
-                </Tag>
-                <HStack>
                   <Tag variant={"outline"} my="0.5em" size={("sm", "md")}>
-                    <TagLeftIcon as={GiPathDistance} m={0} fontSize={"1.8em"} />
+                    <TagLeftIcon as={TiLocation} m={0} />
                     <TagLabel
                       ml="0.2em"
                       fontSize={"0.9em"}
                       letterSpacing={"1px"}
                     >
-                      2.4km
+                      {trail.location}
                     </TagLabel>
                   </Tag>
-                  <Tag variant={"outline"} my="0.5em" size={("sm", "md")}>
-                    <TagLeftIcon as={TiChartArea} m={0} />
-                    <TagLabel
-                      ml="0.2em"
-                      fontSize={"0.9em"}
-                      letterSpacing={"1px"}
-                    >
-                      531m
-                    </TagLabel>
-                  </Tag>
-                </HStack>
 
-                {trail.images.length >= 1 && (
-                  <Image
-                    src={trail.images[num].formats.small.url}
-                    alt="trail image"
-                    layout="fill"
-                    objectFit="cover"
-                    objectPosition="center top"
-                    quality={30}
-                    blurDataURL={
-                      "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mM8c/ToUgAHuAL9y9RxDwAAAABJRU5ErkJggg=="
-                    }
-                    placeholder="blur"
-                    className={styles.image}
-                    priority
-                  />
-                )}
-              </Box>
-            </Link>
-          );
-        })}
+                  <HStack>
+                    <Tag variant={"outline"} my="0.5em" size={("sm", "md")}>
+                      <TagLeftIcon
+                        as={GiPathDistance}
+                        m={0}
+                        fontSize={"1.8em"}
+                      />
+                      <TagLabel fontSize={"0.9em"} letterSpacing={"1px"}>
+                        2.4km
+                      </TagLabel>
+                    </Tag>
+                    <Tag variant={"outline"} my="0.5em" size={("sm", "md")}>
+                      <TagLeftIcon as={TiChartArea} m={0} />
+                      <TagLabel fontSize={"0.9em"} letterSpacing={"1px"}>
+                        531m
+                      </TagLabel>
+                    </Tag>
+                  </HStack>
+
+                  {trail.images.length >= 1 && (
+                    <Image
+                      src={trail.images[num].formats.small.url}
+                      alt="trail image"
+                      layout="fill"
+                      objectFit="cover"
+                      objectPosition="center top"
+                      quality={[20, 70]}
+                      blurDataURL={
+                        "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mM8c/ToUgAHuAL9y9RxDwAAAABJRU5ErkJggg=="
+                      }
+                      placeholder="blur"
+                      className={styles.image}
+                      priority
+                    />
+                  )}
+                </Container>
+              </Link>
+            );
+          })}
+        </Wrap>
       </Flex>
     </PageContainer>
   );
