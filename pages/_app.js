@@ -1,4 +1,4 @@
-// import "../styles/globals.css";
+import "../styles/globals.css";
 import Layout from "../components/Layout";
 import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
 // import { PersistGate } from "redux-persist/integration/react";

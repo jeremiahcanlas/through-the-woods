@@ -17,7 +17,7 @@ import { TiLocation, TiChartArea } from "react-icons/ti";
 import { AiOutlinePlusSquare } from "react-icons/ai";
 import { GiPathDistance } from "react-icons/gi";
 
-import accentImage from "../public/blogs-pic.jpg";
+// import accentImage from "../public/blogs-pic.jpg";
 import PageContainer from "./PageContainer";
 
 import styles from "../styles/Trails.module.scss";
@@ -27,8 +27,13 @@ const Trails = ({ trails }) => {
   const { data: session } = useSession();
 
   return (
-    <PageContainer image={accentImage} title="Trails">
+    <PageContainer>
       <Flex direction="column" px="2em" my="1em" align={"center"}>
+        <Container my="2em" textAlign={["start", "start", "center"]} p="0">
+          <Heading as="h2" fontSize="2rem" letterSpacing="2px">
+            Trails
+          </Heading>
+        </Container>
         {session && (
           <Link href={`/trails/create`} passHref>
             <Button
@@ -65,7 +70,6 @@ const Trails = ({ trails }) => {
                     trail.images.length === 0 && "blackAlpha.900"
                   }
                   _hover={{ backgroundColor: "#343a40", opacity: 0.8 }}
-                  spacing="1em"
                   cursor="pointer"
                   textAlign="left"
                   position="relative"

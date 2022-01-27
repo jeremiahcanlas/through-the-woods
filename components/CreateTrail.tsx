@@ -1,4 +1,4 @@
-import { Container, Button, Stack, Box } from "@chakra-ui/react";
+import { Container, Button, Stack, Box, Heading } from "@chakra-ui/react";
 import { Formik, Form } from "formik";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
@@ -95,8 +95,13 @@ const CreateTrail = () => {
   });
 
   return (
-    <PageContainer showImg={false} title="Create a Trail">
-      <Container p="0">
+    <PageContainer showImg={false}>
+      <Container my="2em" textAlign={["start", "start", "center"]}>
+        <Heading as="h2" fontSize="2rem" letterSpacing="2px">
+          Create
+        </Heading>
+      </Container>
+      <Container p={["0,2em", "0"]}>
         <Formik
           initialValues={{
             title: "",
@@ -110,8 +115,15 @@ const CreateTrail = () => {
             <Form onSubmit={handleSubmit}>
               <TextField placeholder="Title" name="title" />
               <TextField placeholder="Location" name="location" />
-              <TextField name="description" textbox={true} />
+              <TextField
+                name="description"
+                textbox={true}
+                placeholder="Description"
+              />
               <Box my="2em">
+                <Heading fontSize={"1em"} mb="1em">
+                  Upload Images
+                </Heading>
                 <UploadFile images={images} setImages={setImages} />
               </Box>
 
@@ -120,6 +132,7 @@ const CreateTrail = () => {
                   isLoading={isSubmitting}
                   disabled={isSubmitting}
                   loadingText="Submitting"
+                  // width={["95%", "30%"]}
                   size="lg"
                   type="submit"
                 >

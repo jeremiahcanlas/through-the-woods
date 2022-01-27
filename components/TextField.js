@@ -42,7 +42,6 @@ const TextField = ({
                 position="absolute"
                 colorScheme="red"
                 zIndex={10}
-                // name="delete"
                 value={value}
               >
                 Delete

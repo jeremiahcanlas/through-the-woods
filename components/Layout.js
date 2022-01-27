@@ -5,7 +5,7 @@ import "antd/dist/antd.dark.css";
 
 const Layout = ({ children }) => (
   <Container
-    maxW="100vw"
+    maxW="100%"
     px="0"
     height="100%"
     className="main-layout"

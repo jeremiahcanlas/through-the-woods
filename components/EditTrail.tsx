@@ -1,4 +1,4 @@
-import { Container, Button, Stack } from "@chakra-ui/react";
+import { Container, Button, Stack, Heading, Box } from "@chakra-ui/react";
 import { Formik, Form } from "formik";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
@@ -141,8 +141,13 @@ const EditTrail = ({ trail }) => {
   // }}
 
   return (
-    <PageContainer showImg={false} title="Edit Trail">
-      <Container p="0">
+    <PageContainer showImg={false}>
+      <Container my="2em" textAlign={["start", "start", "center"]}>
+        <Heading as="h2" fontSize="2rem" letterSpacing="2px">
+          Edit
+        </Heading>
+      </Container>
+      <Container p={["0,2em", "0"]}>
         <Formik
           initialValues={{
             title: trail.title,
@@ -160,7 +165,12 @@ const EditTrail = ({ trail }) => {
               <TextField placeholder="Location" name="location" />
 
               <TextField name="description" textbox={true} />
-              <UploadFile images={images} setImages={setInitialImages} />
+              <Box my="2em">
+                <Heading fontSize={"1em"} mb="1em">
+                  Upload Images
+                </Heading>
+                <UploadFile images={images} setImages={setInitialImages} />
+              </Box>
               <Stack
                 direction="column"
                 justifyContent="space-between"

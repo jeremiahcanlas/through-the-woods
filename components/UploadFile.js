@@ -16,7 +16,7 @@ function getBase64(file) {
 const UploadFile = ({ images, setImages }) => {
   const [previewVisible, setPreviewVisible] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
-  const [previewTitle, setPreviewTitle] = useState("");
+  // const [previewTitle, setPreviewTitle] = useState("");
 
   const handleCancel = () => setPreviewVisible(false);
 
@@ -29,9 +29,9 @@ const UploadFile = ({ images, setImages }) => {
 
     setPreviewImage(file.url || file.preview);
 
-    setPreviewTitle(
-      file.name || file.url.substring(file.url.lastIndexOf("/") + 1)
-    );
+    // setPreviewTitle(
+    //   file.name || file.url.substring(file.url.lastIndexOf("/") + 1)
+    // );
   };
 
   const handleChange = ({ fileList }) => {
@@ -41,7 +41,6 @@ const UploadFile = ({ images, setImages }) => {
   const uploadButton = (
     <div>
       <PlusOutlined />
-      <div style={{ marginTop: 8 }}>Upload</div>
     </div>
   );
 
@@ -58,10 +57,9 @@ const UploadFile = ({ images, setImages }) => {
 
       <Modal
         visible={previewVisible}
-        title={previewTitle}
+        title={"Upload Preview"}
         footer={null}
         onCancel={handleCancel}
-        centered
       >
         <AntImage alt="image" preview={false} src={previewImage} placeholder />
       </Modal>

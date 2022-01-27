@@ -13,26 +13,35 @@ const PageContainer = ({ children, image, title, showImg }) => (
     opacity="1"
     mb="1.5rem"
   >
-    <Link href="/" passHref>
-      <Heading
-        fontSize={["1em", "1.5em"]}
-        bgGradient="linear(to-t, #2d6a4f 30%,#40916c 70%)"
-        bgClip="text"
-        letterSpacing="0.1em"
-        fontWeight="700"
-        p="1rem 0.1rem"
-        cursor="pointer"
-        position="sticky"
-        top="0"
-      >
-        THROUGH THE WOODS
-      </Heading>
-    </Link>
+    <Box
+      // backgroundColor={"currentcolor"}
+      position="sticky"
+      top="0"
+      zIndex={100}
+      bgGradient="linear-gradient(to-t,rgba(23,25,35,0),rgba(23,25,35, 1) 40%)"
+    >
+      <Link href="/" passHref>
+        <Heading
+          fontSize={["1em", "1.5em"]}
+          bgGradient="linear(to-t, #2d6a4f 30%,#40916c 70%)"
+          bgClip="text"
+          letterSpacing="0.1em"
+          fontWeight="700"
+          p="1rem 1.5rem"
+          cursor="pointer"
+          display="inline-block"
+        >
+          THROUGH THE WOODS
+        </Heading>
+      </Link>
+    </Box>
 
     <Box maxH="100%" minH="100vh" maxW="100vw" textAlign="left" mt="2rem">
-      <Heading as="h2" fontSize="2rem" letterSpacing="2px">
-        {title}
-      </Heading>
+      {title && (
+        <Heading as="h2" fontSize="2rem" letterSpacing="2px">
+          {title}
+        </Heading>
+      )}
 
       {/* <Box
       my="1.2em"
@@ -44,7 +53,6 @@ const PageContainer = ({ children, image, title, showImg }) => (
     >
       <Image src={image} alt="cover image" sizes="40vw" layout="responsive" />
     </Box> */}
-
       {children}
     </Box>
   </Box>
@@ -53,6 +61,7 @@ const PageContainer = ({ children, image, title, showImg }) => (
 PageContainer.defaultProps = {
   image: defaultImage,
   showImg: true,
+  title: "",
 };
 
 export default PageContainer;

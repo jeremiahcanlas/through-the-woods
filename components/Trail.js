@@ -1,4 +1,11 @@
-import { Container, Heading, Text, Button } from "@chakra-ui/react";
+import {
+  Container,
+  Heading,
+  Text,
+  Button,
+  Divider,
+  Stack,
+} from "@chakra-ui/react";
 import Link from "next/link";
 import PageContainer from "./PageContainer";
 import { useSession } from "next-auth/react";
@@ -16,16 +23,31 @@ const Trail = ({ trail }) => {
     );
   };
 
+  console.log(trail);
+
   return (
     <PageContainer>
-      <Container maxW="100vw" p="0" m="0">
-        <Heading mb="1em">{trail.title}</Heading>
-        <Text>by {trail.user.username}</Text>
+      <Container maxW="100vw" m="0">
+        <Heading>{trail.title}</Heading>
+        <Text fontSize={"0.8em"}>{trail.location}</Text>
+        <Text fontSize={"0.8em"}>
+          {new Date(trail.createdAt).toLocaleDateString("en-US", {
+            month: "short",
+            day: "numeric",
+            year: "numeric",
+          })}
+        </Text>
+        <Divider orientation="horizontal" my="1em" />
+
         <Text>{trail.description}</Text>
-        <Link href="/trails" passHref>
-          <Button mt="1em">&larr; All trails</Button>
-        </Link>
-        {session && trail.user.username === session.username && authorButtons()}
+        <Stack direction={"row"} mt="1em">
+          <Link href="/trails" passHref>
+            <Button>&larr; All trails</Button>
+          </Link>
+          {session &&
+            trail.user.username === session.username &&
+            authorButtons()}
+        </Stack>
       </Container>
     </PageContainer>
   );
