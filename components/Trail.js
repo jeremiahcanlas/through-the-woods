@@ -5,13 +5,17 @@ import {
   Button,
   Divider,
   Stack,
+  Box,
+  Flex,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import PageContainer from "./PageContainer";
 import { useSession } from "next-auth/react";
+import Carousel from "./Carousel";
 
 const Trail = ({ trail }) => {
   const { data: session } = useSession();
+  const images = trail.images.map((img) => img.formats.medium.url);
 
   const authorButtons = () => {
     return (
@@ -38,6 +42,18 @@ const Trail = ({ trail }) => {
           })}
         </Text>
         <Divider orientation="horizontal" my="1em" />
+
+        {trail.images.length >= 1 && (
+          <Flex
+            position="relative"
+            justifyContent={"center"}
+            alignItems={"center"}
+            py="2em"
+            height={["30vh", "50vh", "60vh"]}
+          >
+            <Carousel images={images} />
+          </Flex>
+        )}
 
         <Text>{trail.description}</Text>
         <Stack direction={"row"} mt="1em">
