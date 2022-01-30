@@ -60,11 +60,8 @@ const Trails = ({ trails }) => {
             return (
               <Link href={`/trails/${trail.id}`} key={trail.id} passHref>
                 <Container
-                  p={[
-                    "1em 10em 1em 1em",
-                    "2em 15em 2em 1em",
-                    "2em 20em 2em 1em",
-                  ]}
+                  maxW={["100%", "80%", "45%"]}
+                  p={"7%"}
                   borderRadius="1em"
                   backgroundColor={
                     trail.images.length === 0 && "blackAlpha.900"

@@ -48,8 +48,9 @@ const Trail = ({ trail }) => {
             position="relative"
             justifyContent={"center"}
             alignItems={"center"}
-            py="2em"
-            height={["30vh", "50vh", "60vh"]}
+            height={["30vh", "50vh"]}
+            maxW={"100vw"}
+            my={"2em"}
           >
             <Carousel images={images} />
           </Flex>

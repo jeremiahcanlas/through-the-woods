@@ -1,9 +1,10 @@
 import * as React from "react";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Image } from "@chakra-ui/react";
+import { Image, Button } from "@chakra-ui/react";
 import { wrap } from "popmotion";
 import styles from "../styles/Carousel.module.scss";
+import { HiOutlineChevronLeft, HiOutlineChevronRight } from "react-icons/hi";
 
 const MotionImage = motion(Image);
 
@@ -65,31 +66,47 @@ const Carousel = ({ images }) => {
           animate="center"
           exit="exit"
           position={"absolute"}
-          maxW={["70vw", "60vw", "50vw"]}
+          maxW={"100%"}
+          maxH={"100%"}
           transition={{
             x: { type: "spring", stiffness: 300, damping: 30 },
             opacity: { duration: 0.2 },
           }}
-          drag="x"
-          dragConstraints={{ left: 0, right: 0 }}
-          dragElastic={1}
-          onDragEnd={(e, { offset, velocity }) => {
-            const swipe = swipePower(offset.x, velocity.x);
+          // drag="x"
+          // dragConstraints={{ left: 0, right: 0 }}
+          // dragElastic={1}
+          // onDragEnd={({ offset, velocity }) => {
+          //   const swipe = swipePower(offset.x, velocity.x);
 
-            if (swipe < -swipeConfidenceThreshold) {
-              paginate(1);
-            } else if (swipe > swipeConfidenceThreshold) {
-              paginate(-1);
-            }
-          }}
+          //   if (swipe < -swipeConfidenceThreshold) {
+          //     paginate(1);
+          //   } else if (swipe > swipeConfidenceThreshold) {
+          //     paginate(-1);
+          //   }
+          // }}
         />
       </AnimatePresence>
-      <div className={styles.next} onClick={() => paginate(1)}>
-        {"‣"}
-      </div>
-      <div className={styles.prev} onClick={() => paginate(-1)}>
-        {"‣"}
-      </div>
+
+      {images.length > 1 && (
+        <>
+          <Button
+            right={["1px", "50px", "200px"]}
+            position={"absolute"}
+            className={styles.next}
+            textColor={"white"}
+            leftIcon={<HiOutlineChevronRight />}
+            onClick={() => paginate(1)}
+          />
+
+          <Button
+            left={["1px", "50px", "200px"]}
+            position={"absolute"}
+            className={styles.prev}
+            leftIcon={<HiOutlineChevronLeft />}
+            onClick={() => paginate(-1)}
+          />
+        </>
+      )}
     </>
   );
 };
