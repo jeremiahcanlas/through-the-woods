@@ -35,10 +35,10 @@ const variants = {
  * Should accomodate longer swipes and short flicks without having binary checks on
  * just distance thresholds and velocity > 0.
  */
-const swipeConfidenceThreshold = 10000;
-const swipePower = (offset: number, velocity: number) => {
-  return Math.abs(offset) * velocity;
-};
+// const swipeConfidenceThreshold = 10000;
+// const swipePower = (offset: number, velocity: number) => {
+//   return Math.abs(offset) * velocity;
+// };
 
 const Carousel = ({ images }) => {
   const [[page, direction], setPage] = useState([0, 0]);
@@ -90,7 +90,7 @@ const Carousel = ({ images }) => {
       {images.length > 1 && (
         <>
           <Button
-            right={["1px", "50px", "200px"]}
+            right={["1px"]}
             position={"absolute"}
             className={styles.next}
             textColor={"white"}
@@ -99,7 +99,7 @@ const Carousel = ({ images }) => {
           />
 
           <Button
-            left={["1px", "50px", "200px"]}
+            left={["1px"]}
             position={"absolute"}
             className={styles.prev}
             leftIcon={<HiOutlineChevronLeft />}

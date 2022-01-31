@@ -27,11 +27,11 @@ const Trail = ({ trail }) => {
     );
   };
 
-  console.log(trail);
+  // console.log(trail);
 
   return (
     <PageContainer>
-      <Container maxW="100vw" m="0">
+      <Container maxW={["100vw", "80vw", "60vw"]} overflowX={"hidden"}>
         <Heading>{trail.title}</Heading>
         <Text fontSize={"0.8em"}>{trail.location}</Text>
         <Text fontSize={"0.8em"}>

@@ -18,6 +18,7 @@
     "axios": "^0.21.4",
     "formik": "^2.2.9",
     "framer-motion": "^4.1.17",
+    "mapbox-gl": "^2.6.1",
     "next": "^12.0.8",
     "next-auth": "^4.1.2",
     "nookies": "^2.5.2",

@@ -18,7 +18,7 @@ const PageContainer = ({ children, image, title, showImg }) => (
       position="sticky"
       top="0"
       zIndex={100}
-      bgGradient="linear-gradient(to-t,rgba(23,25,35,0),rgba(23,25,35, 1) 40%)"
+      bgGradient="linear-gradient(to-t,rgba(20,24,33,0),rgba(20,24,33, 1) 40%)"
     >
       <Link href="/" passHref>
         <Heading
@@ -36,7 +36,7 @@ const PageContainer = ({ children, image, title, showImg }) => (
       </Link>
     </Box>
 
-    <Box maxH="100%" minH="100vh" maxW="100vw" textAlign="left" mt="2rem">
+    <Box maxH="100%" minH="100vh" maxW="100vw" mt="2rem">
       {title && (
         <Heading as="h2" fontSize="2rem" letterSpacing="2px">
           {title}

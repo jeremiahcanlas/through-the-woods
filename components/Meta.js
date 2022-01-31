@@ -9,6 +9,10 @@ const Meta = ({ title, keywords, description }) => (
     <meta charSet="utf-8" />
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
     <title>{title}</title>
+    <link
+      href="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css"
+      rel="stylesheet"
+    />
   </Head>
 );
 

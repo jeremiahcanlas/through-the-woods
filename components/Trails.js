@@ -16,7 +16,7 @@ import Image from "next/image";
 import { TiLocation, TiChartArea } from "react-icons/ti";
 import { AiOutlinePlusSquare } from "react-icons/ai";
 import { GiPathDistance } from "react-icons/gi";
-
+import { useEffect, useState } from "react";
 // import accentImage from "../public/blogs-pic.jpg";
 import PageContainer from "./PageContainer";
 
@@ -25,6 +25,28 @@ import { useSession } from "next-auth/react";
 
 const Trails = ({ trails }) => {
   const { data: session } = useSession();
+  const [pageMounted, setPageMounted] = useState(false);
+  const mapboxgl = require("mapbox-gl/dist/mapbox-gl");
+  mapboxgl.accessToken =
+    "pk.eyJ1IjoiamVyZW1pYWhjYW5sYXMiLCJhIjoiY2trNjBnd2o4MTlvaTJ4bnV5bDB6N2dmYSJ9.3ftYhh7iE-3UPF_zm1y0MQ";
+
+  useEffect(() => {
+    setPageMounted(true);
+    const map = new mapboxgl.Map({
+      container: "trails-map",
+      style: "mapbox://styles/mapbox/navigation-night-v1",
+    });
+
+    map.addControl(
+      new mapboxgl.GeolocateControl({
+        positionOptions: {
+          enableHighAccuracy: true,
+        },
+        trackUserLocation: true,
+        showUserHeading: true,
+      })
+    );
+  }, []);
 
   return (
     <PageContainer>
@@ -34,6 +56,13 @@ const Trails = ({ trails }) => {
             Trails
           </Heading>
         </Container>
+        <Container
+          id="trails-map"
+          my="3em"
+          height={"40vh"}
+          maxWidth={"90vw"}
+          opacity={"0.8"}
+        />
         {session && (
           <Link href={`/trails/create`} passHref>
             <Button
@@ -118,7 +147,6 @@ const Trails = ({ trails }) => {
                       }
                       placeholder="blur"
                       className={styles.image}
-                      priority
                     />
                   )}
                 </Container>
