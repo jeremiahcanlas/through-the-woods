@@ -6,6 +6,13 @@ import { server } from "../../../server";
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const { jwt, title, location, description, id, images, deleted } = req.body;
 
+  // //forward geocoding to get coordinates
+  // const geocoding = await axios.get(
+  //   `https://api.mapbox.com/geocoding/v5/mapbox.places/${location}.json?access_token=${process.env.mapbox_token}`
+  // );
+
+  // const geojson = geocoding.data.features[0].geometry;
+
   if (req.method === "PUT") {
     try {
       const response = await axios.put(

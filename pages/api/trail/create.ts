@@ -11,7 +11,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     `https://api.mapbox.com/geocoding/v5/mapbox.places/${location}.json?access_token=${process.env.mapbox_token}`
   );
 
-  const coordinates = geocoding.data.features[0].geometry;
+  const geojson = geocoding.data.features[0].geometry;
 
   try {
     const response = await axios.post(
@@ -21,7 +21,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         location,
         description,
         images,
-        coordinates,
+        geojson,
       },
       {
         headers: {

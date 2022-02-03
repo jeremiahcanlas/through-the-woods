@@ -33,7 +33,7 @@ const Trails = ({ trails }) => {
         </Container>
 
         <Container maxW={"100vw"} height={"30vh"} mx="0" my={"1em"}>
-          <Map />
+          <Map trails={trails} />
         </Container>
 
         {session && (
@@ -55,15 +55,15 @@ const Trails = ({ trails }) => {
             </Button>
           </Link>
         )}
-        <Wrap spacing={"0.5em"} my="2em" justify={"center"}>
+        <Wrap spacing={"0.5em"} my="2em" justify={"center"} width={"100%"}>
           {trails.map((trail) => {
             let num = Math.floor(Math.random() * trail.images.length);
 
             return (
               <Link href={`/trails/${trail.id}`} key={trail.id} passHref>
                 <Container
-                  maxW={["100%", "80%", "45%"]}
-                  p={"7%"}
+                  w={["100%", "80%", "50%"]}
+                  p={"40px"}
                   borderRadius="1em"
                   backgroundColor={
                     trail.images.length === 0 && "blackAlpha.900"
