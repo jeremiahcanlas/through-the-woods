@@ -20,7 +20,7 @@ import Map from "./Map";
 import styles from "../styles/Trails.module.scss";
 import { useSession } from "next-auth/react";
 
-const Trails = ({ trails }) => {
+const Trails = ({ trails, geojson }) => {
   const { data: session } = useSession();
 
   return (
@@ -33,7 +33,7 @@ const Trails = ({ trails }) => {
         </Container>
 
         <Container maxW={"100vw"} height={"30vh"} mx="0" my={"1em"}>
-          <Map trails={trails} />
+          <Map trails={trails} geojson={geojson} />
         </Container>
 
         {session && (
