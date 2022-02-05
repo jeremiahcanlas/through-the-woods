@@ -1,4 +1,4 @@
-import ReactMapGL, { Source, Layer } from "react-map-gl";
+import ReactMapGL, { Source, Layer, Marker, Popup } from "react-map-gl";
 import { useState, useEffect } from "react";
 import { getCenter } from "geolib";
 import { Result } from "antd";
@@ -7,6 +7,7 @@ import {
   clusterLayer,
   unclusteredPointLayer,
 } from "../layer";
+import Link from "next/link";
 
 const Map = ({ trails, geojson }) => {
   const coordinates = trails.map((trail) => ({
@@ -32,7 +33,7 @@ const Map = ({ trails, geojson }) => {
     zoom: 6,
   });
 
-  // const [selectedTrail, setSelectedTrail]: any = useState({});
+  const [selectedTrail, setSelectedTrail]: any = useState({});
 
   // console.log(selectedTrail);
 
@@ -50,39 +51,33 @@ const Map = ({ trails, geojson }) => {
       mapStyle="mapbox://styles/jeremiahcanlas/ckz3e4kw4002214p35infkp6f"
       mapboxApiAccessToken={process.env.mapbox_token}
       onViewportChange={(nextViewport) => setViewport(nextViewport)}
+      interactiveLayerIds={[clusterLayer.id, unclusteredPointLayer.id]}
+      onClick={(e) =>
+        e.features.length > 0 &&
+        e.features[0].properties.title &&
+        setSelectedTrail(e.features[0].properties)
+      }
       {...viewport}
       width="100%"
       height="100%"
     >
-      <Source
-        id="trails"
-        type="geojson"
-        data={geojson}
-        cluster={true}
-        clusterMaxZoom={14}
-        clusterRadius={50}
-      >
-        <Layer {...clusterLayer} />
-        <Layer {...clusterCountLayer} />
-        <Layer {...unclusteredPointLayer} />
-      </Source>
-
       {/* {coordinates.map((point) => (
         <div key={point.longitude}>
           <Marker
             longitude={point.longitude}
             latitude={point.latitude}
-            offsetTop={-18}
+            offsetTop={-14}
             offsetLeft={-7 / 2}
+            style={{ width: "3px" }}
           >
             <p
               onClick={(e) => {
                 e.stopPropagation();
-                e.preventDefault()
+                e.preventDefault();
                 setSelectedTrail(point);
               }}
             >
-              📍
+              x
             </p>
           </Marker>
 
@@ -97,6 +92,32 @@ const Map = ({ trails, geojson }) => {
           )}
         </div>
       ))} */}
+      <Source
+        id="trails"
+        type="geojson"
+        data={geojson}
+        cluster={true}
+        clusterMaxZoom={14}
+        clusterRadius={50}
+      >
+        <Layer {...clusterLayer} />
+        <Layer {...clusterCountLayer} />
+        <Layer {...unclusteredPointLayer} />
+      </Source>
+
+      {selectedTrail.lat && (
+        <Popup
+          onClose={() => setSelectedTrail({})}
+          latitude={selectedTrail.lat}
+          longitude={selectedTrail.long}
+        >
+          <Link passHref href={`/trails/${selectedTrail.id}`}>
+            <p style={{ color: "black", cursor: "pointer" }}>
+              {selectedTrail.title}
+            </p>
+          </Link>
+        </Popup>
+      )}
     </ReactMapGL>
   );
 };

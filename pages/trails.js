@@ -17,7 +17,12 @@ trails.getInitialProps = async () => {
   await trails.map((trail) => {
     geojsonData.features.push({
       type: "Feature",
-      properties: {},
+      properties: {
+        id: trail.id,
+        title: trail.title,
+        long: trail.geojson.coordinates[0],
+        lat: trail.geojson.coordinates[1],
+      },
       geometry: trail.geojson,
     });
   });
