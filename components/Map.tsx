@@ -112,9 +112,11 @@ const Map = ({ trails, geojson }) => {
           longitude={selectedTrail.long}
         >
           <Link passHref href={`/trails/${selectedTrail.id}`}>
-            <p style={{ color: "black", cursor: "pointer" }}>
+            <h1
+              style={{ color: "black", cursor: "pointer", fontWeight: "700" }}
+            >
               {selectedTrail.title}
-            </p>
+            </h1>
           </Link>
         </Popup>
       )}
