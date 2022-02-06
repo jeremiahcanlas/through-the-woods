@@ -8,6 +8,7 @@ import {
   unclusteredPointLayer,
 } from "../layer";
 import Link from "next/link";
+import styles from "../styles/Map.module.scss";
 
 const Map = ({ trails, geojson }) => {
   const coordinates = trails.map((trail) => ({
@@ -110,6 +111,9 @@ const Map = ({ trails, geojson }) => {
           onClose={() => setSelectedTrail({})}
           latitude={selectedTrail.lat}
           longitude={selectedTrail.long}
+          className={styles.popup}
+          tipSize={0}
+          offsetTop={-5}
         >
           <Link passHref href={`/trails/${selectedTrail.id}`}>
             <h1
