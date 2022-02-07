@@ -22,6 +22,7 @@ trails.getInitialProps = async () => {
         title: trail.title,
         long: trail.geojson.coordinates[0],
         lat: trail.geojson.coordinates[1],
+        thumbnail: trail.images[0].formats.thumbnail.url,
       },
       geometry: trail.geojson,
     });

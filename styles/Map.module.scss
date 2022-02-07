@@ -1,9 +1,27 @@
 .popup {
-  h1 {
-    font-size: 1.2em;
-  }
+  div {
+    &:last-child {
+      padding: 0;
+      border-radius: 1em;
+      overflow: hidden;
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 0;
+      display: flex;
 
-  .mapboxgl-popup-tip {
-    color: black;
+      div {
+        background-color: transparent;
+      }
+
+      button {
+        display: none;
+      }
+
+      h1 {
+        font-size: 1.2em;
+        color: whitesmoke;
+        font-weight: 600;
+        margin: 5px;
+      }
+    }
   }
 }

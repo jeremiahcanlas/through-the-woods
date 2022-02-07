@@ -1,4 +1,5 @@
 import ReactMapGL, { Source, Layer, Marker, Popup } from "react-map-gl";
+import { Box, Flex, Text, HStack } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { getCenter } from "geolib";
 import { Result } from "antd";
@@ -8,6 +9,7 @@ import {
   unclusteredPointLayer,
 } from "../layer";
 import Link from "next/link";
+import Image from "next/image";
 import styles from "../styles/Map.module.scss";
 
 const Map = ({ trails, geojson }) => {
@@ -36,7 +38,7 @@ const Map = ({ trails, geojson }) => {
 
   const [selectedTrail, setSelectedTrail]: any = useState({});
 
-  // console.log(selectedTrail);
+  console.log(selectedTrail);
 
   // const layerStyle = {
   //   id: "point",
@@ -53,7 +55,7 @@ const Map = ({ trails, geojson }) => {
       mapboxApiAccessToken={process.env.mapbox_token}
       onViewportChange={(nextViewport) => setViewport(nextViewport)}
       interactiveLayerIds={[clusterLayer.id, unclusteredPointLayer.id]}
-      onClick={(e) =>
+      onMouseEnter={(e) =>
         e.features.length > 0 &&
         e.features[0].properties.title &&
         setSelectedTrail(e.features[0].properties)
@@ -107,22 +109,34 @@ const Map = ({ trails, geojson }) => {
       </Source>
 
       {selectedTrail.lat && (
-        <Popup
-          onClose={() => setSelectedTrail({})}
-          latitude={selectedTrail.lat}
-          longitude={selectedTrail.long}
-          className={styles.popup}
-          tipSize={0}
-          offsetTop={-5}
-        >
-          <Link passHref href={`/trails/${selectedTrail.id}`}>
-            <h1
-              style={{ color: "black", cursor: "pointer", fontWeight: "700" }}
+        <Link passHref href={`/trails/${selectedTrail.id}`}>
+          <Box
+            cursor={"pointer"}
+            className={styles.popup}
+            onMouseLeave={() => setSelectedTrail({})}
+          >
+            <Popup
+              latitude={selectedTrail.lat}
+              longitude={selectedTrail.long}
+              tipSize={0}
+              offsetTop={-5}
             >
-              {selectedTrail.title}
-            </h1>
-          </Link>
-        </Popup>
+              <Image
+                height={"100%"}
+                width={"100%"}
+                alt="thumbnail"
+                src={selectedTrail.thumbnail}
+              />
+              <Flex direction={"column"} margin={"0.5em"}>
+                <Text as={"h1"}>{selectedTrail.title}</Text>
+                <HStack justify={"center"}>
+                  <Text padding="2px">2.4 km</Text>
+                  <Text>531 m</Text>
+                </HStack>
+              </Flex>
+            </Popup>
+          </Box>
+        </Link>
       )}
     </ReactMapGL>
   );
