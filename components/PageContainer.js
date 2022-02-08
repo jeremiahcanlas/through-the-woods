@@ -8,7 +8,7 @@ const PageContainer = ({ children, image, title, showImg }) => (
   <Box
     maxH="100%"
     minH="100vh"
-    minW="100%"
+    maxW="100%"
     textAlign="left"
     opacity="1"
     mb="1.5rem"
@@ -36,7 +36,7 @@ const PageContainer = ({ children, image, title, showImg }) => (
       </Link>
     </Box>
 
-    <Box maxH="100%" minH="100vh" maxW="100vw" mt="2rem">
+    <Box maxH="100%" minH="100vh" mt="2rem">
       {title && (
         <Heading as="h2" fontSize="2rem" letterSpacing="2px">
           {title}

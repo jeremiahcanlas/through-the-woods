@@ -1,27 +1,26 @@
-.popup {
-  div {
-    &:last-child {
-      padding: 0;
-      border-radius: 1em;
-      overflow: hidden;
-      background-color: rgba(0, 0, 0, 0.7);
-      padding: 0;
-      display: flex;
+@import "./breakpoints";
 
-      div {
-        background-color: transparent;
-      }
+.popup div {
+  background-color: rgba($color: rgb(14 17 23), $alpha: 1);
+  border-radius: 0.2em;
+}
 
-      button {
-        display: none;
-      }
+.popupContent {
+  span {
+    display: none !important;
 
-      h1 {
-        font-size: 1.2em;
-        color: whitesmoke;
-        font-weight: 600;
-        margin: 5px;
-      }
+    @include md {
+      display: block !important;
     }
+  }
+
+  h1,
+  p {
+    color: white;
+  }
+
+  h1 {
+    font-size: 1.3em;
+    font-weight: 600;
   }
 }

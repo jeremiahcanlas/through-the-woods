@@ -9,7 +9,7 @@ const Layout = ({ children }) => (
     px="0"
     height="100%"
     className="main-layout"
-    backgroundColor="blackAlpha.400"
+    backgroundColor="blackAlpha.600"
   >
     <Alert />
     {children}

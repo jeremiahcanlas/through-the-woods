@@ -32,7 +32,7 @@ const Trails = ({ trails, geojson }) => {
           </Heading>
         </Container>
 
-        <Container maxW={"100vw"} height={"30vh"} mx="0" my={"1em"}>
+        <Container maxW={["100%", "95%"]} height={"35vh"} mx="0" p="0" my="1em">
           <Map trails={trails} geojson={geojson} />
         </Container>
 

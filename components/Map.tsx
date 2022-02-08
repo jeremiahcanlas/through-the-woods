@@ -1,5 +1,13 @@
 import ReactMapGL, { Source, Layer, Marker, Popup } from "react-map-gl";
-import { Box, Flex, Text, HStack } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Text,
+  HStack,
+  VStack,
+  Stack,
+  Container,
+} from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { getCenter } from "geolib";
 import { Result } from "antd";
@@ -18,17 +26,8 @@ const Map = ({ trails, geojson }) => {
     latitude: trail.geojson.coordinates[1],
   }));
 
-  // console.log(geojson);
-
-  // const geojsonData = trails.map((trail) => ({
-  //   type: "FeatureCollection",
-  //   features: [{ type: "Feature", properties: {}, geometry: trail.geojson }],
-  // }));
-
   //finds the center coordinates of all trails
   const center = getCenter(coordinates);
-
-  // console.log(geojsonData);
 
   const [viewport, setViewport] = useState({
     latitude: center && center.latitude,
@@ -38,16 +37,7 @@ const Map = ({ trails, geojson }) => {
 
   const [selectedTrail, setSelectedTrail]: any = useState({});
 
-  console.log(selectedTrail);
-
-  // const layerStyle = {
-  //   id: "point",
-  //   type: "circle",
-  //   paint: {
-  //     "circle-radius": 10,
-  //     "circle-color": "#007cbf",
-  //   },
-  // };
+  // console.log(selectedTrail);
 
   return (
     <ReactMapGL
@@ -60,41 +50,15 @@ const Map = ({ trails, geojson }) => {
         e.features[0].properties.title &&
         setSelectedTrail(e.features[0].properties)
       }
+      onClick={(e) =>
+        e.features.length > 0 &&
+        e.features[0].properties.title &&
+        setSelectedTrail(e.features[0].properties)
+      }
       {...viewport}
       width="100%"
       height="100%"
     >
-      {/* {coordinates.map((point) => (
-        <div key={point.longitude}>
-          <Marker
-            longitude={point.longitude}
-            latitude={point.latitude}
-            offsetTop={-14}
-            offsetLeft={-7 / 2}
-            style={{ width: "3px" }}
-          >
-            <p
-              onClick={(e) => {
-                e.stopPropagation();
-                e.preventDefault();
-                setSelectedTrail(point);
-              }}
-            >
-              x
-            </p>
-          </Marker>
-
-          {selectedTrail.latitude === point.latitude && (
-            <Popup
-              onClose={() => setSelectedTrail({})}
-              latitude={point.latitude}
-              longitude={point.longitude}
-            >
-              <p style={{ color: "black" }}>{point.latitude}</p>
-            </Popup>
-          )}
-        </div>
-      ))} */}
       <Source
         id="trails"
         type="geojson"
@@ -111,28 +75,36 @@ const Map = ({ trails, geojson }) => {
       {selectedTrail.lat && (
         <Link passHref href={`/trails/${selectedTrail.id}`}>
           <Box
-            cursor={"pointer"}
             className={styles.popup}
+            cursor={"pointer"}
             onMouseLeave={() => setSelectedTrail({})}
+            // width={["120px", "150px", "200px"]}
           >
             <Popup
               latitude={selectedTrail.lat}
               longitude={selectedTrail.long}
               tipSize={0}
               offsetTop={-5}
+              className={styles.popup}
+              closeOnClick={false}
+              closeButton={false}
             >
-              <Image
-                height={"100%"}
-                width={"100%"}
-                alt="thumbnail"
-                src={selectedTrail.thumbnail}
-              />
-              <Flex direction={"column"} margin={"0.5em"}>
-                <Text as={"h1"}>{selectedTrail.title}</Text>
-                <HStack justify={"center"}>
-                  <Text padding="2px">2.4 km</Text>
-                  <Text>531 m</Text>
-                </HStack>
+              <Flex className={styles.popupContent} p="0">
+                <Image
+                  height={"100%"}
+                  width={"100%"}
+                  alt="thumbnail"
+                  src={selectedTrail.thumbnail}
+                />
+
+                <VStack margin={"0.5em"} textAlign={["left", "left", "center"]}>
+                  <Text as={"h1"}>{selectedTrail.title}</Text>
+                  <HStack>
+                    <Text>2.4 km</Text>
+                    <Text>531 m</Text>
+                  </HStack>
+                  <Text>est. 2.4 hours</Text>
+                </VStack>
               </Flex>
             </Popup>
           </Box>
