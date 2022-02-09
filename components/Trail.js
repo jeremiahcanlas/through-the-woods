@@ -57,6 +57,21 @@ const Trail = ({ trail }) => {
         )}
 
         <Text>{trail.description}</Text>
+        <Divider orientation="horizontal" my="1em" />
+        <Stack direction={"row"} spacing="3em" m="2em" letterSpacing={"1px"}>
+          <Stack direction={"column"}>
+            <Text>Length</Text>
+            <Text fontWeight={"900"}>2.4 km</Text>
+          </Stack>
+          <Stack direction={"column"}>
+            <Text>Elevation</Text>
+            <Text fontWeight={"900"}>521 m</Text>
+          </Stack>
+          <Stack direction={"column"}>
+            <Text>Type</Text>
+            <Text fontWeight={"900"}>Loop</Text>
+          </Stack>
+        </Stack>
         <Stack direction={"row"} mt="1em">
           <Link href="/trails" passHref>
             <Button>&larr; All trails</Button>
