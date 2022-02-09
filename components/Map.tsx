@@ -7,6 +7,7 @@ import {
   VStack,
   Stack,
   Container,
+  Divider,
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { getCenter } from "geolib";
@@ -78,18 +79,16 @@ const Map = ({ trails, geojson }) => {
             className={styles.popup}
             cursor={"pointer"}
             onMouseLeave={() => setSelectedTrail({})}
-            // width={["120px", "150px", "200px"]}
           >
             <Popup
               latitude={selectedTrail.lat}
               longitude={selectedTrail.long}
               tipSize={0}
-              offsetTop={-5}
-              className={styles.popup}
+              offsetTop={-10}
               closeOnClick={false}
               closeButton={false}
             >
-              <Flex className={styles.popupContent} p="0">
+              <Flex className={styles.popupContent} p="0" height={"12vh"}>
                 <Image
                   height={"100%"}
                   width={"100%"}
@@ -97,14 +96,17 @@ const Map = ({ trails, geojson }) => {
                   src={selectedTrail.thumbnail}
                 />
 
-                <VStack margin={"0.5em"} textAlign={["left", "left", "center"]}>
+                <Stack margin={"0.5em"} mx="1em" spacing="0.2em">
                   <Text as={"h1"}>{selectedTrail.title}</Text>
-                  <HStack>
-                    <Text>2.4 km</Text>
-                    <Text>531 m</Text>
-                  </HStack>
-                  <Text>est. 2.4 hours</Text>
-                </VStack>
+                  <Divider
+                    backgroundColor={"#40916c"}
+                    orientation="horizontal"
+                    my="1em"
+                  />
+                  <Text>Length: 2.4 km</Text>
+                  <Text>Elevation: 531m</Text>
+                  <Text>Est. 2h 5m</Text>
+                </Stack>
               </Flex>
             </Popup>
           </Box>

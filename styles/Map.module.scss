@@ -1,11 +1,19 @@
 @import "./breakpoints";
 
 .popup div {
-  background-color: rgba($color: rgb(14 17 23), $alpha: 1);
   border-radius: 0.2em;
+  padding: 0;
+  overflow: hidden;
 }
 
 .popupContent {
+  background-color: rgba($color: rgb(14 17 23), $alpha: 1);
+  height: 120px !important;
+
+  @include md {
+    width: 350px !important;
+  }
+
   span {
     display: none !important;
 
@@ -17,10 +25,12 @@
   h1,
   p {
     color: white;
+    letter-spacing: 1px;
   }
 
   h1 {
     font-size: 1.3em;
     font-weight: 600;
+    color: #40916c;
   }
 }
