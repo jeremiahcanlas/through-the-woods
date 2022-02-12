@@ -1,62 +1,41 @@
 import Header from "../components/Header";
 import Nav from "../components/Nav";
 import Meta from "../components/Meta";
-import { Flex } from "@chakra-ui/react";
+import Recent from "../components/Recent";
+import { Flex, Box } from "@chakra-ui/react";
+import axios from "axios";
+import { server } from "../server";
 
-export default function Home() {
+export default function Home({ recent }) {
   return (
     <Flex
-      maxH="100%"
-      h="100vh"
-      minW="100%"
-      p="0"
+      // h="100vh"
+      overflow={"hidden"}
       flexDirection="column"
       justifyContent="center"
+      align={"center"}
     >
       <Meta />
-      <Header />
-      <Nav />
+      <Flex
+        justifyContent="center"
+        flexDirection="column"
+        align={"center"}
+        height="80vh"
+      >
+        <Header />
+        <Nav />
+      </Flex>
+
+      <Recent trails={recent} />
     </Flex>
   );
 }
 
-// export const getServerSideProps = async (ctx) => {
-//   const cookies = nookies.get(ctx);
+Home.getInitialProps = async () => {
+  const res = await axios.get(`${server}/trails`);
+  const trails = await res.data.reverse();
 
-//   const json = JSON.stringify({
-//     token: cookies.jwt,
-//   });
+  const recent = await trails.slice(0, 3);
 
-//   if (cookies?.jwt) {
-//     try {
-//       // const response = await axios.get(`${server}/users/me`, {
-//       //   headers: {
-//       //     Authorization: `Bearer ${cookies.jwt}`,
-//       //   },
-//       // });
-
-//       // https://stackoverflow.com/questions/65752932/internal-api-fetch-with-getserversideprops-next-js
-//       const response = await axios.post(
-//         "http://localhost:3000/api/user/me",
-//         json,
-//         {
-//           headers: {
-//             "Content-Type": "application/json",
-//           },
-//         }
-//       );
-
-//       const user = await response.data;
-
-//       return {
-//         props: { user, cookies },
-//       };
-//     } catch (e) {
-//       console.log("ERRRROR FETCHING");
-//     }
-//   }
-
-//   return {
-//     props: {},
-//   };
-// };
+  return { recent };
+};

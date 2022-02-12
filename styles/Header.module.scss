@@ -1,4 +1,12 @@
+@import url("https://fonts.googleapis.com/css2?family=Syne&display=swap");
+
 .image {
   z-index: -1;
   opacity: 0.2;
+}
+
+.heading {
+  font-family: "Syne", sans-serif !important;
+  letter-spacing: 2px;
+  opacity: 1;
 }

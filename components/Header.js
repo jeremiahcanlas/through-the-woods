@@ -26,10 +26,8 @@ const Header = () => (
       <Heading
         fontSize={["2em", "2em"]}
         bgGradient="linear(to-t, #2d6a4f 30%,#40916c 70%)"
-        opacity="1"
         bgClip="text"
-        letterSpacing="0.2em"
-        fontWeight="700"
+        className={styles.heading}
       >
         THROUGH THE WOODS
       </Heading>
@@ -43,7 +41,7 @@ const Header = () => (
       quality={40}
       placeholder="blur"
       className={styles.image}
-      priority
+      priority={false}
     />
   </MotionContainer>
 );

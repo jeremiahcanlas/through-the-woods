@@ -27,8 +27,6 @@ const Trail = ({ trail }) => {
     );
   };
 
-  // console.log(trail);
-
   return (
     <PageContainer>
       <Container maxW={["100vw", "80vw", "60vw"]} overflowX={"hidden"}>

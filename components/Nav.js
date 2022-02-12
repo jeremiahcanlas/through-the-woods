@@ -38,26 +38,22 @@ const Nav = () => {
 
   return (
     <Stack
-      direction={["column", "row"]}
+      direction={["column", "column", "row"]}
       justify="center"
       alignContent="center"
       px="1em"
       mt="3em"
-      spacing={["3", "1"]}
+      spacing={["3", "3", "1"]}
       className="nav-container"
     >
       <Link href="/trails" passHref>
         <Button
           p="0.8em"
-          w={["100%", "70vw", "15vw"]}
+          w={["90vw", "60vw", "15vw"]}
           borderColor="#40916c"
           variant="outline"
           fontWeight="300"
           textColor="white"
-          _hover={{
-            textColor: "blackAlpha.800",
-            backgroundColor: "whiteAlpha.500",
-          }}
           rightIcon={<GiMountaintop size="1.2em" />}
         >
           TRAILS
@@ -68,15 +64,11 @@ const Nav = () => {
           <Link href="/trails/create" passHref>
             <Button
               p="0.8em"
-              w={["100%", "70vw", "15vw"]}
+              w={["90vw", "60vw", "15vw"]}
               borderColor="#40916c"
               variant="outline"
               fontWeight="300"
               textColor="white"
-              _hover={{
-                textColor: "blackAlpha.800",
-                backgroundColor: "whiteAlpha.500",
-              }}
               rightIcon={<IoIosCreate size="1.2em" />}
             >
               CREATE
@@ -84,17 +76,13 @@ const Nav = () => {
           </Link>
           <Button
             p="0.8em"
-            w={["100%", "70vw", "15vw"]}
+            w={["90vw", "60vw", "15vw"]}
             borderColor="#40916c"
             variant="outline"
             fontWeight="300"
             _focus={{ outline: "none" }}
             onClick={logout}
             textColor="red.300"
-            _hover={{
-              textColor: "blackAlpha.800",
-              backgroundColor: "whiteAlpha.500",
-            }}
             rightIcon={<IoIosLogOut />}
           >
             LOG OUT
@@ -104,16 +92,12 @@ const Nav = () => {
         <Link href="/login" passHref>
           <Button
             p="0.8em"
-            w={["100%", "70vw", "15vw"]}
+            w={["90vw", "60vw", "15vw"]}
             borderColor="#40916c"
             variant="outline"
             fontWeight="300"
             _focus={{ outline: "none" }}
             textColor="white"
-            _hover={{
-              textColor: "blackAlpha.800",
-              backgroundColor: "whiteAlpha.500",
-            }}
             rightIcon={<IoIosLogIn />}
           >
             LOG IN

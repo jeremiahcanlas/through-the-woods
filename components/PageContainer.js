@@ -18,7 +18,7 @@ const PageContainer = ({ children, image, title, showImg }) => (
       position="sticky"
       top="0"
       zIndex={100}
-      bgGradient="linear-gradient(to-t,rgba(20,24,33,0),rgba(20,24,33, 1) 40%)"
+      bgGradient="linear-gradient(to-t,rgba(14,17,23,0),rgba(14,17,23, 1) 40%)"
     >
       <Link href="/" passHref>
         <Heading
