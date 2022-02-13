@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { setAlert, removeAlert } from "../features/alert";
 import { GiMountaintop } from "react-icons/gi";
 import { useSession, signOut } from "next-auth/react";
+import styles from "../styles/Nav.module.scss";
 
 const Nav = () => {
   const { data: session } = useSession();
@@ -55,6 +56,7 @@ const Nav = () => {
           fontWeight="300"
           textColor="white"
           rightIcon={<GiMountaintop size="1.2em" />}
+          className={styles.btn}
         >
           TRAILS
         </Button>
@@ -70,6 +72,7 @@ const Nav = () => {
               fontWeight="300"
               textColor="white"
               rightIcon={<IoIosCreate size="1.2em" />}
+              className={styles.btn}
             >
               CREATE
             </Button>
@@ -84,6 +87,7 @@ const Nav = () => {
             onClick={logout}
             textColor="red.300"
             rightIcon={<IoIosLogOut />}
+            className={styles.btn}
           >
             LOG OUT
           </Button>
@@ -99,6 +103,7 @@ const Nav = () => {
             _focus={{ outline: "none" }}
             textColor="white"
             rightIcon={<IoIosLogIn />}
+            className={styles.btn}
           >
             LOG IN
           </Button>

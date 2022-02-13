@@ -1,0 +1,21 @@
+@import "./breakpoints";
+
+.btn {
+  @include md {
+    background-image: linear-gradient(
+      to right,
+      #40916c,
+      #40916c 50%,
+      transparent 50%
+    ) !important;
+    background-size: 202% 100% !important;
+    background-position: 100% !important;
+    transition: all 0.5s cubic-bezier(0, 0, 0.23, 1) !important;
+
+    &:hover {
+      color: black;
+      background-color: transparent !important;
+      background-position: 0% !important;
+    }
+  }
+}
