@@ -29,6 +29,7 @@ const CreateTrail = () => {
 
   if (status === "unauthenticated") {
     router.push("/");
+    return <p>NOT AUTHORIZED</p>;
   }
 
   const handleCreate = async (values) => {
