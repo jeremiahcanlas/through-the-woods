@@ -8,7 +8,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   //forward geocoding to get coordinates
   const geocoding = await axios.get(
-    `https://api.mapbox.com/geocoding/v5/mapbox.places/${location}.json?access_token=${process.env.mapbox_token}`
+    `https://api.mapbox.com/geocoding/v5/mapbox.places/${location}.json?access_token=${process.env.MAPBOX_TOKEN}`
   );
 
   const geojson = geocoding.data.features[0].geometry;
