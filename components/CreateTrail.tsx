@@ -99,67 +99,69 @@ const CreateTrail = () => {
     description: Yup.string().required("Description is Required"),
   });
 
-  return (
-    <PageContainer showImg={false}>
-      <Container my="2em" textAlign={["start", "start", "center"]}>
-        <Heading as="h2" fontSize="2rem" letterSpacing="2px">
-          Create
-        </Heading>
-      </Container>
-      <Container p={["0,2em", "0"]}>
-        <Formik
-          initialValues={{
-            title: "",
-            location: "",
-            description: "",
-          }}
-          validationSchema={validateForm}
-          onSubmit={handleCreate}
-        >
-          {({ isSubmitting, handleSubmit, handleReset, values }) => (
-            <Form onSubmit={handleSubmit}>
-              <TextField placeholder="Title" name="title" />
-              <TextField placeholder="Location" name="location" />
-              <TextField
-                name="description"
-                textbox={true}
-                placeholder="Description"
-              />
-              <Box my="2em">
-                <Heading fontSize={"1em"} mb="1em">
-                  Upload Images
-                </Heading>
-                <UploadFile images={images} setImages={setImages} />
-              </Box>
+  if (status === "authenticated") {
+    return (
+      <PageContainer showImg={false}>
+        <Container my="2em" textAlign={["start", "start", "center"]}>
+          <Heading as="h2" fontSize="2rem" letterSpacing="2px">
+            Create
+          </Heading>
+        </Container>
+        <Container p={["0,2em", "0"]}>
+          <Formik
+            initialValues={{
+              title: "",
+              location: "",
+              description: "",
+            }}
+            validationSchema={validateForm}
+            onSubmit={handleCreate}
+          >
+            {({ isSubmitting, handleSubmit, handleReset, values }) => (
+              <Form onSubmit={handleSubmit}>
+                <TextField placeholder="Title" name="title" />
+                <TextField placeholder="Location" name="location" />
+                <TextField
+                  name="description"
+                  textbox={true}
+                  placeholder="Description"
+                />
+                <Box my="2em">
+                  <Heading fontSize={"1em"} mb="1em">
+                    Upload Images
+                  </Heading>
+                  <UploadFile images={images} setImages={setImages} />
+                </Box>
 
-              <Stack direction="row" justifyContent="space-between">
-                <Button
-                  isLoading={isSubmitting}
-                  disabled={isSubmitting}
-                  loadingText="Submitting"
-                  // width={["95%", "30%"]}
-                  size="lg"
-                  type="submit"
-                >
-                  Submit
-                </Button>
-                <Button
-                  size="sm"
-                  colorScheme="red"
-                  onClick={handleReset}
-                  disabled={isSubmitting}
-                >
-                  CLEAR
-                </Button>
-              </Stack>
+                <Stack direction="row" justifyContent="space-between">
+                  <Button
+                    isLoading={isSubmitting}
+                    disabled={isSubmitting}
+                    loadingText="Submitting"
+                    // width={["95%", "30%"]}
+                    size="lg"
+                    type="submit"
+                  >
+                    Submit
+                  </Button>
+                  <Button
+                    size="sm"
+                    colorScheme="red"
+                    onClick={handleReset}
+                    disabled={isSubmitting}
+                  >
+                    CLEAR
+                  </Button>
+                </Stack>
 
-              {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
-            </Form>
-          )}
-        </Formik>
-      </Container>
-    </PageContainer>
-  );
+                {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
+              </Form>
+            )}
+          </Formik>
+        </Container>
+      </PageContainer>
+    );
+  }
 };
 
 export default CreateTrail;
