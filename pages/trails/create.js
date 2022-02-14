@@ -4,7 +4,7 @@ import { getSession } from "next-auth/react";
 
 const create = () => <CreateTrail />;
 
-export const getInitialProps = async (ctx) => {
+create.getInitialProps = async (ctx) => {
   const session = await getSession(ctx);
 
   if (!session) {
