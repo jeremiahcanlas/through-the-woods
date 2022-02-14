@@ -12,6 +12,8 @@ export const getServerSideProps = async (ctx) => {
     const session = await getSession(ctx);
 
     if (!session || session.username !== trail.user.username) {
+      console.log("couldnt get session");
+
       return {
         redirect: {
           destination: "/",

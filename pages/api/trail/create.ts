@@ -35,6 +35,4 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   } catch (e) {
     res.status(404).end();
   }
-
-  //   res.json({ message: "this is the blog create api route" });
 };
