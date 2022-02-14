@@ -6,7 +6,7 @@ const create = () => <CreateTrail />;
 
 export default create;
 
-export const getInitialProps = async (ctx) => {
+create.getInitialProps = async (ctx) => {
   const session = await getSession(ctx);
 
   if (!session) {

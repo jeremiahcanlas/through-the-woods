@@ -5,7 +5,7 @@ import { getSession } from "next-auth/react";
 
 const edit = ({ trail }) => <EditTrail trail={trail} />;
 
-export const getInitialProps = async (ctx) => {
+edit.getInitialProps = async (ctx) => {
   try {
     const res = await axios.get(`${server}/trails/${ctx.params.id}`);
     const trail = await res.data;
