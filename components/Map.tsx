@@ -43,7 +43,7 @@ const Map = ({ trails, geojson }) => {
   return (
     <ReactMapGL
       mapStyle="mapbox://styles/jeremiahcanlas/ckz3e4kw4002214p35infkp6f"
-      mapboxApiAccessToken={process.env.mapbox_token}
+      mapboxApiAccessToken={process.env.MAPBOX_TOKEN}
       onViewportChange={(nextViewport) => setViewport(nextViewport)}
       interactiveLayerIds={[clusterLayer.id, unclusteredPointLayer.id]}
       onMouseEnter={(e) =>
