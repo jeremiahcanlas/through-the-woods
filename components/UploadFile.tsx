@@ -28,10 +28,6 @@ const UploadFile = ({ images, setImages }) => {
     setPreviewVisible(true);
 
     setPreviewImage(file.url || file.preview);
-
-    // setPreviewTitle(
-    //   file.name || file.url.substring(file.url.lastIndexOf("/") + 1)
-    // );
   };
 
   const handleChange = ({ fileList }) => {
@@ -44,7 +40,7 @@ const UploadFile = ({ images, setImages }) => {
     </div>
   );
 
-  const dummyRequest = ({ file, onSuccess }) => {
+  const dummyRequest: any = ({ file, onSuccess }) => {
     setTimeout(() => {
       onSuccess("ok");
     }, 0);

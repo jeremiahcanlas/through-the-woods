@@ -28,13 +28,6 @@ const EditTrail = ({ trail }) => {
     }, 3000);
   };
 
-  // if (typeof window !== "undefined") return null;
-
-  // if (status === "unauthenticated") {
-  //   router.push("/");
-  //   return <p>NOT AUTHORIZED</p>;
-  // }
-
   //delete trail
   const deletePost = async () => {
     try {

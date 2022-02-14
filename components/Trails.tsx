@@ -40,7 +40,7 @@ const Trails = ({ trails, geojson }) => {
         )}
         <Wrap spacing={"0.5em"} my="2em" justify={"center"} width={"100%"}>
           {trails.map((trail) => {
-            return <TrailBox key={trail.id} trail={trail} />;
+            return <TrailBox key={trail.id} trail={trail} recent={false} />;
           })}
         </Wrap>
       </Flex>

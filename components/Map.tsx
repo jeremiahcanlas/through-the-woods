@@ -1,17 +1,8 @@
-import ReactMapGL, { Source, Layer, Marker, Popup } from "react-map-gl";
-import {
-  Box,
-  Flex,
-  Text,
-  HStack,
-  VStack,
-  Stack,
-  Container,
-  Divider,
-} from "@chakra-ui/react";
-import { useState, useEffect } from "react";
+import ReactMapGL, { Source, Layer, Popup } from "react-map-gl";
+import { Box, Flex, Text, Stack, Divider } from "@chakra-ui/react";
+import { useState } from "react";
 import { getCenter } from "geolib";
-import { Result } from "antd";
+
 import {
   clusterCountLayer,
   clusterLayer,

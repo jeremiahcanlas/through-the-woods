@@ -1,10 +1,7 @@
-import { Container, Heading, Box, Button, Icon } from "@chakra-ui/react";
+import { Heading, Box } from "@chakra-ui/react";
 import Link from "next/link";
-import Image from "next/image";
-import defaultImage from "../public/about-pic.jpeg";
-import { RiHome2Fill } from "react-icons/ri";
 
-const PageContainer = ({ children, image, title, showImg }) => (
+const PageContainer = ({ children, title }) => (
   <Box
     maxH="100%"
     minH="100vh"
@@ -14,7 +11,6 @@ const PageContainer = ({ children, image, title, showImg }) => (
     mb="1.5rem"
   >
     <Box
-      // backgroundColor={"currentcolor"}
       position="sticky"
       top="0"
       zIndex={100}
@@ -43,23 +39,12 @@ const PageContainer = ({ children, image, title, showImg }) => (
         </Heading>
       )}
 
-      {/* <Box
-      my="1.2em"
-      height="20vw"
-      maxH="150px"
-      overflow="hidden"
-      display={!showImg ? "none" : "block"}
-      position="relative"
-    >
-      <Image src={image} alt="cover image" sizes="40vw" layout="responsive" />
-    </Box> */}
       {children}
     </Box>
   </Box>
 );
 
 PageContainer.defaultProps = {
-  image: defaultImage,
   showImg: true,
   title: "",
 };

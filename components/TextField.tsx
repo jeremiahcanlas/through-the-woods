@@ -5,7 +5,6 @@ import {
   FormControl,
   Textarea,
   Checkbox,
-  position,
 } from "@chakra-ui/react";
 
 const TextField = ({
@@ -24,8 +23,7 @@ const TextField = ({
           <FormControl
             isInvalid={meta.error && meta.touched}
             my="6"
-            // position={checkbox && "absolute"}
-            style={{ position: checkbox && "absolute" }}
+            // style={{ position: checkbox && "absolute" }}
           >
             {textbox ? (
               <Textarea

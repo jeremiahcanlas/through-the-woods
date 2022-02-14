@@ -1,5 +1,4 @@
 import Head from "next/head";
-import icon from "../public/favicon.ico";
 
 const Meta = ({ title, keywords, description }) => (
   <Head>

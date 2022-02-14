@@ -19,11 +19,8 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "components/CreateTrail.tsx",
-    "pages/trail/create.ts",
-    "layer.js",
-    "layer.js",
-    "layer.js"
+    "./components/*.tsx",
+    "./components/*.tsx"
   ],
   "exclude": ["node_modules"]
 }

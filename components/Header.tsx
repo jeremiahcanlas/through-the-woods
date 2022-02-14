@@ -34,7 +34,7 @@ const Header = () => (
     </Center>
     <Image
       src={backgroundImage}
-      position="absolute"
+      // position="absolute"
       alt="cover image"
       layout="fill"
       objectFit="cover"

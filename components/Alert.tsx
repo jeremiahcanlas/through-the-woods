@@ -1,8 +1,8 @@
 import { Text } from "@chakra-ui/react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 const Alert = () => {
-  const alert = useSelector((state) => state.alert);
+  const alert = useSelector((state: any) => state.alert);
 
   return (
     <Text
