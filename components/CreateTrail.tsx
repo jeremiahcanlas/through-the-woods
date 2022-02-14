@@ -32,74 +32,74 @@ const CreateTrail = () => {
     return <p>NOT AUTHORIZED</p>;
   }
 
-  const handleCreate = async (values) => {
-    const { title, location, description } = values;
+  if (status === "authenticated") {
+    const handleCreate = async (values) => {
+      const { title, location, description } = values;
 
-    try {
-      let files = [];
+      try {
+        let files = [];
 
-      //will upload to strapi backend
-      if (images.length >= 1) {
-        const data = new FormData();
+        //will upload to strapi backend
+        if (images.length >= 1) {
+          const data = new FormData();
 
-        images.forEach(async (img) => {
-          return data.append("files", img.originFileObj);
+          images.forEach(async (img) => {
+            return data.append("files", img.originFileObj);
+          });
+
+          // uploads images to strapi media library
+          const res = await axios.post(`${server}/upload`, data, {
+            headers: {
+              Authorization: `Bearer ${session.jwt}`,
+            },
+          });
+
+          // this sets the image id in an array
+          await res.data.forEach((file) => {
+            files.push(file.id);
+          });
+        }
+
+        const json = JSON.stringify({
+          title: title,
+          location: location,
+          description: description,
+          images: files,
+          jwt: session.jwt,
         });
 
-        // uploads images to strapi media library
-        const res = await axios.post(`${server}/upload`, data, {
+        const response = await axios.post("/api/trail/create", json, {
           headers: {
-            Authorization: `Bearer ${session.jwt}`,
+            "Content-Type": "application/json",
           },
         });
 
-        // this sets the image id in an array
-        await res.data.forEach((file) => {
-          files.push(file.id);
-        });
+        dispatch(
+          setAlert({
+            msg: "Successfully posted!",
+            alertType: "success",
+          })
+        );
+
+        router.push(`/trails/${response.data.id}`);
+      } catch (error) {
+        dispatch(
+          setAlert({
+            msg: "Post error, try again.",
+            alertType: "error",
+          })
+        );
       }
 
-      const json = JSON.stringify({
-        title: title,
-        location: location,
-        description: description,
-        images: files,
-        jwt: session.jwt,
-      });
+      clearAlert();
+    };
 
-      const response = await axios.post("/api/trail/create", json, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+    const validateForm = Yup.object({
+      title: Yup.string().required("Title is Required"),
+      location: Yup.string().required("Location is Required"),
+      description: Yup.string().required("Description is Required"),
+    });
 
-      dispatch(
-        setAlert({
-          msg: "Successfully posted!",
-          alertType: "success",
-        })
-      );
-
-      router.push(`/trails/${response.data.id}`);
-    } catch (error) {
-      dispatch(
-        setAlert({
-          msg: "Post error, try again.",
-          alertType: "error",
-        })
-      );
-    }
-
-    clearAlert();
-  };
-
-  const validateForm = Yup.object({
-    title: Yup.string().required("Title is Required"),
-    location: Yup.string().required("Location is Required"),
-    description: Yup.string().required("Description is Required"),
-  });
-
-  if (status === "authenticated") {
     return (
       <PageContainer showImg={false}>
         <Container my="2em" textAlign={["start", "start", "center"]}>
