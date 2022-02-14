@@ -16,7 +16,7 @@ import * as Yup from "yup";
 import { server } from "../server";
 
 const EditTrail = ({ trail }) => {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
 
   const router = useRouter();
   const dispatch = useDispatch();
@@ -27,6 +27,13 @@ const EditTrail = ({ trail }) => {
       dispatch(removeAlert());
     }, 3000);
   };
+
+  // if (typeof window !== "undefined") return null;
+
+  // if (status === "unauthenticated") {
+  //   router.push("/");
+  //   return <p>NOT AUTHORIZED</p>;
+  // }
 
   //delete trail
   const deletePost = async () => {
@@ -136,75 +143,74 @@ const EditTrail = ({ trail }) => {
     deleted: Yup.array(),
   });
 
-  // if (trail.user.username === user.username) {
-  //   router.push("/");
-  // }}
+  if (session) {
+    return (
+      <PageContainer showImg={false}>
+        <Container my="2em" textAlign={["start", "start", "center"]}>
+          <Heading as="h2" fontSize="2rem" letterSpacing="2px">
+            Edit
+          </Heading>
+        </Container>
+        <Container p={["0,2em", "0"]}>
+          <Formik
+            initialValues={{
+              title: trail.title,
+              location: trail.location,
+              description: trail.description,
+              deleted: [],
+            }}
+            validationSchema={validateForm}
+            onSubmit={handleCreate}
+          >
+            {({ isSubmitting, handleSubmit, handleReset, values }) => (
+              <Form onSubmit={handleSubmit}>
+                {/* {error && <Text>{error}</Text>} */}
+                <TextField placeholder="Title" name="title" />
+                <TextField placeholder="Location" name="location" />
 
-  return (
-    <PageContainer showImg={false}>
-      <Container my="2em" textAlign={["start", "start", "center"]}>
-        <Heading as="h2" fontSize="2rem" letterSpacing="2px">
-          Edit
-        </Heading>
-      </Container>
-      <Container p={["0,2em", "0"]}>
-        <Formik
-          initialValues={{
-            title: trail.title,
-            location: trail.location,
-            description: trail.description,
-            deleted: [],
-          }}
-          validationSchema={validateForm}
-          onSubmit={handleCreate}
-        >
-          {({ isSubmitting, handleSubmit, handleReset, values }) => (
-            <Form onSubmit={handleSubmit}>
-              {/* {error && <Text>{error}</Text>} */}
-              <TextField placeholder="Title" name="title" />
-              <TextField placeholder="Location" name="location" />
-
-              <TextField name="description" textbox={true} />
-              <Box my="2em">
-                <Heading fontSize={"1em"} mb="1em">
-                  Upload Images
-                </Heading>
-                <UploadFile images={images} setImages={setInitialImages} />
-              </Box>
-              <Stack
-                direction="column"
-                justifyContent="space-between"
-                maxW="100%"
-                spacing="4em"
-              >
-                <Button
-                  isLoading={isSubmitting}
-                  disabled={isSubmitting}
-                  loadingText="Updating"
-                  width={["95%", "30%"]}
-                  alignSelf={["center", "start"]}
-                  size="lg"
-                  type="submit"
+                <TextField name="description" textbox={true} />
+                <Box my="2em">
+                  <Heading fontSize={"1em"} mb="1em">
+                    Upload Images
+                  </Heading>
+                  <UploadFile images={images} setImages={setInitialImages} />
+                </Box>
+                <Stack
+                  direction="column"
+                  justifyContent="space-between"
+                  maxW="100%"
+                  spacing="4em"
                 >
-                  Update
-                </Button>
-                <Button
-                  backgroundColor={"red.500"}
-                  maxW={["40%", "30%"]}
-                  loadingText="Deleting"
-                  _hover={{ backgroundColor: "red.300" }}
-                  onClick={() => deletePost()}
-                >
-                  Delete
-                </Button>
-              </Stack>
-              {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
-            </Form>
-          )}
-        </Formik>
-      </Container>
-    </PageContainer>
-  );
+                  <Button
+                    isLoading={isSubmitting}
+                    disabled={isSubmitting}
+                    loadingText="Updating"
+                    width={["95%", "30%"]}
+                    alignSelf={["center", "start"]}
+                    size="lg"
+                    type="submit"
+                  >
+                    Update
+                  </Button>
+                  <Button
+                    backgroundColor={"red.500"}
+                    maxW={["40%", "30%"]}
+                    loadingText="Deleting"
+                    _hover={{ backgroundColor: "red.300" }}
+                    onClick={() => deletePost()}
+                  >
+                    Delete
+                  </Button>
+                </Stack>
+                {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
+              </Form>
+            )}
+          </Formik>
+        </Container>
+      </PageContainer>
+    );
+  }
+  return <p>NOT AUTHORIZED</p>;
 };
 
 export default EditTrail;

@@ -9,20 +9,8 @@ export const getServerSideProps = async (ctx) => {
   try {
     const res = await axios.get(`${server}/trails/${ctx.params.id}`);
     const trail = await res.data;
-    const session = await getSession(ctx);
 
-    if (!session || session.username !== trail.user.username) {
-      console.log("couldnt get session");
-
-      return {
-        redirect: {
-          destination: "/",
-          permanent: false,
-        },
-      };
-    }
-
-    return { props: { trail } };
+    return { props: { trail, session: await getSession(ctx) } };
   } catch {
     console.log("trail error");
     return {
