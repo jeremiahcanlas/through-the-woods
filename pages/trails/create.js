@@ -4,21 +4,21 @@ import { getSession } from "next-auth/react";
 
 const create = () => <CreateTrail />;
 
-export const getServerSideProps = async (ctx) => {
-  const session = await getSession(ctx);
+// export const getServerSideProps = async (ctx) => {
+//   const session = await getSession(ctx);
 
-  if (!session) {
-    return {
-      redirect: {
-        destination: "/",
-        permanent: false,
-      },
-    };
-  }
+//   if (!session) {
+//     return {
+//       redirect: {
+//         destination: "/",
+//         permanent: false,
+//       },
+//     };
+//   }
 
-  return {
-    props: {},
-  };
-};
+//   return {
+//     props: {},
+//   };
+// };
 
 export default create;

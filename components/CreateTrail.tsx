@@ -15,7 +15,7 @@ import * as Yup from "yup";
 import { server } from "../server";
 
 const CreateTrail = () => {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
 
   const router = useRouter();
   const dispatch = useDispatch();
@@ -26,6 +26,10 @@ const CreateTrail = () => {
       dispatch(removeAlert());
     }, 3000);
   };
+
+  if (status === "unauthenticated") {
+    router.push("/");
+  }
 
   const handleCreate = async (values) => {
     const { title, location, description } = values;
