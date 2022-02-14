@@ -1,4 +1,4 @@
-export const clusterLayer = {
+export const clusterLayer: any = {
   id: "clusters",
   type: "circle",
   source: "trails",
@@ -17,7 +17,7 @@ export const clusterLayer = {
   },
 };
 
-export const clusterCountLayer = {
+export const clusterCountLayer: any = {
   id: "cluster-count",
   type: "symbol",
   source: "trails",
@@ -29,7 +29,7 @@ export const clusterCountLayer = {
   },
 };
 
-export const unclusteredPointLayer = {
+export const unclusteredPointLayer: any = {
   id: "unclustered-point",
   type: "circle",
   source: "trails",
