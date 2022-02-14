@@ -19,7 +19,7 @@ export const clusterLayer: LayerProps = {
   },
 };
 
-export const clusterCountLayer: LayerProps = {
+export const clusterCountLayer = {
   id: "cluster-count",
   type: "symbol",
   source: "trails",
