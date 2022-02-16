@@ -1,11 +1,12 @@
 import { Container, Stack, Text, Button } from "@chakra-ui/react";
 import TrailBox from "./TrailBox";
 import Link from "next/link";
+import styles from "../styles/Trails.module.scss";
 
 const Recent = ({ trails }) => {
   return (
     <Container
-      h={"50vh"}
+      h={"60vh"}
       borderRadius="0.5em"
       m="1em"
       maxW={["90%", "70%", "50%", "30%"]}
@@ -19,7 +20,9 @@ const Recent = ({ trails }) => {
         })}
       </Stack>
       <Link href="/trails" passHref>
-        <Button variant="outline">View All Trails</Button>
+        <Button variant="outline" className={styles.btn}>
+          View All Trails
+        </Button>
       </Link>
     </Container>
   );

@@ -4,6 +4,7 @@ import { AiOutlinePlusSquare } from "react-icons/ai";
 import PageContainer from "./PageContainer";
 import TrailBox from "./TrailBox";
 import Map from "./Map";
+import styles from "../styles/Trails.module.scss";
 
 import { useSession } from "next-auth/react";
 
@@ -33,6 +34,7 @@ const Trails = ({ trails, geojson }) => {
               fontWeight="300"
               textColor="white"
               leftIcon={<AiOutlinePlusSquare />}
+              className={styles.btn}
             >
               Create New trail
             </Button>

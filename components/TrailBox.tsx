@@ -18,15 +18,16 @@ const TrailBox = ({ trail, recent }) => {
   return (
     <Link href={`/trails/${trail.id}`} key={trail.id} passHref>
       <Container
-        w={recent ? "100%" : ["100%", "80%", "50%"]}
+        w={recent ? "100%" : ["100%", "80%", "30%"]}
         p={recent ? "15px" : "40px"}
         maxW={recent && "100%"}
         borderRadius="1em"
         backgroundColor={trail.images.length === 0 && "blackAlpha.900"}
-        _hover={{ backgroundColor: "#343a40", opacity: 0.8 }}
+        // _hover={{ backgroundColor: "#343a40", opacity: 0.8 }}
         cursor="pointer"
         textAlign="left"
         position="relative"
+        className={styles.trailBox}
       >
         <Heading fontSize={["md", "lg"]} letterSpacing={"1px"}>
           {trail.title}
