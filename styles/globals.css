@@ -4,6 +4,10 @@ body {
   padding: 0 !important;
   margin: 0 !important;
 }
+::-webkit-scrollbar {
+  width: 0; /* Remove scrollbar space */
+  background: transparent; /* Optional: just make scrollbar invisible */
+}
 
 a {
   color: inherit;
