@@ -3,17 +3,12 @@ body {
   max-width: 100vw !important;
   padding: 0 !important;
   margin: 0 !important;
+  scrollbar-color: black black !important;
 }
 
 body {
   overflow-y: scroll;
   overflow-x: hidden;
-}
-
-*::-webkit-scrollbar {
-  width: 0; /* Remove scrollbar space */
-  color: rgba(14, 17, 23, 0);
-  background: transparent; /* Optional: just make scrollbar invisible */
 }
 
 a {
