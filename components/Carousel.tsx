@@ -96,6 +96,7 @@ const Carousel = ({ images }) => {
             textColor={"white"}
             leftIcon={<HiOutlineChevronRight />}
             onClick={() => paginate(1)}
+            padding={0}
           />
 
           <Button
@@ -104,6 +105,7 @@ const Carousel = ({ images }) => {
             className={styles.prev}
             leftIcon={<HiOutlineChevronLeft />}
             onClick={() => paginate(-1)}
+            padding={0}
           />
         </>
       )}

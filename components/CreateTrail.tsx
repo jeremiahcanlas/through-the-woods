@@ -1,4 +1,13 @@
-import { Container, Button, Stack, Box, Heading } from "@chakra-ui/react";
+import {
+  Container,
+  Button,
+  Stack,
+  Box,
+  Heading,
+  Input,
+  InputGroup,
+  InputRightElement,
+} from "@chakra-ui/react";
 import { Formik, Form } from "formik";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
@@ -124,6 +133,36 @@ const CreateTrail = () => {
             <Form onSubmit={handleSubmit}>
               <TextField placeholder="Title" name="title" />
               <TextField placeholder="Location" name="location" />
+              <Stack direction={"row"} spacing="2" mb="3">
+                <InputGroup>
+                  <Input placeholder="0" type="number" name="length" />
+                  {
+                    // eslint-disable-next-line react/no-children-prop
+                    <InputRightElement children={"km"} />
+                  }
+                </InputGroup>
+
+                <InputGroup>
+                  <Input placeholder="Trail Type" type="number" name="length" />
+                </InputGroup>
+              </Stack>
+              <Box>
+                <Heading fontSize={"1em"} mb="1em">
+                  Length
+                </Heading>
+                <Stack direction={"row"} spacing="0">
+                  <InputGroup>
+                    <Input placeholder="days" type="number" name="days" />
+                  </InputGroup>
+                  <InputGroup>
+                    <Input placeholder="hours" type="number" name="hours" />
+                  </InputGroup>
+                  <InputGroup>
+                    <Input placeholder="mins" type="number" name="minutes" />
+                  </InputGroup>
+                </Stack>
+              </Box>
+
               <TextField
                 name="description"
                 textbox={true}
