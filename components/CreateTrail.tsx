@@ -7,6 +7,8 @@ import {
   Input,
   InputGroup,
   InputRightElement,
+  NumberInput,
+  NumberInputField,
 } from "@chakra-ui/react";
 import { Formik, Form } from "formik";
 import { useRouter } from "next/router";
@@ -46,7 +48,7 @@ const CreateTrail = () => {
   }
 
   const handleCreate = async (values) => {
-    const { title, location, description } = values;
+    const { title, location, type, distance, description } = values;
 
     try {
       let files = [];
@@ -109,6 +111,7 @@ const CreateTrail = () => {
   const validateForm = Yup.object({
     title: Yup.string().required("Title is Required"),
     location: Yup.string().required("Location is Required"),
+    type: Yup.string().required("Trail Type is Required"),
     description: Yup.string().required("Description is Required"),
   });
 
@@ -124,50 +127,115 @@ const CreateTrail = () => {
           initialValues={{
             title: "",
             location: "",
+            type: "",
+            distance: 0,
+            elevation: 0,
+            days: 0,
+            hours: 0,
+            minutes: 0,
             description: "",
           }}
           validationSchema={validateForm}
           onSubmit={handleCreate}
         >
-          {({ isSubmitting, handleSubmit, handleReset, values }) => (
+          {({
+            isSubmitting,
+            handleSubmit,
+            handleReset,
+            values,
+            setFieldValue,
+          }) => (
             <Form onSubmit={handleSubmit}>
               <TextField placeholder="Title" name="title" />
               <TextField placeholder="Location" name="location" />
               <Stack direction={"row"} spacing="2" mb="3">
-                <InputGroup>
-                  <Input placeholder="0" type="number" name="length" />
-                  {
-                    // eslint-disable-next-line react/no-children-prop
-                    <InputRightElement children={"km"} />
-                  }
-                </InputGroup>
-
-                <InputGroup>
-                  <Input placeholder="Trail Type" type="number" name="length" />
-                </InputGroup>
+                <TextField placeholder="Trail type" name="type" />
               </Stack>
-              <Box>
+              <Stack direction={"row"} spacing="6em" my="2em">
+                <Box>
+                  <Heading fontSize={"1em"} mb="1em">
+                    Distance (km)
+                  </Heading>
+                  {/* <TextField numField name="distance" element={"km"} /> */}
+                  <NumberInput
+                    maxW={"8em"}
+                    defaultValue={0}
+                    variant={"flushed"}
+                    size="md"
+                    min={0}
+                    name="distance"
+                    onChange={(e) => setFieldValue("distance", e)}
+                  >
+                    <NumberInputField />
+                    {
+                      // eslint-disable-next-line react/no-children-prop
+                      <InputRightElement fontWeight={700} children={"km"} />
+                    }
+                  </NumberInput>
+                </Box>
+                <Box>
+                  <Heading fontSize={"1em"} mb="1em">
+                    Elevation (m)
+                  </Heading>
+                  {/* <TextField numField name="elevation" element={"m"} /> */}
+                  <NumberInput
+                    maxW={"8em"}
+                    defaultValue={0}
+                    variant={"flushed"}
+                    size="md"
+                    min={0}
+                    name="elevation"
+                    onChange={(e) => setFieldValue("elevation", e)}
+                  >
+                    <NumberInputField />
+                    {
+                      // eslint-disable-next-line react/no-children-prop
+                      <InputRightElement fontWeight={700} children={"m"} />
+                    }
+                  </NumberInput>
+                </Box>
+              </Stack>
+              <Box my="2em">
                 <Heading fontSize={"1em"} mb="1em">
-                  Length
+                  Trail Length
                 </Heading>
                 <Stack direction={"row"} spacing="0">
-                  <InputGroup>
-                    <Input placeholder="days" type="number" name="days" />
-                  </InputGroup>
-                  <InputGroup>
-                    <Input placeholder="hours" type="number" name="hours" />
-                  </InputGroup>
-                  <InputGroup>
-                    <Input placeholder="mins" type="number" name="minutes" />
-                  </InputGroup>
+                  <NumberInput
+                    maxW={"8em"}
+                    variant={"flushed"}
+                    size="md"
+                    min={0}
+                    name="days"
+                    onChange={(e) => setFieldValue("days", e)}
+                  >
+                    <NumberInputField placeholder="days" />
+                  </NumberInput>
+                  <NumberInput
+                    maxW={"8em"}
+                    variant={"flushed"}
+                    size="md"
+                    min={0}
+                    max={23}
+                    name="hours"
+                    onChange={(e) => setFieldValue("hours", e)}
+                  >
+                    <NumberInputField placeholder="hours" />
+                  </NumberInput>
+                  <NumberInput
+                    maxW={"8em"}
+                    variant={"flushed"}
+                    size="md"
+                    min={0}
+                    max={59}
+                    name="minutes"
+                    onChange={(e) => setFieldValue("minutes", e)}
+                  >
+                    <NumberInputField placeholder="minutes" />
+                  </NumberInput>
                 </Stack>
               </Box>
 
-              <TextField
-                name="description"
-                textbox={true}
-                placeholder="Description"
-              />
+              <TextField name="description" textbox placeholder="Description" />
               <Box my="2em">
                 <Heading fontSize={"1em"} mb="1em">
                   Upload Images
@@ -180,7 +248,6 @@ const CreateTrail = () => {
                   isLoading={isSubmitting}
                   disabled={isSubmitting}
                   loadingText="Submitting"
-                  // width={["95%", "30%"]}
                   size="lg"
                   type="submit"
                 >
@@ -196,7 +263,7 @@ const CreateTrail = () => {
                 </Button>
               </Stack>
 
-              {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
+              <pre>{JSON.stringify(values, null, 2)}</pre>
             </Form>
           )}
         </Formik>

@@ -5,6 +5,9 @@ import {
   FormControl,
   Textarea,
   Checkbox,
+  NumberInput,
+  NumberInputField,
+  InputRightElement,
 } from "@chakra-ui/react";
 
 const TextField = ({
@@ -15,16 +18,16 @@ const TextField = ({
   textbox,
   multiple,
   checkbox,
+  numField,
+  maxVal,
+  minVal,
+  element,
 }) => {
   return (
     <Field name={name}>
       {({ field, meta }) => {
         return (
-          <FormControl
-            isInvalid={meta.error && meta.touched}
-            my="6"
-            // style={{ position: checkbox && "absolute" }}
-          >
+          <FormControl isInvalid={meta.error && meta.touched}>
             {textbox ? (
               <Textarea
                 {...field}
@@ -44,6 +47,22 @@ const TextField = ({
               >
                 Delete
               </Checkbox>
+            ) : numField ? (
+              <NumberInput
+                {...field}
+                maxW={"8em"}
+                variant={"flushed"}
+                size="md"
+                min={minVal}
+                max={maxVal}
+                id={name}
+              >
+                <NumberInputField placeholder={placeholder} />
+                {element && (
+                  // eslint-disable-next-line react/no-children-prop
+                  <InputRightElement fontWeight={700} children={element} />
+                )}
+              </NumberInput>
             ) : (
               <Input
                 {...field}
@@ -68,7 +87,11 @@ TextField.defaultProps = {
   textbox: false,
   multiple: false,
   checkbox: false,
+  numField: false,
+  element: false,
   value: "",
+  minVal: 0,
+  maxVal: 9999,
 };
 
 export default TextField;
