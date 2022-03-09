@@ -5,10 +5,11 @@ import {
   FormControl,
   Textarea,
   Checkbox,
-  NumberInput,
-  NumberInputField,
-  InputRightElement,
+  useRadioGroup,
+  HStack,
 } from "@chakra-ui/react";
+
+import RadioCard from "./RadioCard";
 
 const TextField = ({
   placeholder,
@@ -18,11 +19,14 @@ const TextField = ({
   textbox,
   multiple,
   checkbox,
-  numField,
-  maxVal,
-  minVal,
-  element,
+  selectField,
 }) => {
+  const { getRootProps, getRadioProps } = useRadioGroup({
+    name,
+  });
+
+  const group = getRootProps();
+
   return (
     <Field name={name}>
       {({ field, meta }) => {
@@ -47,22 +51,17 @@ const TextField = ({
               >
                 Delete
               </Checkbox>
-            ) : numField ? (
-              <NumberInput
-                {...field}
-                maxW={"8em"}
-                variant={"flushed"}
-                size="md"
-                min={minVal}
-                max={maxVal}
-                id={name}
-              >
-                <NumberInputField placeholder={placeholder} />
-                {element && (
-                  // eslint-disable-next-line react/no-children-prop
-                  <InputRightElement fontWeight={700} children={element} />
-                )}
-              </NumberInput>
+            ) : selectField ? (
+              <HStack {...field} {...group}>
+                {selectField.map((value) => {
+                  const radio = getRadioProps({ value });
+                  return (
+                    <RadioCard key={value} {...radio}>
+                      {value}
+                    </RadioCard>
+                  );
+                })}
+              </HStack>
             ) : (
               <Input
                 {...field}
@@ -87,11 +86,8 @@ TextField.defaultProps = {
   textbox: false,
   multiple: false,
   checkbox: false,
-  numField: false,
-  element: false,
+  selectField: false,
   value: "",
-  minVal: 0,
-  maxVal: 9999,
 };
 
 export default TextField;

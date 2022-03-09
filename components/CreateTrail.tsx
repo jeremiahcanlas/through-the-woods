@@ -4,12 +4,11 @@ import {
   Stack,
   Box,
   Heading,
-  Input,
-  InputGroup,
   InputRightElement,
   NumberInput,
   NumberInputField,
 } from "@chakra-ui/react";
+import Link from "next/link";
 import { Formik, Form } from "formik";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
@@ -48,7 +47,18 @@ const CreateTrail = () => {
   }
 
   const handleCreate = async (values) => {
-    const { title, location, type, distance, description } = values;
+    const {
+      title,
+      location,
+      difficulty,
+      type,
+      distance,
+      elevation,
+      days,
+      hours,
+      minutes,
+      description,
+    } = values;
 
     try {
       let files = [];
@@ -78,6 +88,15 @@ const CreateTrail = () => {
         title: title,
         location: location,
         description: description,
+        difficulty: difficulty,
+        type: type,
+        distance: parseInt(distance),
+        elevation: parseInt(elevation),
+        length: {
+          days: parseInt(days),
+          hours: parseInt(hours),
+          minutes: parseInt(minutes),
+        },
         images: files,
         jwt: session.jwt,
       });
@@ -111,9 +130,17 @@ const CreateTrail = () => {
   const validateForm = Yup.object({
     title: Yup.string().required("Title is Required"),
     location: Yup.string().required("Location is Required"),
+    difficulty: Yup.string().required("Difficulty is Required"),
     type: Yup.string().required("Trail Type is Required"),
+    distance: Yup.number(),
+    elevation: Yup.number(),
+    days: Yup.number(),
+    hours: Yup.number(),
+    minutes: Yup.number(),
     description: Yup.string().required("Description is Required"),
   });
+
+  const trailTypes = ["Loop", "Out & Back", "Point to Point"];
 
   return (
     <PageContainer showImg={false}>
@@ -127,6 +154,7 @@ const CreateTrail = () => {
           initialValues={{
             title: "",
             location: "",
+            difficulty: "",
             type: "",
             distance: 0,
             elevation: 0,
@@ -148,15 +176,32 @@ const CreateTrail = () => {
             <Form onSubmit={handleSubmit}>
               <TextField placeholder="Title" name="title" />
               <TextField placeholder="Location" name="location" />
-              <Stack direction={"row"} spacing="2" mb="3">
-                <TextField placeholder="Trail type" name="type" />
-              </Stack>
+              <Box my="2em">
+                <Heading fontSize={"1em"} mb="1em">
+                  Difficulty
+                </Heading>
+                <TextField
+                  selectField={["Easy", "Moderate", "Hard"]}
+                  placeholder="Trail type"
+                  name="difficulty"
+                />
+              </Box>
+              <Box my="2em">
+                <Heading fontSize={"1em"} mb="1em">
+                  Route Type
+                </Heading>
+                <TextField
+                  selectField={trailTypes}
+                  placeholder="Trail type"
+                  name="type"
+                />
+              </Box>
               <Stack direction={"row"} spacing="6em" my="2em">
                 <Box>
                   <Heading fontSize={"1em"} mb="1em">
                     Distance (km)
                   </Heading>
-                  {/* <TextField numField name="distance" element={"km"} /> */}
+
                   <NumberInput
                     maxW={"8em"}
                     defaultValue={0}
@@ -177,7 +222,6 @@ const CreateTrail = () => {
                   <Heading fontSize={"1em"} mb="1em">
                     Elevation (m)
                   </Heading>
-                  {/* <TextField numField name="elevation" element={"m"} /> */}
                   <NumberInput
                     maxW={"8em"}
                     defaultValue={0}
@@ -253,14 +297,21 @@ const CreateTrail = () => {
                 >
                   Submit
                 </Button>
-                <Button
-                  size="sm"
-                  colorScheme="red"
-                  onClick={handleReset}
-                  disabled={isSubmitting}
-                >
-                  CLEAR
-                </Button>
+                <Stack direction="column">
+                  <Button
+                    size="sm"
+                    colorScheme="red"
+                    onClick={handleReset}
+                    disabled={isSubmitting}
+                  >
+                    Clear
+                  </Button>
+                  <Link href={"/trails"} passHref>
+                    <Button size="sm" disabled={isSubmitting}>
+                      Cancel
+                    </Button>
+                  </Link>
+                </Stack>
               </Stack>
 
               <pre>{JSON.stringify(values, null, 2)}</pre>
