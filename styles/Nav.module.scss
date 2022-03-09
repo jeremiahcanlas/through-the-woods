@@ -8,7 +8,7 @@
       #40916c 50%,
       transparent 50%
     ) !important;
-    background-size: 202% 100% !important;
+    background-size: 200% 100% !important;
     background-position: 100% !important;
     transition: all 0.5s cubic-bezier(0, 0, 0.23, 1) !important;
 
@@ -19,7 +19,7 @@
     }
   }
 
-  &:hover {
-    background-color: transparent !important;
-  }
+  // &:hover {
+  //   background-color: transparent !important;
+  // }
 }

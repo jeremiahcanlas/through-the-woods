@@ -1,4 +1,5 @@
-import { Box, useRadio } from "@chakra-ui/react";
+import { Box, useRadio, Button } from "@chakra-ui/react";
+import styles from "../styles/Nav.module.scss";
 
 const RadioCard = (props) => {
   const { getInputProps, getCheckboxProps } = useRadio(props);
@@ -17,9 +18,10 @@ const RadioCard = (props) => {
         boxShadow="md"
         _checked={{
           bg: "#40916c",
-          color: "white",
+          // color: "white",
           borderColor: "#40916c",
         }}
+        className={styles.btn}
         px={[1, 4, 5]}
         py={[1, 2, 3]}
       >

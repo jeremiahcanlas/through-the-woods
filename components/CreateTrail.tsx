@@ -7,6 +7,7 @@ import {
   InputRightElement,
   NumberInput,
   NumberInputField,
+  IconButton,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { Formik, Form } from "formik";
@@ -15,6 +16,7 @@ import { useDispatch } from "react-redux";
 import { setAlert, removeAlert } from "../features/alert";
 import { useState } from "react";
 import { useSession } from "next-auth/react";
+import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 
 import PageContainer from "./PageContainer";
 import TextField from "./TextField";
@@ -176,6 +178,39 @@ const CreateTrail = () => {
             <Form onSubmit={handleSubmit}>
               <TextField placeholder="Title" name="title" />
               <TextField placeholder="Location" name="location" />
+              <Box my="2em">
+                <Heading fontSize={"1em"} mb="1em">
+                  Rating
+                </Heading>
+
+                <Stack direction={"row"}>
+                  <IconButton
+                    variant={"ghost"}
+                    aria-label="star"
+                    icon={<AiOutlineStar />}
+                  />
+                  <IconButton
+                    variant={"ghost"}
+                    aria-label="star"
+                    icon={<AiOutlineStar />}
+                  />
+                  <IconButton
+                    variant={"ghost"}
+                    aria-label="star"
+                    icon={<AiOutlineStar />}
+                  />
+                  <IconButton
+                    variant={"ghost"}
+                    aria-label="star"
+                    icon={<AiOutlineStar />}
+                  />
+                  <IconButton
+                    variant={"ghost"}
+                    aria-label="star"
+                    icon={<AiOutlineStar />}
+                  />
+                </Stack>
+              </Box>
               <Box my="2em">
                 <Heading fontSize={"1em"} mb="1em">
                   Difficulty
