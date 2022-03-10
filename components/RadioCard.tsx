@@ -22,8 +22,8 @@ const RadioCard = (props) => {
           borderColor: "#40916c",
         }}
         className={styles.btn}
-        px={[1, 4, 5]}
-        py={[1, 2, 3]}
+        px={[3, 4, 5]}
+        py={[1.5, 2, 3]}
       >
         {props.children}
       </Box>

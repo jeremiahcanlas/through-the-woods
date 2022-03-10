@@ -54,6 +54,7 @@ const CreateTrail = () => {
       location,
       difficulty,
       type,
+      rating,
       distance,
       elevation,
       days,
@@ -92,9 +93,10 @@ const CreateTrail = () => {
         description: description,
         difficulty: difficulty,
         type: type,
+        rating: rating,
         distance: parseInt(distance),
         elevation: parseInt(elevation),
-        length: {
+        trailLength: {
           days: parseInt(days),
           hours: parseInt(hours),
           minutes: parseInt(minutes),
@@ -144,6 +146,8 @@ const CreateTrail = () => {
 
   const trailTypes = ["Loop", "Out & Back", "Point to Point"];
 
+  const stars = [1, 2, 3, 4, 5];
+
   return (
     <PageContainer showImg={false}>
       <Container my="2em" textAlign={["start", "start", "center"]}>
@@ -158,6 +162,7 @@ const CreateTrail = () => {
             location: "",
             difficulty: "",
             type: "",
+            rating: 0,
             distance: 0,
             elevation: 0,
             days: 0,
@@ -182,33 +187,24 @@ const CreateTrail = () => {
                 <Heading fontSize={"1em"} mb="1em">
                   Rating
                 </Heading>
-
+                {console.log(values)}
                 <Stack direction={"row"}>
-                  <IconButton
-                    variant={"ghost"}
-                    aria-label="star"
-                    icon={<AiOutlineStar />}
-                  />
-                  <IconButton
-                    variant={"ghost"}
-                    aria-label="star"
-                    icon={<AiOutlineStar />}
-                  />
-                  <IconButton
-                    variant={"ghost"}
-                    aria-label="star"
-                    icon={<AiOutlineStar />}
-                  />
-                  <IconButton
-                    variant={"ghost"}
-                    aria-label="star"
-                    icon={<AiOutlineStar />}
-                  />
-                  <IconButton
-                    variant={"ghost"}
-                    aria-label="star"
-                    icon={<AiOutlineStar />}
-                  />
+                  {stars.map((star) => (
+                    <IconButton
+                      key={star}
+                      fontSize="2em"
+                      variant={"ghost"}
+                      aria-label="star"
+                      onClick={() => setFieldValue("rating", star)}
+                      icon={
+                        values.rating >= star ? (
+                          <AiFillStar color="rgb(221, 227, 146)" />
+                        ) : (
+                          <AiOutlineStar />
+                        )
+                      }
+                    />
+                  ))}
                 </Stack>
               </Box>
               <Box my="2em">

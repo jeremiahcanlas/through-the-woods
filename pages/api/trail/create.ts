@@ -13,7 +13,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     type,
     distance,
     elevation,
-    length,
+    trailLength,
     images,
   } = req.body;
 
@@ -35,6 +35,11 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         description,
         images,
         geojson,
+        difficulty,
+        type,
+        distance,
+        elevation,
+        trailLength,
       },
       {
         headers: {
@@ -44,7 +49,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       }
     );
 
-    res.status(200);
+    res.status(200).json(response.data);
   } catch (e) {
     res.status(404).end();
   }
