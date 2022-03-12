@@ -20,6 +20,9 @@ trails.getInitialProps = async () => {
       properties: {
         id: trail.id,
         title: trail.title,
+        elevation: trail.elevation,
+        distance: trail.distance,
+        trailLength: trail.trailLength,
         long: trail.geojson.coordinates[0],
         lat: trail.geojson.coordinates[1],
         thumbnail:

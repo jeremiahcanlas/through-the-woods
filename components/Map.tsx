@@ -86,7 +86,6 @@ const Map = ({ trails, geojson }) => {
                     src={selectedTrail.thumbnail}
                   />
                 )}
-                {console.log(selectedTrail)}
 
                 <Stack margin={"0.5em"} mx="1em" spacing="0.2em">
                   <Text as={"h1"}>{selectedTrail.title}</Text>
@@ -95,10 +94,17 @@ const Map = ({ trails, geojson }) => {
                     orientation="horizontal"
                     my="1em"
                   />
-                  <Text>Length: 2.4 km</Text>
-                  <Text>Elevation: 531m</Text>
-                  <Text>Est. 2h 5m</Text>
+                  <Text>Length: {selectedTrail.distance}km</Text>
+                  <Text>Elevation: {selectedTrail.elevation}m</Text>
+                  {selectedTrail.trailLength && (
+                    <Text>
+                      Est.
+                      {/* {selectedTrail.trailLength[3] &&
+                        selectedTrail.trailLength[3]} */}
+                    </Text>
+                  )}
                 </Stack>
+                {/* {console.log(selectedTrail.trailLength[3])} */}
               </Flex>
             </Popup>
           </Box>
