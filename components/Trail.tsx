@@ -59,7 +59,7 @@ const Trail = ({ trail }) => {
         <Stack direction={"row"} spacing="3em" m="2em" letterSpacing={"1px"}>
           <Stack direction={"column"}>
             <Text>Length</Text>
-            <Text fontWeight={"900"}>2.4 km</Text>
+            <Text fontWeight={"900"}>{trail.distance}km</Text>
           </Stack>
           <Stack direction={"column"}>
             <Text>Elevation</Text>

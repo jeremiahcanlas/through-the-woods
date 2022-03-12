@@ -86,6 +86,7 @@ const Map = ({ trails, geojson }) => {
                     src={selectedTrail.thumbnail}
                   />
                 )}
+                {console.log(selectedTrail)}
 
                 <Stack margin={"0.5em"} mx="1em" spacing="0.2em">
                   <Text as={"h1"}>{selectedTrail.title}</Text>

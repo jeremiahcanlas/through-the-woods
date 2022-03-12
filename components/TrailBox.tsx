@@ -44,13 +44,13 @@ const TrailBox = ({ trail, recent }) => {
           <Tag variant={"outline"} my="0.5em">
             <TagLeftIcon as={GiPathDistance} m={0} fontSize={"1.8em"} />
             <TagLabel fontSize={"0.9em"} letterSpacing={"1px"}>
-              2.4km
+              {trail.distance}km
             </TagLabel>
           </Tag>
           <Tag variant={"outline"} my="0.5em">
             <TagLeftIcon as={TiChartArea} m={0} />
             <TagLabel fontSize={"0.9em"} letterSpacing={"1px"}>
-              531m
+              {trail.elevation}m
             </TagLabel>
           </Tag>
         </HStack>
