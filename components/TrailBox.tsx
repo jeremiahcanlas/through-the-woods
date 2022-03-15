@@ -1,19 +1,24 @@
 import {
   Container,
+  Text,
+  Box,
   Heading,
   HStack,
   Tag,
   TagLabel,
   TagLeftIcon,
+  Stack,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import Image from "next/image";
 import styles from "../styles/Trails.module.scss";
 import { TiLocation, TiChartArea } from "react-icons/ti";
 import { GiPathDistance } from "react-icons/gi";
+import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 
 const TrailBox = ({ trail, recent }) => {
   let num = Math.floor(Math.random() * trail.images.length);
+  const stars = [1, 2, 3, 4, 5];
 
   return (
     <Link href={`/trails/${trail.id}`} key={trail.id} passHref>
@@ -29,9 +34,19 @@ const TrailBox = ({ trail, recent }) => {
         position="relative"
         className={styles.trailBox}
       >
-        <Heading fontSize={["md", "lg"]} letterSpacing={"1px"}>
-          {trail.title}
-        </Heading>
+        <Stack direction={"row"}>
+          <Heading fontSize={["md", "lg"]} letterSpacing={"1px"} margin={0}>
+            {trail.title}
+          </Heading>
+          {/* <Stack direction={"row"} hidden={!recent}>
+            <AiFillStar fontSize={"1.5em"} color="rgb(221, 227, 146)" />
+            <Text>{trail.rating}</Text>
+          </Stack> */}
+          <Tag hidden={!recent}>
+            <TagLabel fontWeight={600}>{trail.rating}</TagLabel>
+            <TagLeftIcon m={0} color="rgb(221, 227, 146)" as={AiFillStar} />
+          </Tag>
+        </Stack>
 
         <Tag variant={"outline"} my="0.5em">
           <TagLeftIcon as={TiLocation} m={0} />
@@ -39,7 +54,15 @@ const TrailBox = ({ trail, recent }) => {
             {trail.location}
           </TagLabel>
         </Tag>
-
+        <Stack direction={"row"} my="0.5em" hidden={recent}>
+          {stars.map((star) =>
+            trail.rating >= star ? (
+              <AiFillStar color="rgb(221, 227, 146)" />
+            ) : (
+              <AiOutlineStar />
+            )
+          )}
+        </Stack>
         <HStack hidden={recent}>
           <Tag variant={"outline"} my="0.5em">
             <TagLeftIcon as={GiPathDistance} m={0} fontSize={"1.8em"} />

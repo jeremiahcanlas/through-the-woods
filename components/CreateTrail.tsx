@@ -96,7 +96,11 @@ const CreateTrail = () => {
         rating: rating,
         distance: parseInt(distance),
         elevation: parseInt(elevation),
-        trailLength: [days, hours, minutes],
+        trailLength: {
+          days: parseInt(days),
+          hours: parseInt(hours),
+          minutes: parseInt(minutes),
+        },
         images: files,
         jwt: session.jwt,
       });
@@ -341,7 +345,7 @@ const CreateTrail = () => {
                 </Stack>
               </Stack>
 
-              <pre>{JSON.stringify(values, null, 2)}</pre>
+              {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
             </Form>
           )}
         </Formik>

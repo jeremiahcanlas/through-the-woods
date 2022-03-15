@@ -29,6 +29,9 @@ const Map = ({ trails, geojson }) => {
 
   const [selectedTrail, setSelectedTrail]: any = useState({});
 
+  const estimatedTime =
+    selectedTrail.trailLength && JSON.parse(selectedTrail.trailLength);
+
   return (
     <ReactMapGL
       mapStyle="mapbox://styles/jeremiahcanlas/ckz3e4kw4002214p35infkp6f"
@@ -96,15 +99,12 @@ const Map = ({ trails, geojson }) => {
                   />
                   <Text>Length: {selectedTrail.distance}km</Text>
                   <Text>Elevation: {selectedTrail.elevation}m</Text>
-                  {selectedTrail.trailLength && (
-                    <Text>
-                      Est.
-                      {/* {selectedTrail.trailLength[3] &&
-                        selectedTrail.trailLength[3]} */}
-                    </Text>
-                  )}
+                  <Text>
+                    Est {estimatedTime.days >= 1 && `${estimatedTime.days}d`}
+                    {estimatedTime.hours >= 1 && `${estimatedTime.hours}h`}
+                    {estimatedTime.minutes >= 1 && `${estimatedTime.minutes}m`}
+                  </Text>
                 </Stack>
-                {/* {console.log(selectedTrail.trailLength[3])} */}
               </Flex>
             </Popup>
           </Box>

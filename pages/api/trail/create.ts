@@ -10,11 +10,12 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     location,
     description,
     difficulty,
+    rating,
     type,
     distance,
     elevation,
-    trailLength,
     images,
+    trailLength,
   } = req.body;
 
   //forward geocoding to get coordinates
@@ -24,8 +25,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   const geojson = geocoding.data.features[0].geometry;
 
-  console.log(req.body);
-
   try {
     const response = await axios.post(
       `${server}/trails`,
@@ -33,6 +32,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         title,
         location,
         description,
+        rating,
         images,
         geojson,
         difficulty,
@@ -51,6 +51,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
     res.status(200).json(response.data);
   } catch (e) {
-    res.status(404).end();
+    console.log(e.respose.data.message);
+    res.status(e.response.status).end();
   }
 };
