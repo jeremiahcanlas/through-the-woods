@@ -20,9 +20,11 @@ const TextField = ({
   multiple,
   checkbox,
   selectField,
+  defaultVal,
 }) => {
   const { getRootProps, getRadioProps } = useRadioGroup({
     name,
+    defaultValue: defaultVal,
   });
 
   const group = getRootProps();
@@ -87,6 +89,7 @@ TextField.defaultProps = {
   multiple: false,
   checkbox: false,
   selectField: false,
+  defaultVal: "",
   value: "",
 };
 

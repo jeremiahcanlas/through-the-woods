@@ -1,9 +1,20 @@
-import { Container, Button, Stack, Heading, Box } from "@chakra-ui/react";
+import {
+  Container,
+  Button,
+  Stack,
+  Heading,
+  Box,
+  IconButton,
+  NumberInput,
+  NumberInputField,
+  InputRightElement,
+} from "@chakra-ui/react";
 import { Formik, Form } from "formik";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { setAlert, removeAlert } from "../features/alert";
 import { useState } from "react";
+import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 
 import PageContainer from "./PageContainer";
 import TextField from "./TextField";
@@ -21,7 +32,12 @@ const EditTrail = ({ trail }) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const [images, setInitialImages] = useState(trail.images);
+  const trailTypes = ["Loop", "Out & Back", "Point to Point"];
 
+  const stars = [1, 2, 3, 4, 5];
+  // const estimatedTime = JSON.parse(trail.trailLength)
+
+  console.log(trail);
   const clearAlert = () => {
     setTimeout(() => {
       dispatch(removeAlert());
@@ -149,17 +165,162 @@ const EditTrail = ({ trail }) => {
             initialValues={{
               title: trail.title,
               location: trail.location,
+              difficulty: trail.difficulty,
+              type: trail.type,
+              rating: trail.rating,
+              distance: trail.distance,
+              elevation: trail.elevation,
+              days: trail.trailLength.days,
+              hours: trail.trailLength.hours,
+              minutes: trail.trailLength.minutes,
               description: trail.description,
               deleted: [],
             }}
             validationSchema={validateForm}
             onSubmit={handleCreate}
           >
-            {({ isSubmitting, handleSubmit, handleReset, values }) => (
+            {({
+              isSubmitting,
+              handleSubmit,
+              handleReset,
+              values,
+              setFieldValue,
+            }) => (
               <Form onSubmit={handleSubmit}>
                 {/* {error && <Text>{error}</Text>} */}
                 <TextField placeholder="Title" name="title" />
                 <TextField placeholder="Location" name="location" />
+                <Box my="2em">
+                  <Heading fontSize={"1em"} mb="1em">
+                    Rating
+                  </Heading>
+                  {console.log(values)}
+                  <Stack direction={"row"}>
+                    {stars.map((star) => (
+                      <IconButton
+                        key={star}
+                        fontSize="2em"
+                        variant={"ghost"}
+                        aria-label="star"
+                        onClick={() => setFieldValue("rating", star)}
+                        icon={
+                          values.rating >= star ? (
+                            <AiFillStar color="rgb(221, 227, 146)" />
+                          ) : (
+                            <AiOutlineStar />
+                          )
+                        }
+                      />
+                    ))}
+                  </Stack>
+                </Box>
+                <Box my="2em">
+                  <Heading fontSize={"1em"} mb="1em">
+                    Difficulty
+                  </Heading>
+                  <TextField
+                    selectField={["Easy", "Moderate", "Hard"]}
+                    placeholder="Trail type"
+                    name="difficulty"
+                    defaultVal={trail.difficulty}
+                  />
+                </Box>
+                <Box my="2em">
+                  <Heading fontSize={"1em"} mb="1em">
+                    Route Type
+                  </Heading>
+                  <TextField
+                    selectField={trailTypes}
+                    placeholder="Trail type"
+                    name="type"
+                    defaultVal={trail.type}
+                  />
+                </Box>
+                <Stack direction={"row"} spacing="6em" my="2em">
+                  <Box>
+                    <Heading fontSize={"1em"} mb="1em">
+                      Distance (km)
+                    </Heading>
+
+                    <NumberInput
+                      maxW={"8em"}
+                      defaultValue={trail.distance}
+                      variant={"flushed"}
+                      size="md"
+                      min={0}
+                      name="distance"
+                      onChange={(e) => setFieldValue("distance", e)}
+                    >
+                      <NumberInputField />
+                      {
+                        // eslint-disable-next-line react/no-children-prop
+                        <InputRightElement fontWeight={700} children={"km"} />
+                      }
+                    </NumberInput>
+                  </Box>
+                  <Box>
+                    <Heading fontSize={"1em"} mb="1em">
+                      Elevation (m)
+                    </Heading>
+                    <NumberInput
+                      maxW={"8em"}
+                      defaultValue={trail.elevation}
+                      variant={"flushed"}
+                      size="md"
+                      min={0}
+                      name="elevation"
+                      onChange={(e) => setFieldValue("elevation", e)}
+                    >
+                      <NumberInputField />
+                      {
+                        // eslint-disable-next-line react/no-children-prop
+                        <InputRightElement fontWeight={700} children={"m"} />
+                      }
+                    </NumberInput>
+                  </Box>
+                </Stack>
+                <Box my="2em">
+                  <Heading fontSize={"1em"} mb="1em">
+                    Trail Length
+                  </Heading>
+                  <Stack direction={"row"} spacing="0">
+                    <NumberInput
+                      defaultValue={values.days}
+                      maxW={"8em"}
+                      variant={"flushed"}
+                      size="md"
+                      min={0}
+                      name="days"
+                      onChange={(e) => setFieldValue("days", e)}
+                    >
+                      <NumberInputField placeholder="days" />
+                    </NumberInput>
+                    <NumberInput
+                      defaultValue={values.hours}
+                      maxW={"8em"}
+                      variant={"flushed"}
+                      size="md"
+                      min={0}
+                      max={23}
+                      name="hours"
+                      onChange={(e) => setFieldValue("hours", e)}
+                    >
+                      <NumberInputField placeholder="hours" />
+                    </NumberInput>
+                    <NumberInput
+                      defaultValue={values.minutes}
+                      maxW={"8em"}
+                      variant={"flushed"}
+                      size="md"
+                      min={0}
+                      max={59}
+                      name="minutes"
+                      onChange={(e) => setFieldValue("minutes", e)}
+                    >
+                      <NumberInputField placeholder="minutes" />
+                    </NumberInput>
+                  </Stack>
+                </Box>
 
                 <TextField name="description" textbox={true} />
                 <Box my="2em">
