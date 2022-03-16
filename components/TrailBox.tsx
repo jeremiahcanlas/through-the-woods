@@ -1,7 +1,5 @@
 import {
   Container,
-  Text,
-  Box,
   Heading,
   HStack,
   Tag,
@@ -28,7 +26,6 @@ const TrailBox = ({ trail, recent }) => {
         maxW={recent && "100%"}
         borderRadius="1em"
         backgroundColor={trail.images.length === 0 && "blackAlpha.900"}
-        // _hover={{ backgroundColor: "#343a40", opacity: 0.8 }}
         cursor="pointer"
         textAlign="left"
         position="relative"
@@ -38,10 +35,7 @@ const TrailBox = ({ trail, recent }) => {
           <Heading fontSize={["md", "lg"]} letterSpacing={"1px"} margin={0}>
             {trail.title}
           </Heading>
-          {/* <Stack direction={"row"} hidden={!recent}>
-            <AiFillStar fontSize={"1.5em"} color="rgb(221, 227, 146)" />
-            <Text>{trail.rating}</Text>
-          </Stack> */}
+
           <Tag hidden={!recent}>
             <TagLabel fontWeight={600}>{trail.rating}</TagLabel>
             <TagLeftIcon m={0} color="rgb(221, 227, 146)" as={AiFillStar} />
@@ -57,9 +51,9 @@ const TrailBox = ({ trail, recent }) => {
         <Stack direction={"row"} my="0.5em" hidden={recent}>
           {stars.map((star) =>
             trail.rating >= star ? (
-              <AiFillStar color="rgb(221, 227, 146)" />
+              <AiFillStar key={star} color="rgb(221, 227, 146)" />
             ) : (
-              <AiOutlineStar />
+              <AiOutlineStar key={star} />
             )
           )}
         </Stack>

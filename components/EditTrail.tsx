@@ -29,15 +29,12 @@ import { server } from "../server";
 const EditTrail = ({ trail }) => {
   const { data: session, status } = useSession();
 
+  //uses next router
   const router = useRouter();
+  //disptaches an action
   const dispatch = useDispatch();
-  const [images, setInitialImages] = useState(trail.images);
-  const trailTypes = ["Loop", "Out & Back", "Point to Point"];
 
-  const stars = [1, 2, 3, 4, 5];
-  // const estimatedTime = JSON.parse(trail.trailLength)
-
-  console.log(trail);
+  //clears alert after 3s
   const clearAlert = () => {
     setTimeout(() => {
       dispatch(removeAlert());
@@ -72,9 +69,23 @@ const EditTrail = ({ trail }) => {
     clearAlert();
   };
 
+  const [images, setInitialImages] = useState(trail.images);
+
   //To submit edited file
   const handleCreate = async (values) => {
-    const { title, location, description } = values;
+    const {
+      title,
+      location,
+      description,
+      difficulty,
+      type,
+      rating,
+      distance,
+      elevation,
+      days,
+      hours,
+      minutes,
+    } = values;
 
     try {
       let files = [];
@@ -112,6 +123,16 @@ const EditTrail = ({ trail }) => {
       const json = JSON.stringify({
         title: title,
         location: location,
+        difficulty: difficulty,
+        type: type,
+        rating: parseInt(rating),
+        distance: parseInt(distance),
+        elevation: parseInt(elevation),
+        trailLength: {
+          days: parseInt(days),
+          hours: parseInt(hours),
+          minutes: parseInt(minutes),
+        },
         description: description,
         id: trail.id,
         images: files,
@@ -152,6 +173,10 @@ const EditTrail = ({ trail }) => {
     deleted: Yup.array(),
   });
 
+  //could easily be a separate file...
+  const trailTypes = ["Loop", "Out & Back", "Point to Point"];
+  const stars = [1, 2, 3, 4, 5];
+
   if (session) {
     return (
       <PageContainer showImg={false}>
@@ -179,13 +204,7 @@ const EditTrail = ({ trail }) => {
             validationSchema={validateForm}
             onSubmit={handleCreate}
           >
-            {({
-              isSubmitting,
-              handleSubmit,
-              handleReset,
-              values,
-              setFieldValue,
-            }) => (
+            {({ isSubmitting, handleSubmit, values, setFieldValue }) => (
               <Form onSubmit={handleSubmit}>
                 {/* {error && <Text>{error}</Text>} */}
                 <TextField placeholder="Title" name="title" />
@@ -194,7 +213,6 @@ const EditTrail = ({ trail }) => {
                   <Heading fontSize={"1em"} mb="1em">
                     Rating
                   </Heading>
-                  {console.log(values)}
                   <Stack direction={"row"}>
                     {stars.map((star) => (
                       <IconButton
@@ -222,7 +240,7 @@ const EditTrail = ({ trail }) => {
                     selectField={["Easy", "Moderate", "Hard"]}
                     placeholder="Trail type"
                     name="difficulty"
-                    defaultVal={trail.difficulty}
+                    defaultVal={values.difficulty}
                   />
                 </Box>
                 <Box my="2em">
@@ -233,7 +251,7 @@ const EditTrail = ({ trail }) => {
                     selectField={trailTypes}
                     placeholder="Trail type"
                     name="type"
-                    defaultVal={trail.type}
+                    defaultVal={values.type}
                   />
                 </Box>
                 <Stack direction={"row"} spacing="6em" my="2em">
@@ -244,7 +262,7 @@ const EditTrail = ({ trail }) => {
 
                     <NumberInput
                       maxW={"8em"}
-                      defaultValue={trail.distance}
+                      defaultValue={values.distance}
                       variant={"flushed"}
                       size="md"
                       min={0}
@@ -264,7 +282,7 @@ const EditTrail = ({ trail }) => {
                     </Heading>
                     <NumberInput
                       maxW={"8em"}
-                      defaultValue={trail.elevation}
+                      defaultValue={values.elevation}
                       variant={"flushed"}
                       size="md"
                       min={0}
@@ -356,7 +374,7 @@ const EditTrail = ({ trail }) => {
                     Delete
                   </Button>
                 </Stack>
-                {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
+                <pre>{JSON.stringify(values, null, 2)}</pre>
               </Form>
             )}
           </Formik>
