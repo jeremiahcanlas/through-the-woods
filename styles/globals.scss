@@ -23,3 +23,13 @@ a {
 *:focus {
   box-shadow: none !important;
 }
+
+//this hides 'improve this map' watermark
+.mapboxgl-ctrl-bottom-right {
+  display: none;
+}
+
+//hides mapbox logo, sorry mapbox...
+.mapboxgl-ctrl-logo {
+  display: none !important;
+}

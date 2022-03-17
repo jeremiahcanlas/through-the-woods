@@ -61,6 +61,7 @@ const CreateTrail = () => {
       hours,
       minutes,
       description,
+      url,
     } = values;
 
     try {
@@ -101,6 +102,7 @@ const CreateTrail = () => {
           hours: parseInt(hours),
           minutes: parseInt(minutes),
         },
+        allTrailsUrl: url,
         images: files,
         jwt: session.jwt,
       });
@@ -139,9 +141,15 @@ const CreateTrail = () => {
     distance: Yup.number(),
     elevation: Yup.number(),
     days: Yup.number(),
-    hours: Yup.number(),
-    minutes: Yup.number(),
+    hours: Yup.number().max(23),
+    minutes: Yup.number().max(59),
     description: Yup.string().required("Description is Required"),
+    url: Yup.string()
+      .matches(
+        /((https?):\/\/)?(www.)?alltrails.([a-z]+)\/(explore\/trail)/,
+        "Enter valid AllTrails URL"
+      )
+      .required("AllTrails URL required"),
   });
 
   const trailTypes = ["Loop", "Out & Back", "Point to Point"];
@@ -169,6 +177,7 @@ const CreateTrail = () => {
             hours: 0,
             minutes: 0,
             description: "",
+            url: "",
           }}
           validationSchema={validateForm}
           onSubmit={handleCreate}
@@ -311,6 +320,8 @@ const CreateTrail = () => {
               </Box>
 
               <TextField name="description" textbox placeholder="Description" />
+              <TextField placeholder="AllTrails URL" type="url" name="url" />
+
               <Box my="2em">
                 <Heading fontSize={"1em"} mb="1em">
                   Upload Images

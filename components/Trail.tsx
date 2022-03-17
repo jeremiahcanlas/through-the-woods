@@ -1,4 +1,5 @@
 import {
+  Badge,
   Container,
   Heading,
   Text,
@@ -8,10 +9,13 @@ import {
   Box,
   Flex,
 } from "@chakra-ui/react";
+import Image from "next/image";
 import Link from "next/link";
 import PageContainer from "./PageContainer";
 import { useSession } from "next-auth/react";
 import Carousel from "./Carousel";
+import allTrailsLogo from "../public/alltrailslogo.svg";
+import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 
 const Trail = ({ trail }) => {
   const { data: session } = useSession();
@@ -27,6 +31,20 @@ const Trail = ({ trail }) => {
     );
   };
 
+  const difficultyColor = () => {
+    if (trail.difficulty === "Easy") {
+      return "green";
+    }
+
+    if (trail.difficulty === "Moderate") {
+      return "yellow";
+    }
+
+    return "red";
+  };
+
+  const stars = [1, 2, 3, 4, 5];
+
   return (
     <PageContainer>
       <Container maxW={["100vw", "80vw", "60vw"]} overflowX={"hidden"}>
@@ -39,6 +57,19 @@ const Trail = ({ trail }) => {
             year: "numeric",
           })}
         </Text>
+        <Stack direction={"row"} mt="0.5em">
+          <Badge colorScheme={difficultyColor()}>{trail.difficulty}</Badge>
+          <Stack direction={"row"} my="0.5em" spacing={"1"}>
+            {stars.map((star) =>
+              trail.rating >= star ? (
+                <AiFillStar key={star} color="rgb(221, 227, 146)" />
+              ) : (
+                <AiOutlineStar key={star} />
+              )
+            )}
+          </Stack>
+        </Stack>
+
         <Divider orientation="horizontal" my="1em" />
 
         {trail.images.length >= 1 && (
@@ -70,9 +101,25 @@ const Trail = ({ trail }) => {
             <Text fontWeight={"900"}>{trail.type}</Text>
           </Stack>
         </Stack>
+        <Box mb="3rem">
+          <a
+            href={trail.allTrailsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Button position="relative" variant={"outline"}>
+              <Image
+                src={allTrailsLogo}
+                alt="alltrails logo"
+                height={"20%"}
+                width={"100%"}
+              />
+            </Button>
+          </a>
+        </Box>
         <Stack direction={"row"} mt="1em">
           <Link href="/trails" passHref>
-            <Button>&larr; All trails</Button>
+            <Button>&larr; Trails</Button>
           </Link>
           {session &&
             trail.user.username === session.username &&

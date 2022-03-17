@@ -26,6 +26,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       id,
       images,
       deleted,
+      allTrailsUrl,
     } = await req.body;
 
     try {
@@ -43,6 +44,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
           trailLength,
           images,
           deleted,
+          allTrailsUrl,
         },
         {
           headers: {

@@ -16,6 +16,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     elevation,
     images,
     trailLength,
+    allTrailsUrl,
   } = req.body;
 
   //forward geocoding to get coordinates
@@ -40,6 +41,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         distance,
         elevation,
         trailLength,
+        allTrailsUrl,
       },
       {
         headers: {

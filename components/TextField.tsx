@@ -33,7 +33,7 @@ const TextField = ({
     <Field name={name}>
       {({ field, meta }) => {
         return (
-          <FormControl isInvalid={meta.error && meta.touched}>
+          <FormControl isInvalid={meta.error && meta.touched} my="1em">
             {textbox ? (
               <Textarea
                 {...field}

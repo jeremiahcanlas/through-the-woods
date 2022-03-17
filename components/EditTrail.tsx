@@ -85,6 +85,7 @@ const EditTrail = ({ trail }) => {
       days,
       hours,
       minutes,
+      url,
     } = values;
 
     try {
@@ -134,6 +135,7 @@ const EditTrail = ({ trail }) => {
           minutes: parseInt(minutes),
         },
         description: description,
+        allTrailsUrl: url,
         id: trail.id,
         images: files,
         jwt: session.jwt,
@@ -169,8 +171,20 @@ const EditTrail = ({ trail }) => {
   const validateForm = Yup.object({
     title: Yup.string().required("Title is Required"),
     location: Yup.string().required("Location is Required"),
+    difficulty: Yup.string().required("Difficulty is Required"),
+    type: Yup.string().required("Trail Type is Required"),
+    distance: Yup.number(),
+    elevation: Yup.number(),
+    days: Yup.number(),
+    hours: Yup.number().max(23),
+    minutes: Yup.number().max(59),
     description: Yup.string().required("Description is Required"),
-    deleted: Yup.array(),
+    url: Yup.string()
+      .matches(
+        /((https?):\/\/)?(www.)?alltrails.([a-z]+)\/(explore\/trail)/,
+        "Enter valid AllTrails URL"
+      )
+      .required("URL required"),
   });
 
   //could easily be a separate file...
@@ -199,6 +213,7 @@ const EditTrail = ({ trail }) => {
               hours: trail.trailLength.hours,
               minutes: trail.trailLength.minutes,
               description: trail.description,
+              url: trail.allTrailsUrl,
               deleted: [],
             }}
             validationSchema={validateForm}
@@ -341,6 +356,8 @@ const EditTrail = ({ trail }) => {
                 </Box>
 
                 <TextField name="description" textbox={true} />
+                <TextField placeholder="AllTrails URL" name="url" />
+
                 <Box my="2em">
                   <Heading fontSize={"1em"} mb="1em">
                     Upload Images
@@ -374,7 +391,7 @@ const EditTrail = ({ trail }) => {
                     Delete
                   </Button>
                 </Stack>
-                <pre>{JSON.stringify(values, null, 2)}</pre>
+                {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
               </Form>
             )}
           </Formik>
