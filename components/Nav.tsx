@@ -1,4 +1,4 @@
-import { Button, Stack } from "@chakra-ui/react";
+import { Button, Stack, Text, useToast, Box } from "@chakra-ui/react";
 import Link from "next/link";
 import { IoIosLogIn, IoIosLogOut, IoIosCreate } from "react-icons/io";
 import { useDispatch } from "react-redux";
@@ -10,6 +10,7 @@ import styles from "../styles/Nav.module.scss";
 const Nav = () => {
   const { data: session } = useSession();
   const dispatch = useDispatch();
+  const toast = useToast();
 
   const clearAlert = () => {
     setTimeout(() => {
@@ -20,12 +21,30 @@ const Nav = () => {
   const logout = async () => {
     try {
       await signOut({ redirect: false });
-      dispatch(
-        setAlert({
-          msg: "Successfully Logged Out",
-          alertType: "success",
-        })
-      );
+      // dispatch(
+      //   setAlert({
+      //     msg: "Successfully Logged Out",
+      //     alertType: "success",
+      //   })
+      // );
+
+      toast({
+        position: "top",
+        render: () => (
+          <Box
+            borderRadius={"0.3em"}
+            backgroundColor={"#40916c"}
+            padding="2em"
+            width={"70vw"}
+          >
+            <Text color={"black"} fontWeight={"700"}>
+              See ya friend 👋
+            </Text>
+            <Text color={"black"}>Successfully Logged Out</Text>
+          </Box>
+        ),
+        duration: 3000,
+      });
     } catch (e) {
       dispatch(
         setAlert({

@@ -1,22 +1,31 @@
 import PageContainer from "./PageContainer";
 import { useRouter } from "next/router";
-import { Stack, Button, Container, Heading } from "@chakra-ui/react";
+import {
+  Stack,
+  Text,
+  Button,
+  Box,
+  Container,
+  Heading,
+  useToast,
+} from "@chakra-ui/react";
 import { Formik, Form } from "formik";
 import TextField from "./TextField";
 import * as Yup from "yup";
-import { useDispatch } from "react-redux";
-import { setAlert, removeAlert } from "../features/alert";
+// import { useDispatch } from "react-redux";
+// import { setAlert, removeAlert } from "../features/alert";
 import { signIn, getSession } from "next-auth/react";
 
 const LogIn = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const router = useRouter();
+  const toast = useToast();
 
-  const clearAlert = () => {
-    setTimeout(() => {
-      dispatch(removeAlert());
-    }, 3000);
-  };
+  // const clearAlert = () => {
+  //   setTimeout(() => {
+  //     dispatch(removeAlert());
+  //   }, 3000);
+  // };
 
   const handleSubmit = async (values) => {
     const { identifier, password } = values;
@@ -29,25 +38,63 @@ const LogIn = () => {
       });
 
       const session = await getSession();
+      // console.log(session);
 
-      dispatch(
-        setAlert({
-          msg: `Welcome ${session.username}`,
-          alertType: "success",
-        })
-      );
+      // dispatch(
+      //   setAlert({
+      //     msg: `Welcome ${session.username}`,
+      //     alertType: "success",
+      //   })
+      // );
+
+      toast({
+        position: "top",
+        title: `Hello, ${session.username}!`,
+        render: () => (
+          <Box
+            borderRadius={"0.3em"}
+            backgroundColor={"#40916c"}
+            padding="2em"
+            width={"70vw"}
+          >
+            <Text color={"black"} fontWeight={"700"}>
+              Hello, {session.username}
+            </Text>
+            <Text color={"black"}>You successfully logged in.</Text>
+          </Box>
+        ),
+        duration: 3000,
+      });
 
       router.push("/");
     } catch (error) {
-      dispatch(
-        setAlert({
-          msg: "Incorrect username or password",
-          alertType: "error",
-        })
-      );
+      // dispatch(
+      //   setAlert({
+      //     msg: "Incorrect username or password",
+      //     alertType: "error",
+      //   })
+      // );
+
+      toast({
+        position: "top",
+        render: () => (
+          <Box
+            borderRadius={"0.3em"}
+            backgroundColor={"red.300"}
+            padding="2em"
+            width={"70vw"}
+          >
+            <Text color={"black"} fontWeight={"700"}>
+              Incorrect username or password
+            </Text>
+            <Text color={"black"}>Or you probably dont exist</Text>
+          </Box>
+        ),
+        duration: 3000,
+      });
     }
 
-    clearAlert();
+    // clearAlert();
   };
 
   const validateLogin = Yup.object({

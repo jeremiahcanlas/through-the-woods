@@ -8,12 +8,14 @@ import {
   NumberInput,
   NumberInputField,
   IconButton,
+  useToast,
+  Text,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { Formik, Form } from "formik";
 import { useRouter } from "next/router";
-import { useDispatch } from "react-redux";
-import { setAlert, removeAlert } from "../features/alert";
+// import { useDispatch } from "react-redux";
+// import { setAlert, removeAlert } from "../features/alert";
 import { useState } from "react";
 import { useSession } from "next-auth/react";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
@@ -30,14 +32,16 @@ const CreateTrail = () => {
   const { data: session, status } = useSession();
 
   const router = useRouter();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
+  const toast = useToast();
+
   const [images, setImages] = useState([]);
 
-  const clearAlert = () => {
-    setTimeout(() => {
-      dispatch(removeAlert());
-    }, 3000);
-  };
+  // const clearAlert = () => {
+  //   setTimeout(() => {
+  //     dispatch(removeAlert());
+  //   }, 3000);
+  // };
 
   if (status === "loading") {
     return <p>Please Wait</p>;
@@ -113,24 +117,61 @@ const CreateTrail = () => {
         },
       });
 
-      dispatch(
-        setAlert({
-          msg: "Successfully posted!",
-          alertType: "success",
-        })
-      );
+      // dispatch(
+      //   setAlert({
+      //     msg: "Successfully posted!",
+      //     alertType: "success",
+      //   })
+      // );
+
+      toast({
+        position: "top",
+        // title: `Hello, ${session.username}!`,
+        render: () => (
+          <Box
+            borderRadius={"0.3em"}
+            backgroundColor={"#40916c"}
+            padding="2em"
+            width={"70vw"}
+          >
+            <Text color={"black"} fontWeight={"700"}>
+              Successfully Posted
+            </Text>
+            {/* <Text color={"black"}>You successfully logged in.</Text> */}
+          </Box>
+        ),
+        duration: 3000,
+      });
 
       router.push(`/trails/${response.data.id}`);
     } catch (error) {
-      dispatch(
-        setAlert({
-          msg: "Post error, try again.",
-          alertType: "error",
-        })
-      );
+      // dispatch(
+      //   setAlert({
+      //     msg: "Post error, try again.",
+      //     alertType: "error",
+      //   })
+      // );
+
+      toast({
+        position: "top",
+        render: () => (
+          <Box
+            borderRadius={"0.3em"}
+            backgroundColor={"red.300"}
+            padding="2em"
+            width={"70vw"}
+          >
+            <Text color={"black"} fontWeight={"700"}>
+              Post error
+            </Text>
+            <Text color={"black"}>Try it again in a few...</Text>
+          </Box>
+        ),
+        duration: 3000,
+      });
     }
 
-    clearAlert();
+    // clearAlert();
   };
 
   const validateForm = Yup.object({

@@ -19,11 +19,12 @@ const options = {
           });
           if (data) {
             return data;
+          } else {
+            console.log("cant find user");
+            throw new Error("data is not found");
           }
-
-          return null;
         } catch (e) {
-          return null;
+          throw new Error("error");
         }
       },
     }),
@@ -56,8 +57,9 @@ const options = {
         session.jwt = token.jwt;
         session.username = token.name;
         return session;
+      } else {
+        throw new Error("no token found");
       }
-      return null;
     },
   },
   secret: "test",

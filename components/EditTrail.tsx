@@ -4,15 +4,17 @@ import {
   Stack,
   Heading,
   Box,
+  Text,
   IconButton,
   NumberInput,
   NumberInputField,
   InputRightElement,
+  useToast,
 } from "@chakra-ui/react";
 import { Formik, Form } from "formik";
 import { useRouter } from "next/router";
-import { useDispatch } from "react-redux";
-import { setAlert, removeAlert } from "../features/alert";
+// import { useDispatch } from "react-redux";
+// import { setAlert, removeAlert } from "../features/alert";
 import { useState } from "react";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 
@@ -32,14 +34,15 @@ const EditTrail = ({ trail }) => {
   //uses next router
   const router = useRouter();
   //disptaches an action
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
+  const toast = useToast();
 
   //clears alert after 3s
-  const clearAlert = () => {
-    setTimeout(() => {
-      dispatch(removeAlert());
-    }, 3000);
-  };
+  // const clearAlert = () => {
+  //   setTimeout(() => {
+  //     dispatch(removeAlert());
+  //   }, 3000);
+  // };
 
   //delete trail
   const deletePost = async () => {
@@ -49,24 +52,60 @@ const EditTrail = ({ trail }) => {
         jwt: session.jwt,
       });
 
-      dispatch(
-        setAlert({
-          msg: "Successfully deleted",
-          alertType: "success",
-        })
-      );
-
+      // dispatch(
+      //   setAlert({
+      //     msg: "Successfully deleted",
+      //     alertType: "success",
+      //   })
+      // );
       router.push("/trails");
+
+      toast({
+        position: "top",
+        // title: `Hello, ${session.username}!`,
+        render: () => (
+          <Box
+            borderRadius={"0.3em"}
+            backgroundColor={"#40916c"}
+            padding="2em"
+            width={"70vw"}
+          >
+            <Text color={"black"} fontWeight={"700"}>
+              Trail Successfully Deleted
+            </Text>
+          </Box>
+        ),
+        duration: 3000,
+      });
     } catch (e) {
-      dispatch(
-        setAlert({
-          msg: "Deleting failed",
-          alertType: "error",
-        })
-      );
+      //   dispatch(
+      //     setAlert({
+      //       msg: "Deleting failed",
+      //       alertType: "error",
+      //     })
+      //   );
+      // }
+
+      toast({
+        position: "top",
+        render: () => (
+          <Box
+            borderRadius={"0.3em"}
+            backgroundColor={"red.300"}
+            padding="2em"
+            width={"70vw"}
+          >
+            <Text color={"black"} fontWeight={"700"}>
+              Deleting Error
+            </Text>
+            <Text color={"black"}>Try it again in a few...</Text>
+          </Box>
+        ),
+        duration: 3000,
+      });
     }
 
-    clearAlert();
+    // clearAlert();
   };
 
   const [images, setInitialImages] = useState(trail.images);
@@ -148,24 +187,59 @@ const EditTrail = ({ trail }) => {
         },
       });
 
-      dispatch(
-        setAlert({
-          msg: "Successfully edited!",
-          alertType: "success",
-        })
-      );
+      // dispatch(
+      //   setAlert({
+      //     msg: "Successfully edited!",
+      //     alertType: "success",
+      //   })
+      // );
 
       router.push(`/trails/${response.data.id}`);
+
+      toast({
+        position: "top",
+        render: () => (
+          <Box
+            borderRadius={"0.3em"}
+            backgroundColor={"#40916c"}
+            padding="2em"
+            width={"70vw"}
+          >
+            <Text color={"black"} fontWeight={"700"}>
+              Trail Successfully Updated
+            </Text>
+          </Box>
+        ),
+        duration: 3000,
+      });
     } catch (error) {
-      dispatch(
-        setAlert({
-          msg: "Post error, try again.",
-          alertType: "error",
-        })
-      );
+      // dispatch(
+      //   setAlert({
+      //     msg: "Post error, try again.",
+      //     alertType: "error",
+      //   })
+      // );
+
+      toast({
+        position: "top",
+        render: () => (
+          <Box
+            borderRadius={"0.3em"}
+            backgroundColor={"red.300"}
+            padding="2em"
+            width={"70vw"}
+          >
+            <Text color={"black"} fontWeight={"700"}>
+              Update Error
+            </Text>
+            <Text color={"black"}>Try it again in a few...</Text>
+          </Box>
+        ),
+        duration: 3000,
+      });
     }
 
-    clearAlert();
+    // clearAlert();
   };
 
   const validateForm = Yup.object({
