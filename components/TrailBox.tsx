@@ -45,7 +45,7 @@ const TrailBox = ({ trail, recent }) => {
         <Tag variant={"outline"} my="0.5em">
           <TagLeftIcon as={TiLocation} m={0} />
           <TagLabel ml="0.2em" fontSize={"0.9em"} letterSpacing={"1px"}>
-            {trail.location}
+            {trail.city}
           </TagLabel>
         </Tag>
         <Stack direction={"row"} my="0.5em" hidden={recent}>

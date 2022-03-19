@@ -49,7 +49,7 @@ const Trail = ({ trail }) => {
     <PageContainer>
       <Container maxW={["100vw", "80vw", "60vw"]} overflowX={"hidden"}>
         <Heading>{trail.title}</Heading>
-        <Text fontSize={"0.8em"}>{trail.location}</Text>
+        <Text fontSize={"0.8em"}>{trail.city}</Text>
         <Text fontSize={"0.8em"}>
           {new Date(trail.createdAt).toLocaleDateString("en-US", {
             month: "short",

@@ -255,7 +255,7 @@ const EditTrail = ({ trail }) => {
     description: Yup.string().required("Description is Required"),
     url: Yup.string()
       .matches(
-        /((https?):\/\/)?(www.)?alltrails.([a-z]+)\/(explore\/trail)/,
+        /((https?):\/\/)?(www.)?alltrails.([a-z]+)\/(explore\/recording)/,
         "Enter valid AllTrails URL"
       )
       .required("URL required"),

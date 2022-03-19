@@ -55,7 +55,7 @@ const LogIn = () => {
             borderRadius={"0.3em"}
             backgroundColor={"#40916c"}
             padding="2em"
-            width={"70vw"}
+            mx="auto"
           >
             <Text color={"black"} fontWeight={"700"}>
               Hello, {session.username}
@@ -82,7 +82,7 @@ const LogIn = () => {
             borderRadius={"0.3em"}
             backgroundColor={"red.300"}
             padding="2em"
-            width={"70vw"}
+            mx="auto"
           >
             <Text color={"black"} fontWeight={"700"}>
               Incorrect username or password

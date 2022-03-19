@@ -8,6 +8,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     jwt,
     title,
     location,
+    city,
     description,
     difficulty,
     rating,
@@ -32,6 +33,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       {
         title,
         location,
+        city,
         description,
         rating,
         images,

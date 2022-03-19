@@ -56,6 +56,7 @@ const CreateTrail = () => {
     const {
       title,
       location,
+      city,
       difficulty,
       type,
       rating,
@@ -95,6 +96,7 @@ const CreateTrail = () => {
       const json = JSON.stringify({
         title: title,
         location: location,
+        city: city,
         description: description,
         difficulty: difficulty,
         type: type,
@@ -132,7 +134,7 @@ const CreateTrail = () => {
             borderRadius={"0.3em"}
             backgroundColor={"#40916c"}
             padding="2em"
-            width={"70vw"}
+            mx="auto"
           >
             <Text color={"black"} fontWeight={"700"}>
               Successfully Posted
@@ -145,6 +147,7 @@ const CreateTrail = () => {
 
       router.push(`/trails/${response.data.id}`);
     } catch (error) {
+      // console.log(error);
       // dispatch(
       //   setAlert({
       //     msg: "Post error, try again.",
@@ -159,7 +162,7 @@ const CreateTrail = () => {
             borderRadius={"0.3em"}
             backgroundColor={"red.300"}
             padding="2em"
-            width={"70vw"}
+            mx="auto"
           >
             <Text color={"black"} fontWeight={"700"}>
               Post error
@@ -177,6 +180,7 @@ const CreateTrail = () => {
   const validateForm = Yup.object({
     title: Yup.string().required("Title is Required"),
     location: Yup.string().required("Location is Required"),
+    city: Yup.string().required("City is Required"),
     difficulty: Yup.string().required("Difficulty is Required"),
     type: Yup.string().required("Trail Type is Required"),
     distance: Yup.number(),
@@ -187,7 +191,7 @@ const CreateTrail = () => {
     description: Yup.string().required("Description is Required"),
     url: Yup.string()
       .matches(
-        /((https?):\/\/)?(www.)?alltrails.([a-z]+)\/(explore\/trail)/,
+        /((https?):\/\/)?(www.)?alltrails.([a-z]+)\/(explore\/recording)/,
         "Enter valid AllTrails URL"
       )
       .required("AllTrails URL required"),
@@ -209,6 +213,7 @@ const CreateTrail = () => {
           initialValues={{
             title: "",
             location: "",
+            city: "",
             difficulty: "",
             type: "",
             rating: 0,
@@ -232,12 +237,16 @@ const CreateTrail = () => {
           }) => (
             <Form onSubmit={handleSubmit}>
               <TextField placeholder="Title" name="title" />
-              <TextField placeholder="Location" name="location" />
+              <TextField
+                placeholder="Location (Exact Address)"
+                name="location"
+              />
+              <TextField placeholder="City" name="city" />
               <Box my="2em">
                 <Heading fontSize={"1em"} mb="1em">
                   Rating
                 </Heading>
-                {console.log(values)}
+                {/* {console.log(values)} */}
                 <Stack direction={"row"}>
                   {stars.map((star) => (
                     <IconButton
