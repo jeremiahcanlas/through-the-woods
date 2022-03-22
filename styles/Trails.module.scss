@@ -7,13 +7,13 @@
 }
 
 .trailBox {
-  &:hover {
-    background-color: transparent !important;
-  }
-
+  border: 1px solid transparent !important;
+  display: block;
   @include md {
-    background-color: #343a40;
-    opacity: 0.8;
+    padding: 1em;
+    &:hover {
+      border: solid 1px #40916c !important;
+    }
   }
 }
 

@@ -31,23 +31,22 @@ const TrailBox = ({ trail, recent }) => {
         position="relative"
         className={styles.trailBox}
       >
+        <Heading fontSize={["md", "lg"]} letterSpacing={"1px"} margin={0}>
+          {trail.title}
+        </Heading>
         <Stack direction={"row"}>
-          <Heading fontSize={["md", "lg"]} letterSpacing={"1px"} margin={0}>
-            {trail.title}
-          </Heading>
+          <Tag variant={"outline"} my="0.5em">
+            <TagLeftIcon as={TiLocation} m={0} />
+            <TagLabel ml="0.2em" fontSize={"0.9em"} letterSpacing={"1px"}>
+              {trail.city}
+            </TagLabel>
+          </Tag>
 
           <Tag hidden={!recent}>
             <TagLabel fontWeight={600}>{trail.rating}</TagLabel>
             <TagLeftIcon m={0} color="rgb(221, 227, 146)" as={AiFillStar} />
           </Tag>
         </Stack>
-
-        <Tag variant={"outline"} my="0.5em">
-          <TagLeftIcon as={TiLocation} m={0} />
-          <TagLabel ml="0.2em" fontSize={"0.9em"} letterSpacing={"1px"}>
-            {trail.city}
-          </TagLabel>
-        </Tag>
         <Stack direction={"row"} my="0.5em" hidden={recent}>
           {stars.map((star) =>
             trail.rating >= star ? (
