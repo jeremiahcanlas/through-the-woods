@@ -102,6 +102,9 @@ const Trail = ({ trail }) => {
           </Stack>
         </Stack>
         <Box mb="3rem">
+          <Text fontWeight={"600"} mb="1em">
+            AllTrails&reg; Recording:
+          </Text>
           <a
             href={trail.allTrailsUrl}
             target="_blank"

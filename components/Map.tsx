@@ -24,7 +24,7 @@ const Map = ({ trails, geojson }) => {
   const [viewport, setViewport] = useState({
     latitude: center && center.latitude,
     longitude: center && center.longitude,
-    zoom: 6,
+    zoom: 4,
   });
 
   const [selectedTrail, setSelectedTrail]: any = useState({});

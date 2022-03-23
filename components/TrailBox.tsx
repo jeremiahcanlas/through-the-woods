@@ -35,14 +35,14 @@ const TrailBox = ({ trail, recent }) => {
           {trail.title}
         </Heading>
         <Stack direction={"row"}>
-          <Tag variant={"outline"} my="0.5em">
+          <Tag variant={"outline"} my="0.5em" mx="0">
             <TagLeftIcon as={TiLocation} m={0} />
             <TagLabel ml="0.2em" fontSize={"0.9em"} letterSpacing={"1px"}>
               {trail.city}
             </TagLabel>
           </Tag>
 
-          <Tag hidden={!recent}>
+          <Tag hidden={!recent} variant="none">
             <TagLabel fontWeight={600}>{trail.rating}</TagLabel>
             <TagLeftIcon m={0} color="rgb(221, 227, 146)" as={AiFillStar} />
           </Tag>
