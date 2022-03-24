@@ -68,7 +68,7 @@ const EditTrail = ({ trail }) => {
             borderRadius={"0.3em"}
             backgroundColor={"#40916c"}
             padding="2em"
-            width={"70vw"}
+            mx="auto"
           >
             <Text color={"black"} fontWeight={"700"}>
               Trail Successfully Deleted
@@ -93,7 +93,7 @@ const EditTrail = ({ trail }) => {
             borderRadius={"0.3em"}
             backgroundColor={"red.300"}
             padding="2em"
-            width={"70vw"}
+            mx="auto"
           >
             <Text color={"black"} fontWeight={"700"}>
               Deleting Error

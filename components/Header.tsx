@@ -46,7 +46,7 @@ const Header = () => (
       layout="fill"
       objectFit="cover"
       quality={30}
-      placeholder="blur"
+      // placeholder="blur"
       className={styles.image}
       // priority={false}
     />
