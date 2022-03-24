@@ -19,29 +19,36 @@ const Header = () => (
     animate={{ opacity: 1 }}
     transition={{ delay: 0.5, duration: 1.5 }}
   >
-    <Center width="100%" height="100%" flexDirection="column">
-      <Container opacity="1" width="220px">
-        <Image src="/trees.svg" alt="trees" width="160px" height="80px" />
-      </Container>
-      <Heading
-        fontSize={["2em", "2em"]}
-        bgGradient="linear(to-t, #2d6a4f 30%,#40916c 70%)"
-        bgClip="text"
-        className={styles.heading}
-      >
-        THROUGH THE WOODS
-      </Heading>
-    </Center>
+    <MotionContainer
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.7, duration: 3 }}
+    >
+      <Center width="100%" height="100%" flexDirection="column">
+        <Container opacity="1" width="220px">
+          <Image src="/trees.svg" alt="trees" width="160px" height="80px" />
+        </Container>
+        <Heading
+          fontSize={["2em", "2em"]}
+          bgGradient="linear(to-t, #2d6a4f 30%,#40916c 70%)"
+          bgClip="text"
+          className={styles.heading}
+        >
+          THROUGH THE WOODS
+        </Heading>
+      </Center>
+    </MotionContainer>
+
     <Image
       src={backgroundImage}
       // position="absolute"
       alt="cover image"
       layout="fill"
       objectFit="cover"
-      quality={40}
+      quality={30}
       placeholder="blur"
       className={styles.image}
-      priority={false}
+      // priority={false}
     />
   </MotionContainer>
 );

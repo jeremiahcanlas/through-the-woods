@@ -5,6 +5,7 @@ import PageContainer from "./PageContainer";
 import TrailBox from "./TrailBox";
 import Map from "./Map";
 import styles from "../styles/Trails.module.scss";
+import Fade from "react-reveal/Fade";
 
 import { useSession } from "next-auth/react";
 
@@ -41,9 +42,11 @@ const Trails = ({ trails, geojson }) => {
           </Link>
         )}
         <Wrap spacing={"0.5em"} my="2em" justify={"center"} width={"100%"}>
-          {trails.map((trail) => {
-            return <TrailBox key={trail.id} trail={trail} recent={false} />;
-          })}
+          <Fade>
+            {trails.map((trail) => {
+              return <TrailBox key={trail.id} trail={trail} recent={false} />;
+            })}
+          </Fade>
         </Wrap>
       </Flex>
     </PageContainer>

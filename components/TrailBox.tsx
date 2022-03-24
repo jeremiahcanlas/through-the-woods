@@ -13,19 +13,26 @@ import styles from "../styles/Trails.module.scss";
 import { TiLocation, TiChartArea } from "react-icons/ti";
 import { GiPathDistance } from "react-icons/gi";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
+// import Fade from "react-reveal/Fade";
 
 const TrailBox = ({ trail, recent }) => {
   let num = Math.floor(Math.random() * trail.images.length);
   const stars = [1, 2, 3, 4, 5];
 
   return (
+    // <Fade bottom>
     <Link href={`/trails/${trail.id}`} key={trail.id} passHref>
       <Container
-        w={recent ? "100%" : ["100%", "80%", "30%"]}
+        // w={recent ? "100%" : ["100%", "80%", "30%"]}
+        w={recent ? "100vw" : ["90vw", "80vw", "30vw"]}
+        // w={"30vw"}
+        h={!recent && "30vh"}
+        // maxH="30vh"
         p={recent ? "15px" : "40px"}
         maxW={recent && "100%"}
         borderRadius="1em"
         backgroundColor={trail.images.length === 0 && "blackAlpha.900"}
+        alignContent="center"
         cursor="pointer"
         textAlign="left"
         position="relative"
@@ -89,6 +96,7 @@ const TrailBox = ({ trail, recent }) => {
         )}
       </Container>
     </Link>
+    // </Fade>
   );
 };
 
