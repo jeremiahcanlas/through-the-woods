@@ -42,7 +42,7 @@ const Trails = ({ trails, geojson }) => {
           </Link>
         )}
         <Wrap spacing={"0.5em"} my="2em" justify={"center"} width={"100%"}>
-          <Fade>
+          <Fade ssrFadeout bottom>
             {trails.map((trail) => {
               return <TrailBox key={trail.id} trail={trail} recent={false} />;
             })}
