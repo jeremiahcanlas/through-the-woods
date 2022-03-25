@@ -253,12 +253,10 @@ const EditTrail = ({ trail }) => {
     hours: Yup.number().max(23),
     minutes: Yup.number().max(59),
     description: Yup.string().required("Description is Required"),
-    url: Yup.string()
-      .matches(
-        /((https?):\/\/)?(www.)?alltrails.([a-z]+)\/(explore\/recording)/,
-        "Enter valid AllTrails URL"
-      )
-      .required("URL required"),
+    url: Yup.string().matches(
+      /((https?):\/\/)?(www.)?alltrails.([a-z]+)\/(explore\/recording)/,
+      "Enter valid AllTrails URL"
+    ),
   });
 
   //could easily be a separate file...
@@ -430,7 +428,13 @@ const EditTrail = ({ trail }) => {
                 </Box>
 
                 <TextField name="description" textbox={true} />
-                <TextField placeholder="AllTrails URL" name="url" />
+                {session.user.name !== "guest" && (
+                  <TextField
+                    placeholder="AllTrails URL"
+                    type="url"
+                    name="url"
+                  />
+                )}
 
                 <Box my="2em">
                   <Heading fontSize={"1em"} mb="1em">

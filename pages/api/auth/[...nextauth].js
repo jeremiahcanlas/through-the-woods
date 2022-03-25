@@ -45,6 +45,7 @@ const options = {
   callbacks: {
     // Getting the JWT token from API response
     async jwt({ token, user }) {
+      // console.log(user.user.trails.length || "");
       if (user) {
         token.jwt = user.jwt;
         token.name = user.user.username;
@@ -56,6 +57,7 @@ const options = {
       if (token) {
         session.jwt = token.jwt;
         session.username = token.name;
+
         return session;
       } else {
         throw new Error("no token found");

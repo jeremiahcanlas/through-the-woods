@@ -31,6 +31,16 @@ import { server } from "../server";
 const CreateTrail = () => {
   const { data: session, status } = useSession();
 
+  // const isAtCapacity = () => {
+  //   if (session.user.name === "guest" && session.trailsCount >= 1) {
+  //     return true;
+  //   }
+
+  //   return false;
+  // };
+
+  // console.log(session);
+
   const router = useRouter();
   // const dispatch = useDispatch();
   const toast = useToast();
@@ -51,6 +61,8 @@ const CreateTrail = () => {
     router.push("/");
     return <p>NOT AUTHORIZED</p>;
   }
+
+  // console.log(session);
 
   const handleCreate = async (values) => {
     const {
@@ -155,6 +167,10 @@ const CreateTrail = () => {
       //   })
       // );
 
+      const errorObj = { error };
+
+      // console.log(errorObj.error.response.data.message);
+
       toast({
         position: "top",
         render: () => (
@@ -164,10 +180,20 @@ const CreateTrail = () => {
             padding="2em"
             mx="auto"
           >
-            <Text color={"black"} fontWeight={"700"}>
-              Post error
-            </Text>
-            <Text color={"black"}>Try it again in a few...</Text>
+            {session.user.name === "guest" ? (
+              <>
+                <Text color={"black"}>
+                  {errorObj.error.response.data.message}
+                </Text>
+              </>
+            ) : (
+              <>
+                <Text color={"black"} fontWeight={"700"}>
+                  Post error
+                </Text>
+                <Text color={"black"}>Try it again in a few...</Text>
+              </>
+            )}
           </Box>
         ),
         duration: 3000,
@@ -189,12 +215,10 @@ const CreateTrail = () => {
     hours: Yup.number().max(23),
     minutes: Yup.number().max(59),
     description: Yup.string().required("Description is Required"),
-    url: Yup.string()
-      .matches(
-        /((https?):\/\/)?(www.)?alltrails.([a-z]+)\/(explore\/recording)/,
-        "Enter valid AllTrails URL"
-      )
-      .required("AllTrails URL required"),
+    url: Yup.string().matches(
+      /((https?):\/\/)?(www.)?alltrails.([a-z]+)\/(explore\/recording)/,
+      "Enter valid AllTrails URL"
+    ),
   });
 
   const trailTypes = ["Loop", "Out & Back", "Point to Point"];
@@ -370,7 +394,9 @@ const CreateTrail = () => {
               </Box>
 
               <TextField name="description" textbox placeholder="Description" />
-              <TextField placeholder="AllTrails URL" type="url" name="url" />
+              {session.user.name !== "guest" && (
+                <TextField placeholder="AllTrails URL" type="url" name="url" />
+              )}
 
               <Box my="2em">
                 <Heading fontSize={"1em"} mb="1em">

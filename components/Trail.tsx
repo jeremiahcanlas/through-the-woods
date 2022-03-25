@@ -9,6 +9,7 @@ import {
   Box,
   Flex,
 } from "@chakra-ui/react";
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import PageContainer from "./PageContainer";
@@ -19,13 +20,20 @@ import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 
 const Trail = ({ trail }) => {
   const { data: session } = useSession();
+  const [loading, triggerLoad] = useState(false);
   const images = trail.images.map((img) => img.formats.medium.url);
 
   const authorButtons = () => {
     return (
       <>
         <Link href={`/trails/${trail.id}/edit`} passHref>
-          <Button m="1em">Edit</Button>
+          <Button
+            m="1em"
+            isLoading={loading}
+            onClick={() => triggerLoad(!loading)}
+          >
+            Edit
+          </Button>
         </Link>
       </>
     );
@@ -101,25 +109,27 @@ const Trail = ({ trail }) => {
             <Text fontWeight={"900"}>{trail.type}</Text>
           </Stack>
         </Stack>
-        <Box mb="3rem">
-          <Text fontWeight={"600"} mb="1em">
-            AllTrails&reg; Recording:
-          </Text>
-          <a
-            href={trail.allTrailsUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Button position="relative" variant={"outline"}>
-              <Image
-                src={allTrailsLogo}
-                alt="alltrails logo"
-                height={"20%"}
-                width={"100%"}
-              />
-            </Button>
-          </a>
-        </Box>
+        {trail.allTrailsUrl && (
+          <Box mb="3rem">
+            <Text fontWeight={"600"} mb="1em">
+              AllTrails&reg; Recording:
+            </Text>
+            <a
+              href={trail.allTrailsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Button position="relative" variant={"outline"}>
+                <Image
+                  src={allTrailsLogo}
+                  alt="alltrails logo"
+                  height={"20%"}
+                  width={"100%"}
+                />
+              </Button>
+            </a>
+          </Box>
+        )}
         <Stack direction={"row"} mt="1em">
           <Link href="/trails" passHref>
             <Button>&larr; Trails</Button>

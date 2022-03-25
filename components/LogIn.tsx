@@ -38,7 +38,6 @@ const LogIn = () => {
       });
 
       const session = await getSession();
-      // console.log(session);
 
       // dispatch(
       //   setAlert({
@@ -50,6 +49,7 @@ const LogIn = () => {
       toast({
         position: "top",
         title: `Hello, ${session.username}!`,
+        // isClosable: session.username !== "guest" ? false : true,
         render: () => (
           <Box
             borderRadius={"0.3em"}
@@ -57,13 +57,29 @@ const LogIn = () => {
             padding="2em"
             mx="auto"
           >
-            <Text color={"black"} fontWeight={"700"}>
-              Hello, {session.username}
-            </Text>
-            <Text color={"black"}>You successfully logged in.</Text>
+            {session.username !== "guest" ? (
+              <>
+                <Text color={"black"} fontWeight={"700"}>
+                  Hello, {session.username}
+                </Text>
+                <Text color={"black"}>You successfully logged in.</Text>
+              </>
+            ) : (
+              <>
+                <Text color={"black"} fontWeight={"700"}>
+                  Welcome to Through the Woods, Guest!
+                </Text>
+                <Text color={"black"}>
+                  You have a special access to my website that allows you to
+                  create 1 entry ONLY for testing purposes. Please report any
+                  issues to https://github.com/jeremiahcanlas/through-the-woods.
+                  Enjoy!
+                </Text>
+              </>
+            )}
           </Box>
         ),
-        duration: 3000,
+        duration: session.username !== "guest" ? 3000 : 6000,
       });
 
       router.push("/");
@@ -113,7 +129,7 @@ const LogIn = () => {
           validationSchema={validateLogin}
           onSubmit={handleSubmit}
         >
-          {({ isSubmitting, handleSubmit }) => (
+          {({ isSubmitting, handleSubmit, setFieldValue }) => (
             <Form onSubmit={handleSubmit} method="POST">
               <Stack my="2em" px={["0", "2em", "4em"]} spacing={8}>
                 <Heading as="h2">Login</Heading>
@@ -126,6 +142,17 @@ const LogIn = () => {
                 />
                 <Button isLoading={isSubmitting} size="sm" type="submit">
                   Login
+                </Button>
+                <Button
+                  isLoading={isSubmitting}
+                  size="sm"
+                  type="submit"
+                  onClick={() => {
+                    setFieldValue("identifier", "guest");
+                    setFieldValue("password", "ttwguest");
+                  }}
+                >
+                  Login as Guest
                 </Button>
               </Stack>
             </Form>
