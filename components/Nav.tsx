@@ -72,7 +72,8 @@ const Nav = () => {
           w={["90vw", "60vw", "15vw"]}
           borderColor="#40916c"
           variant="outline"
-          fontWeight="300"
+          letterSpacing="1px"
+          fontWeight="500"
           textColor="white"
           rightIcon={<GiMountaintop size="1.2em" />}
           className={styles.btn}
@@ -88,7 +89,8 @@ const Nav = () => {
               w={["90vw", "60vw", "15vw"]}
               borderColor="#40916c"
               variant="outline"
-              fontWeight="300"
+              letterSpacing="1px"
+              fontWeight="500"
               textColor="white"
               rightIcon={<IoIosCreate size="1.2em" />}
               className={styles.btn}
@@ -101,7 +103,8 @@ const Nav = () => {
             w={["90vw", "60vw", "15vw"]}
             borderColor="#40916c"
             variant="outline"
-            fontWeight="300"
+            letterSpacing="1px"
+            fontWeight="500"
             _focus={{ outline: "none" }}
             onClick={logout}
             textColor="red.300"
@@ -118,7 +121,8 @@ const Nav = () => {
             w={["90vw", "60vw", "15vw"]}
             borderColor="#40916c"
             variant="outline"
-            fontWeight="300"
+            letterSpacing="1px"
+            fontWeight="500"
             _focus={{ outline: "none" }}
             textColor="white"
             rightIcon={<IoIosLogIn />}

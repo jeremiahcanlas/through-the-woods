@@ -243,8 +243,12 @@ const EditTrail = ({ trail }) => {
   };
 
   const validateForm = Yup.object({
-    title: Yup.string().required("Title is Required"),
-    location: Yup.string().required("Location is Required"),
+    title: Yup.string()
+      .matches(/^.{1,30}$/gm, "Maximum character reached")
+      .required("Title is Required"),
+    location: Yup.string()
+      .matches(/^.{1,30}$/gm, "Maximum character reached")
+      .required("Location is Required"),
     difficulty: Yup.string().required("Difficulty is Required"),
     type: Yup.string().required("Trail Type is Required"),
     distance: Yup.number(),

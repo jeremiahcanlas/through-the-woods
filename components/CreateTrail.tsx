@@ -204,14 +204,20 @@ const CreateTrail = () => {
   };
 
   const validateForm = Yup.object({
-    title: Yup.string().required("Title is Required"),
-    location: Yup.string().required("Location is Required"),
-    city: Yup.string().required("City is Required"),
+    title: Yup.string()
+      .matches(/^.{1,30}$/gm, "Maximum character reached")
+      .required("Title is Required"),
+    location: Yup.string()
+      .matches(/^.{1,40}$/gm, "Maximum character reached")
+      .required("Location is Required"),
+    city: Yup.string()
+      .matches(/^.{1,20}$/gm, "Maximum character reached")
+      .required("City is Required"),
     difficulty: Yup.string().required("Difficulty is Required"),
     type: Yup.string().required("Trail Type is Required"),
-    distance: Yup.number(),
-    elevation: Yup.number(),
-    days: Yup.number(),
+    distance: Yup.number().max(999),
+    elevation: Yup.number().max(99999),
+    days: Yup.number().max(5),
     hours: Yup.number().max(23),
     minutes: Yup.number().max(59),
     description: Yup.string().required("Description is Required"),
@@ -322,6 +328,7 @@ const CreateTrail = () => {
                     variant={"flushed"}
                     size="md"
                     min={0}
+                    max={99}
                     name="distance"
                     onChange={(e) => setFieldValue("distance", e)}
                   >
@@ -342,6 +349,7 @@ const CreateTrail = () => {
                     variant={"flushed"}
                     size="md"
                     min={0}
+                    max={9999}
                     name="elevation"
                     onChange={(e) => setFieldValue("elevation", e)}
                   >
@@ -363,6 +371,7 @@ const CreateTrail = () => {
                     variant={"flushed"}
                     size="md"
                     min={0}
+                    max={5}
                     name="days"
                     onChange={(e) => setFieldValue("days", e)}
                   >

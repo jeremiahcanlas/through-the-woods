@@ -32,12 +32,13 @@ const Trails = ({ trails, geojson }) => {
               p="1px"
               borderColor="#40916c"
               variant="outline"
-              fontWeight="300"
+              letterSpacing="1px"
+              fontWeight="500"
               textColor="white"
               leftIcon={<AiOutlinePlusSquare />}
               className={styles.btn}
             >
-              Create New trail
+              New Trail
             </Button>
           </Link>
         )}

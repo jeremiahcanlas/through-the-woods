@@ -20,8 +20,8 @@ const Header = () => (
     transition={{ delay: 0.5, duration: 1.5 }}
   >
     <MotionContainer
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
       transition={{ delay: 0.7, duration: 3 }}
     >
       <Center width="100%" height="100%" flexDirection="column">
@@ -29,8 +29,8 @@ const Header = () => (
           <Image src="/trees.svg" alt="trees" width="160px" height="80px" />
         </Container>
         <Heading
-          fontSize={["2em", "2em"]}
-          bgGradient="linear(to-t, #2d6a4f 30%,#40916c 70%)"
+          fontSize={["1.5em", "2em"]}
+          bgGradient="linear(to-t, #40916c 30%,#40916c 70%)"
           bgClip="text"
           className={styles.heading}
         >
