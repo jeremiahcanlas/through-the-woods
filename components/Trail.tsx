@@ -23,6 +23,7 @@ const Trail = ({ trail }) => {
   const [loading, triggerLoad] = useState(false);
   const images = trail.images.map((img) => img.formats.medium.url);
 
+  console.log(trail);
   const authorButtons = () => {
     return (
       <>
@@ -57,7 +58,9 @@ const Trail = ({ trail }) => {
     <PageContainer>
       <Container maxW={["100vw", "80vw", "60vw"]} overflowX={"hidden"}>
         <Heading>{trail.title}</Heading>
-        <Text fontSize={"0.8em"}>{trail.city}</Text>
+        <Text fontSize={"0.8em"} my="0.5em">
+          {trail.city}
+        </Text>
         <Text fontSize={"0.8em"}>
           {new Date(trail.createdAt).toLocaleDateString("en-US", {
             month: "short",
@@ -65,7 +68,7 @@ const Trail = ({ trail }) => {
             year: "numeric",
           })}
         </Text>
-        <Stack direction={"row"} mt="0.5em">
+        <Stack direction={"row"} my="0.5em">
           <Badge colorScheme={difficultyColor()}>{trail.difficulty}</Badge>
           <Stack direction={"row"} my="0.5em" spacing={"1"}>
             {stars.map((star) =>
@@ -77,7 +80,12 @@ const Trail = ({ trail }) => {
             )}
           </Stack>
         </Stack>
-
+        <Text fontSize={"0.8em"}>
+          <b>Est.</b>{" "}
+          {trail.trailLength.days >= 1 && `${trail.trailLength.days}d`}{" "}
+          {trail.trailLength.hours >= 1 && `${trail.trailLength.hours}h`}{" "}
+          {trail.trailLength.minutes >= 1 && `${trail.trailLength.minutes}m`}
+        </Text>
         <Divider orientation="horizontal" my="1em" />
 
         {trail.images.length >= 1 && (
@@ -98,10 +106,10 @@ const Trail = ({ trail }) => {
         <Stack direction={"row"} spacing="3em" m="2em" letterSpacing={"1px"}>
           <Stack direction={"column"}>
             <Text>Length</Text>
-            <Text fontWeight={"900"}>{trail.distance}km</Text>
+            <Text fontWeight={"900"}>{trail.distance} km</Text>
           </Stack>
           <Stack direction={"column"}>
-            <Text>Elevation</Text>
+            <Text>Elevation gain</Text>
             <Text fontWeight={"900"}>{trail.elevation} m</Text>
           </Stack>
           <Stack direction={"column"}>
