@@ -31,11 +31,18 @@ export default function Home({ recent }) {
   );
 }
 
-Home.getInitialProps = async () => {
-  const res = await axios.get(`${server}/trails`);
-  const trails = await res.data.reverse();
+export const getServerSideProps = async () => {
+  try {
+    const res = await axios.get(`${server}/trails`);
+    const trails = await res.data.reverse();
 
-  const recent = await trails.slice(0, 3);
+    const recent = await trails.slice(0, 3);
 
-  return { recent };
+    return { props: { recent } };
+  } catch (error) {
+    console.log(error);
+    return {
+      notFound: true,
+    };
+  }
 };
