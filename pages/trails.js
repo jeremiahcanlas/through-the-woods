@@ -9,6 +9,7 @@ const trails = ({ trails, geojsonData }) => (
     <Trails trails={trails} geojson={geojsonData} />
   </>
 );
+
 trails.getInitialProps = async () => {
   const geojsonData = { type: "FeatureCollection", features: [] };
   const res = await axios.get(`${server}/trails`);
