@@ -35,6 +35,7 @@ const TextField = ({
         return (
           <FormControl isInvalid={meta.error && meta.touched} my="1em">
             {textbox ? (
+              // renders a textbox
               <Textarea
                 {...field}
                 variant="flushed"
@@ -43,6 +44,7 @@ const TextField = ({
                 height={["400px", "300px"]}
               />
             ) : checkbox ? (
+              // renders a checkbox
               <Checkbox
                 {...field}
                 size="sm"
@@ -54,6 +56,7 @@ const TextField = ({
                 Delete
               </Checkbox>
             ) : selectField ? (
+              // renders a radio selector
               <HStack {...field} {...group}>
                 {selectField.map((value) => {
                   const radio = getRadioProps({ value });
@@ -65,6 +68,7 @@ const TextField = ({
                 })}
               </HStack>
             ) : (
+              // renders a normal input field
               <Input
                 {...field}
                 variant="flushed"
@@ -74,6 +78,7 @@ const TextField = ({
                 multiple={multiple}
               />
             )}
+            {/* renders error message */}
             <FormErrorMessage fontSize="0.8em">{meta.error}</FormErrorMessage>
           </FormControl>
         );

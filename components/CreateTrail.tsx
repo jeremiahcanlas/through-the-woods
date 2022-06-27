@@ -131,13 +131,6 @@ const CreateTrail = () => {
         },
       });
 
-      // dispatch(
-      //   setAlert({
-      //     msg: "Successfully posted!",
-      //     alertType: "success",
-      //   })
-      // );
-
       toast({
         position: "top",
         // title: `Hello, ${session.username}!`,
@@ -159,17 +152,7 @@ const CreateTrail = () => {
 
       router.push(`/trails/${response.data.id}`);
     } catch (error) {
-      // console.log(error);
-      // dispatch(
-      //   setAlert({
-      //     msg: "Post error, try again.",
-      //     alertType: "error",
-      //   })
-      // );
-
       const errorObj = { error };
-
-      // console.log(errorObj.error.response.data.message);
 
       toast({
         position: "top",
