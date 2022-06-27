@@ -37,7 +37,7 @@ const trails = ({ trails, geojsonData }) => (
 //   return { trails, geojsonData };
 // };
 
-export const getServerSideProps = async (ctx) => {
+export const getStaticProps = async (ctx) => {
   try {
     const geojsonData = { type: "FeatureCollection", features: [] };
 

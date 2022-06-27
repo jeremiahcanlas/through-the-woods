@@ -9,7 +9,6 @@ import { server } from "../server";
 export default function Home({ recent }) {
   return (
     <Flex
-      // h="100vh"
       overflow={"hidden"}
       flexDirection="column"
       justifyContent="center"
@@ -31,7 +30,7 @@ export default function Home({ recent }) {
   );
 }
 
-export const getServerSideProps = async () => {
+export const getStaticProps = async () => {
   try {
     const res = await axios.get(`${server}/trails`);
     const trails = await res.data.reverse();
