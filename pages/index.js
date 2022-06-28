@@ -6,7 +6,7 @@ import { Flex, Box } from "@chakra-ui/react";
 import axios from "axios";
 import { server } from "../server";
 
-export default function Home({ recent }) {
+export default function Home({ recent, trails }) {
   return (
     <Flex
       overflow={"hidden"}
@@ -22,7 +22,7 @@ export default function Home({ recent }) {
         height="80vh"
       >
         <Header />
-        <Nav />
+        <Nav trails={trails} />
       </Flex>
 
       <Recent trails={recent} />
@@ -37,7 +37,7 @@ export const getStaticProps = async () => {
 
     const recent = await trails.slice(0, 3);
 
-    return { props: { recent } };
+    return { props: { recent, trails } };
   } catch (error) {
     console.log(error);
     return {

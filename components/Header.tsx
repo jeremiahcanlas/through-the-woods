@@ -2,7 +2,6 @@ import { Container, Heading, Center } from "@chakra-ui/react";
 import Image from "next/image";
 import backgroundImage from "../public/cover.jpg";
 import { motion } from "framer-motion";
-
 import styles from "../styles/Header.module.scss";
 
 const MotionContainer = motion(Container);
@@ -41,14 +40,12 @@ const Header = () => (
 
     <Image
       src={backgroundImage}
-      // position="absolute"
+      priority
       alt="cover image"
       layout="fill"
       objectFit="cover"
       quality={30}
-      // placeholder="blur"
       className={styles.image}
-      // priority={false}
     />
   </MotionContainer>
 );

@@ -10,6 +10,11 @@ import {
   IconButton,
   useToast,
   Text,
+  Slider,
+  SliderTrack,
+  SliderFilledTrack,
+  SliderThumb,
+  SliderMark,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { Formik, Form } from "formik";
@@ -24,6 +29,7 @@ import PageContainer from "./PageContainer";
 import TextField from "./TextField";
 import UploadFile from "./UploadFile";
 
+import humanizeDuration from "humanize-duration";
 import axios from "axios";
 import * as Yup from "yup";
 import { server } from "../server";
@@ -46,6 +52,7 @@ const CreateTrail = () => {
   const toast = useToast();
 
   const [images, setImages] = useState([]);
+  const [sliderValue, setSliderValue] = useState(0);
 
   // const clearAlert = () => {
   //   setTimeout(() => {
@@ -62,8 +69,6 @@ const CreateTrail = () => {
     return <p>NOT AUTHORIZED</p>;
   }
 
-  // console.log(session);
-
   const handleCreate = async (values) => {
     const {
       title,
@@ -74,6 +79,7 @@ const CreateTrail = () => {
       rating,
       distance,
       elevation,
+      duration,
       days,
       hours,
       minutes,
@@ -186,6 +192,10 @@ const CreateTrail = () => {
     // clearAlert();
   };
 
+  const convertDuration = (val: number) => {
+    setSliderValue(humanizeDuration(val, { delimiter: " and ", round: true }));
+  };
+
   const validateForm = Yup.object({
     title: Yup.string()
       .matches(/^.{1,30}$/gm, "Maximum character reached")
@@ -200,6 +210,7 @@ const CreateTrail = () => {
     type: Yup.string().required("Trail Type is Required"),
     distance: Yup.number().max(999),
     elevation: Yup.number().max(99999),
+    duration: Yup.number().max(8.64e7),
     days: Yup.number().max(5),
     hours: Yup.number().max(23),
     minutes: Yup.number().max(59),
@@ -232,6 +243,7 @@ const CreateTrail = () => {
             rating: 0,
             distance: 0,
             elevation: 0,
+            duration: 0,
             days: 0,
             hours: 0,
             minutes: 0,
@@ -254,6 +266,7 @@ const CreateTrail = () => {
                 placeholder="Location (Exact Address)"
                 name="location"
               />
+              {console.log(values)}
               <TextField placeholder="City" name="city" />
               <Box my="2em">
                 <Heading fontSize={"1em"} mb="1em">
@@ -344,7 +357,8 @@ const CreateTrail = () => {
                   </NumberInput>
                 </Box>
               </Stack>
-              <Box my="2em">
+
+              {/* <Box my="2em">
                 <Heading fontSize={"1em"} mb="1em">
                   Trail Length
                 </Heading>
@@ -383,6 +397,28 @@ const CreateTrail = () => {
                     <NumberInputField placeholder="minutes" />
                   </NumberInput>
                 </Stack>
+              </Box> */}
+              <Box>
+                <Heading fontSize={"1em"} mb="1em">
+                  Duration
+                </Heading>
+                <Slider
+                  aria-label="slider-ex-1"
+                  defaultValue={1}
+                  step={100000}
+                  min={0}
+                  max={8.64e7}
+                  onChange={(val) => convertDuration(val)}
+                >
+                  <SliderTrack>
+                    <SliderFilledTrack />
+                  </SliderTrack>
+                  <SliderThumb />
+                </Slider>
+
+                <Heading fontSize={"1em"} mb="1em">
+                  {sliderValue === 0 ? "No Duration" : sliderValue}
+                </Heading>
               </Box>
 
               <TextField name="description" textbox placeholder="Description" />

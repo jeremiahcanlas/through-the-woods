@@ -19,6 +19,7 @@
     "formik": "^2.2.9",
     "framer-motion": "^4.1.17",
     "geolib": "^3.3.3",
+    "humanize-duration": "^3.27.2",
     "next": "^12.1.6",
     "next-auth": "^4.6.1",
     "nookies": "^2.5.2",

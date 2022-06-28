@@ -6,11 +6,15 @@ import { setAlert, removeAlert } from "../features/alert";
 import { GiMountaintop } from "react-icons/gi";
 import { useSession, signOut } from "next-auth/react";
 import styles from "../styles/Nav.module.scss";
+import _ from "lodash";
 
-const Nav = () => {
+const Nav = ({ trails }) => {
   const { data: session } = useSession();
   const dispatch = useDispatch();
   const toast = useToast();
+
+  console.log("TOTAL DISTANCE", _.sumBy(trails, "distance"));
+  console.log("TOTAL ELEVATION", _.sumBy(trails, "elevation"));
 
   const clearAlert = () => {
     setTimeout(() => {
