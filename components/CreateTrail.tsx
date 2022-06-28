@@ -53,6 +53,7 @@ const CreateTrail = () => {
 
   const [images, setImages] = useState([]);
   const [sliderValue, setSliderValue] = useState(0);
+  const [duration, setDuration] = useState(0);
 
   // const clearAlert = () => {
   //   setTimeout(() => {
@@ -79,7 +80,6 @@ const CreateTrail = () => {
       rating,
       distance,
       elevation,
-      duration,
       days,
       hours,
       minutes,
@@ -121,6 +121,7 @@ const CreateTrail = () => {
         rating: rating,
         distance: parseInt(distance),
         elevation: parseInt(elevation),
+        duration: duration,
         trailLength: {
           days: parseInt(days),
           hours: parseInt(hours),
@@ -136,6 +137,8 @@ const CreateTrail = () => {
           "Content-Type": "application/json",
         },
       });
+
+      // console.log(json);
 
       toast({
         position: "top",
@@ -194,6 +197,7 @@ const CreateTrail = () => {
 
   const convertDuration = (val: number) => {
     setSliderValue(humanizeDuration(val, { delimiter: " and ", round: true }));
+    setDuration(val);
   };
 
   const validateForm = Yup.object({
@@ -210,7 +214,7 @@ const CreateTrail = () => {
     type: Yup.string().required("Trail Type is Required"),
     distance: Yup.number().max(999),
     elevation: Yup.number().max(99999),
-    duration: Yup.number().max(8.64e7),
+
     days: Yup.number().max(5),
     hours: Yup.number().max(23),
     minutes: Yup.number().max(59),
@@ -243,7 +247,7 @@ const CreateTrail = () => {
             rating: 0,
             distance: 0,
             elevation: 0,
-            duration: 0,
+
             days: 0,
             hours: 0,
             minutes: 0,
@@ -266,7 +270,7 @@ const CreateTrail = () => {
                 placeholder="Location (Exact Address)"
                 name="location"
               />
-              {console.log(values)}
+
               <TextField placeholder="City" name="city" />
               <Box my="2em">
                 <Heading fontSize={"1em"} mb="1em">
@@ -407,7 +411,7 @@ const CreateTrail = () => {
                   defaultValue={1}
                   step={100000}
                   min={0}
-                  max={8.64e7}
+                  max={4.32e7}
                   onChange={(val) => convertDuration(val)}
                 >
                   <SliderTrack>

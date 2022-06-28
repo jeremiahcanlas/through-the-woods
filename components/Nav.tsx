@@ -6,6 +6,7 @@ import { setAlert, removeAlert } from "../features/alert";
 import { GiMountaintop } from "react-icons/gi";
 import { useSession, signOut } from "next-auth/react";
 import styles from "../styles/Nav.module.scss";
+import convert from "humanize-duration";
 import _ from "lodash";
 
 const Nav = ({ trails }) => {
@@ -15,6 +16,7 @@ const Nav = ({ trails }) => {
 
   console.log("TOTAL DISTANCE", _.sumBy(trails, "distance"));
   console.log("TOTAL ELEVATION", _.sumBy(trails, "elevation"));
+  console.log("TOTAL DURATION", convert(_.sumBy(trails, "duration")));
 
   const clearAlert = () => {
     setTimeout(() => {

@@ -16,6 +16,7 @@ import PageContainer from "./PageContainer";
 import { useSession } from "next-auth/react";
 import Carousel from "./Carousel";
 import allTrailsLogo from "../public/alltrailslogo.svg";
+import convert from "humanize-duration";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 
 const Trail = ({ trail }) => {
@@ -82,9 +83,7 @@ const Trail = ({ trail }) => {
         </Stack>
         <Text fontSize={"0.8em"}>
           <b>Est.</b>{" "}
-          {trail.trailLength.days >= 1 && `${trail.trailLength.days}d`}{" "}
-          {trail.trailLength.hours >= 1 && `${trail.trailLength.hours}h`}{" "}
-          {trail.trailLength.minutes >= 1 && `${trail.trailLength.minutes}m`}
+          {convert(trail.duration, { delimiter: " and ", round: true })}
         </Text>
         <Divider orientation="horizontal" my="1em" />
 

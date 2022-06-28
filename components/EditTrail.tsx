@@ -10,6 +10,11 @@ import {
   NumberInputField,
   InputRightElement,
   useToast,
+  Slider,
+  SliderTrack,
+  SliderFilledTrack,
+  SliderThumb,
+  SliderMark,
 } from "@chakra-ui/react";
 import { Formik, Form } from "formik";
 import { useRouter } from "next/router";
@@ -22,6 +27,7 @@ import PageContainer from "./PageContainer";
 import TextField from "./TextField";
 import UploadFile from "./UploadFile";
 import { useSession } from "next-auth/react";
+import humanizeDuration from "humanize-duration";
 
 import axios from "axios";
 import * as Yup from "yup";
@@ -62,14 +68,10 @@ const EditTrail = ({ trail }) => {
 
       toast({
         position: "top",
+
         // title: `Hello, ${session.username}!`,
         render: () => (
-          <Box
-            borderRadius={"0.3em"}
-            backgroundColor={"#40916c"}
-            padding="2em"
-            mx="auto"
-          >
+          <Box borderRadius={"0.3em"} backgroundColor={"#40916c"} padding="2em">
             <Text color={"black"} fontWeight={"700"}>
               Trail Successfully Deleted
             </Text>
@@ -109,6 +111,10 @@ const EditTrail = ({ trail }) => {
   };
 
   const [images, setInitialImages] = useState(trail.images);
+  const [sliderValue, setSliderValue] = useState(
+    humanizeDuration(trail.duration, { delimiter: " and ", round: true })
+  );
+  const [duration, setDuration] = useState(trail.duration);
 
   //To submit edited file
   const handleCreate = async (values) => {
@@ -121,9 +127,6 @@ const EditTrail = ({ trail }) => {
       rating,
       distance,
       elevation,
-      days,
-      hours,
-      minutes,
       url,
     } = values;
 
@@ -168,11 +171,12 @@ const EditTrail = ({ trail }) => {
         rating: parseInt(rating),
         distance: parseInt(distance),
         elevation: parseInt(elevation),
-        trailLength: {
-          days: parseInt(days),
-          hours: parseInt(hours),
-          minutes: parseInt(minutes),
-        },
+        duration: duration,
+        // trailLength: {
+        //   days: parseInt(days),
+        //   hours: parseInt(hours),
+        //   minutes: parseInt(minutes),
+        // },
         description: description,
         allTrailsUrl: url,
         id: trail.id,
@@ -199,12 +203,7 @@ const EditTrail = ({ trail }) => {
       toast({
         position: "top",
         render: () => (
-          <Box
-            borderRadius={"0.3em"}
-            backgroundColor={"#40916c"}
-            padding="2em"
-            width={"70vw"}
-          >
+          <Box borderRadius={"0.3em"} backgroundColor={"#40916c"} padding="2em">
             <Text color={"black"} fontWeight={"700"}>
               Trail Successfully Updated
             </Text>
@@ -244,24 +243,26 @@ const EditTrail = ({ trail }) => {
 
   const validateForm = Yup.object({
     title: Yup.string()
-      .matches(/^.{1,30}$/gm, "Maximum character reached")
+      .matches(/^.{1,40}$/gm, "Maximum character reached")
       .required("Title is Required"),
     location: Yup.string()
-      .matches(/^.{1,30}$/gm, "Maximum character reached")
+      .matches(/^.{1,40}$/gm, "Maximum character reached")
       .required("Location is Required"),
     difficulty: Yup.string().required("Difficulty is Required"),
     type: Yup.string().required("Trail Type is Required"),
     distance: Yup.number(),
     elevation: Yup.number(),
-    days: Yup.number(),
-    hours: Yup.number().max(23),
-    minutes: Yup.number().max(59),
     description: Yup.string().required("Description is Required"),
     url: Yup.string().matches(
       /((https?):\/\/)?(www.)?alltrails.([a-z]+)\/(explore\/recording)/,
       "Enter valid AllTrails URL"
     ),
   });
+
+  const convertDuration = (val: number) => {
+    setSliderValue(humanizeDuration(val, { delimiter: " and ", round: true }));
+    setDuration(val);
+  };
 
   //could easily be a separate file...
   const trailTypes = ["Loop", "Out & Back", "Point to Point"];
@@ -285,9 +286,10 @@ const EditTrail = ({ trail }) => {
               rating: trail.rating,
               distance: trail.distance,
               elevation: trail.elevation,
-              days: trail.trailLength.days,
-              hours: trail.trailLength.hours,
-              minutes: trail.trailLength.minutes,
+              duration: trail.duration,
+              // days: trail.trailLength.days,
+              // hours: trail.trailLength.hours,
+              // minutes: trail.trailLength.minutes,
               description: trail.description,
               url: trail.allTrailsUrl,
               deleted: [],
@@ -388,7 +390,7 @@ const EditTrail = ({ trail }) => {
                     </NumberInput>
                   </Box>
                 </Stack>
-                <Box my="2em">
+                {/* <Box my="2em">
                   <Heading fontSize={"1em"} mb="1em">
                     Trail Length
                   </Heading>
@@ -429,6 +431,29 @@ const EditTrail = ({ trail }) => {
                       <NumberInputField placeholder="minutes" />
                     </NumberInput>
                   </Stack>
+                </Box> */}
+
+                <Box>
+                  <Heading fontSize={"1em"} mb="1em">
+                    Duration
+                  </Heading>
+                  <Slider
+                    aria-label="slider-ex-1"
+                    defaultValue={values.duration}
+                    step={100000}
+                    min={0}
+                    max={4.32e7}
+                    onChange={(val) => convertDuration(val)}
+                  >
+                    <SliderTrack>
+                      <SliderFilledTrack />
+                    </SliderTrack>
+                    <SliderThumb />
+                  </Slider>
+
+                  <Heading fontSize={"1em"} mb="1em">
+                    {sliderValue === 0 ? "No Duration" : sliderValue}
+                  </Heading>
                 </Box>
 
                 <TextField name="description" textbox={true} />

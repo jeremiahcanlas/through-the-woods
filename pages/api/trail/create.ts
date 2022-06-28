@@ -15,8 +15,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     type,
     distance,
     elevation,
+    duration,
     images,
-    trailLength,
     allTrailsUrl,
   } = req.body;
 
@@ -42,7 +42,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         type,
         distance,
         elevation,
-        trailLength,
+        duration,
         allTrailsUrl,
       },
       {

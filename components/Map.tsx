@@ -2,6 +2,7 @@ import ReactMapGL, { Source, Layer, Popup } from "react-map-gl";
 import { Box, Flex, Text, Stack, Divider } from "@chakra-ui/react";
 import { useState } from "react";
 import { getCenter } from "geolib";
+import convert from "humanize-duration";
 
 import {
   clusterCountLayer,
@@ -28,9 +29,6 @@ const Map = ({ trails, geojson }) => {
   });
 
   const [selectedTrail, setSelectedTrail]: any = useState({});
-
-  const estimatedTime =
-    selectedTrail.trailLength && JSON.parse(selectedTrail.trailLength);
 
   return (
     <ReactMapGL
@@ -100,9 +98,10 @@ const Map = ({ trails, geojson }) => {
                   <Text>Length: {selectedTrail.distance}km</Text>
                   <Text>Elevation: {selectedTrail.elevation}m</Text>
                   <Text>
-                    Est {estimatedTime.days >= 1 && `${estimatedTime.days}d`}
-                    {estimatedTime.hours >= 1 && `${estimatedTime.hours}h`}
-                    {estimatedTime.minutes >= 1 && `${estimatedTime.minutes}m`}
+                    Est.
+                    {convert(selectedTrail.duration, {
+                      delimiter: " and ",
+                    })}
                   </Text>
                 </Stack>
               </Flex>

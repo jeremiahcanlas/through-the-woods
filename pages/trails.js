@@ -52,7 +52,7 @@ export const getStaticProps = async (ctx) => {
           title: trail.title,
           elevation: trail.elevation,
           distance: trail.distance,
-          trailLength: trail.trailLength,
+          duration: trail.duration,
           long: trail.geojson.coordinates[0],
           lat: trail.geojson.coordinates[1],
           thumbnail:
