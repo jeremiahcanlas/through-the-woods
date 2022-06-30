@@ -88,7 +88,12 @@ const Map = ({ trails, geojson }) => {
                   />
                 )}
 
-                <Stack margin={"0.5em"} mx="1em" spacing="0.2em">
+                <Stack
+                  margin={"0.5em"}
+                  mx="1em"
+                  spacing="0.2em"
+                  fontSize={"1em"}
+                >
                   <Text as={"h1"}>{selectedTrail.title}</Text>
                   <Divider
                     backgroundColor={"#40916c"}
@@ -99,8 +104,9 @@ const Map = ({ trails, geojson }) => {
                   <Text>Elevation: {selectedTrail.elevation}m</Text>
                   <Text>
                     Est.
+                    {console.log("DURATION", selectedTrail.duration)}
                     {convert(selectedTrail.duration, {
-                      delimiter: " and ",
+                      delimiter: " & ",
                     })}
                   </Text>
                 </Stack>

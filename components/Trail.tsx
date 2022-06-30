@@ -83,7 +83,11 @@ const Trail = ({ trail }) => {
         </Stack>
         <Text fontSize={"0.8em"}>
           <b>Est.</b>{" "}
-          {convert(trail.duration, { delimiter: " and ", round: true })}
+          {convert(trail.duration, {
+            delimiter: " and ",
+            round: true,
+            units: ["h", "m"],
+          })}
         </Text>
         <Divider orientation="horizontal" my="1em" />
 

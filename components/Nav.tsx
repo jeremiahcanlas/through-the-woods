@@ -1,22 +1,19 @@
 import { Button, Stack, Text, useToast, Box } from "@chakra-ui/react";
 import Link from "next/link";
 import { IoIosLogIn, IoIosLogOut, IoIosCreate } from "react-icons/io";
+import { BiStats } from "react-icons/bi";
 import { useDispatch } from "react-redux";
 import { setAlert, removeAlert } from "../features/alert";
 import { GiMountaintop } from "react-icons/gi";
 import { useSession, signOut } from "next-auth/react";
 import styles from "../styles/Nav.module.scss";
-import convert from "humanize-duration";
+
 import _ from "lodash";
 
-const Nav = ({ trails }) => {
+const Nav = () => {
   const { data: session } = useSession();
   const dispatch = useDispatch();
   const toast = useToast();
-
-  console.log("TOTAL DISTANCE", _.sumBy(trails, "distance"));
-  console.log("TOTAL ELEVATION", _.sumBy(trails, "elevation"));
-  console.log("TOTAL DURATION", convert(_.sumBy(trails, "duration")));
 
   const clearAlert = () => {
     setTimeout(() => {
@@ -27,12 +24,6 @@ const Nav = ({ trails }) => {
   const logout = async () => {
     try {
       await signOut({ redirect: false });
-      // dispatch(
-      //   setAlert({
-      //     msg: "Successfully Logged Out",
-      //     alertType: "success",
-      //   })
-      // );
 
       toast({
         position: "top",
@@ -85,6 +76,22 @@ const Nav = ({ trails }) => {
           className={styles.btn}
         >
           TRAILS
+        </Button>
+      </Link>
+
+      <Link href="/statistics" passHref>
+        <Button
+          p="0.8em"
+          w={["90vw", "60vw", "15vw"]}
+          borderColor="#40916c"
+          variant="outline"
+          letterSpacing="1px"
+          fontWeight="500"
+          textColor="white"
+          rightIcon={<BiStats size="1.2em" />}
+          className={styles.btn}
+        >
+          STATS
         </Button>
       </Link>
       {session ? (
