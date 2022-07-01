@@ -20,7 +20,7 @@ import { Formik, Form } from "formik";
 import { useRouter } from "next/router";
 // import { useDispatch } from "react-redux";
 // import { setAlert, removeAlert } from "../features/alert";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 
 import PageContainer from "./PageContainer";
@@ -36,6 +36,11 @@ import { server } from "../server";
 
 const EditTrail = ({ trail }) => {
   const { data: session, status } = useSession();
+  const [serverUrl, setUrl] = useState();
+
+  useEffect(() => {
+    setUrl(serverUrl);
+  }, []);
 
   //uses next router
   const router = useRouter();
@@ -130,6 +135,8 @@ const EditTrail = ({ trail }) => {
       url,
     } = values;
 
+    console.log("IMAGES", images, session.jwt, serverUrl);
+
     try {
       let files = [];
       let newImages = await images.filter(
@@ -172,11 +179,6 @@ const EditTrail = ({ trail }) => {
         distance: parseInt(distance),
         elevation: parseInt(elevation),
         duration: duration,
-        // trailLength: {
-        //   days: parseInt(days),
-        //   hours: parseInt(hours),
-        //   minutes: parseInt(minutes),
-        // },
         description: description,
         allTrailsUrl: url,
         id: trail.id,
@@ -212,13 +214,7 @@ const EditTrail = ({ trail }) => {
         duration: 3000,
       });
     } catch (error) {
-      // dispatch(
-      //   setAlert({
-      //     msg: "Post error, try again.",
-      //     alertType: "error",
-      //   })
-      // );
-
+      console.log(error);
       toast({
         position: "top",
         render: () => (
@@ -287,9 +283,6 @@ const EditTrail = ({ trail }) => {
               distance: trail.distance,
               elevation: trail.elevation,
               duration: trail.duration,
-              // days: trail.trailLength.days,
-              // hours: trail.trailLength.hours,
-              // minutes: trail.trailLength.minutes,
               description: trail.description,
               url: trail.allTrailsUrl,
               deleted: [],
@@ -440,7 +433,7 @@ const EditTrail = ({ trail }) => {
                   <Slider
                     aria-label="slider-ex-1"
                     defaultValue={values.duration}
-                    step={100000}
+                    step={1000}
                     min={0}
                     max={4.32e7}
                     onChange={(val) => convertDuration(val)}

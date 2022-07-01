@@ -104,7 +104,6 @@ const Map = ({ trails, geojson }) => {
                   <Text>Elevation: {selectedTrail.elevation}m</Text>
                   <Text>
                     Est.
-                    {console.log("DURATION", selectedTrail.duration)}
                     {convert(selectedTrail.duration, {
                       delimiter: " & ",
                     })}

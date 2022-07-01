@@ -13,19 +13,34 @@ export const getStaticProps = async (ctx) => {
 
     trails = await res.data;
 
-    //filters only whats needed
-    // trails = await trails.map((trail) => ({
-    //   elevation: trail.elevation,
-    //   duration: trail.duration,
-    //   distance: trail.distance,
-    // }));
-
-    trails = {
-      totalElevation: _.sumBy(trails, "elevation"),
-      totalDuration: _.sumBy(trails, "duration"),
-      totalDistance: _.sumBy(trails, "distance"),
+    const statsArr = {
+      elevation: _.map(trails, (trail) => trail.elevation),
+      duration: _.map(trails, (trail) => trail.duration),
+      distance: _.map(trails, (trail) => trail.distance),
     };
 
+    // youre trying to get the highest of all , and their respective data(title w/ a link with id)
+
+    trails = {
+      elevationStats: {
+        total: _.sumBy(trails, "elevation"),
+        average: Math.floor(_.mean(statsArr.elevation)),
+        best: trails.sort((a, b) => a.elevation - b.elevation)[
+          trails.length - 1
+        ],
+      },
+      durationStats: {
+        total: _.sumBy(trails, "duration"),
+        average: Math.floor(_.mean(statsArr.duration)),
+        best: trails.sort((a, b) => a.duration - b.duration)[trails.length - 1],
+      },
+      distanceStats: {
+        total: _.sumBy(trails, "distance"),
+        average: Math.floor(_.mean(statsArr.distance)),
+        best: trails.sort((a, b) => a.distance - b.distance)[trails.length - 1],
+      },
+    };
+    console.log(trails);
     return { props: { trails } };
   } catch (error) {
     console.log(error);

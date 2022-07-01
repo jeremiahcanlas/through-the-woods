@@ -28,7 +28,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       deleted,
       allTrailsUrl,
     } = await req.body;
-
+    console.log("In edit api js", images);
     try {
       const response = await axios.put(
         `${server}/trails/${id}`,

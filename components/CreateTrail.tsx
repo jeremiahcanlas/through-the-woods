@@ -196,7 +196,13 @@ const CreateTrail = () => {
   };
 
   const convertDuration = (val: number) => {
-    setSliderValue(humanizeDuration(val, { delimiter: " and ", round: true }));
+    setSliderValue(
+      humanizeDuration(val, {
+        delimiter: " and ",
+        round: true,
+        units: ["h", "m"],
+      })
+    );
     setDuration(val);
   };
 
@@ -214,7 +220,6 @@ const CreateTrail = () => {
     type: Yup.string().required("Trail Type is Required"),
     distance: Yup.number().max(999),
     elevation: Yup.number().max(99999),
-
     days: Yup.number().max(5),
     hours: Yup.number().max(23),
     minutes: Yup.number().max(59),
@@ -247,7 +252,6 @@ const CreateTrail = () => {
             rating: 0,
             distance: 0,
             elevation: 0,
-
             days: 0,
             hours: 0,
             minutes: 0,
@@ -409,7 +413,7 @@ const CreateTrail = () => {
                 <Slider
                   aria-label="slider-ex-1"
                   defaultValue={1}
-                  step={100000}
+                  step={60000}
                   min={0}
                   max={4.32e7}
                   onChange={(val) => convertDuration(val)}
@@ -464,7 +468,7 @@ const CreateTrail = () => {
                 </Stack>
               </Stack>
 
-              {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
+              <pre>{JSON.stringify(values, null, 2)}</pre>
             </Form>
           )}
         </Formik>
