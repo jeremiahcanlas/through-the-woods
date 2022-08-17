@@ -468,7 +468,7 @@ const CreateTrail = () => {
                 </Stack>
               </Stack>
 
-              <pre>{JSON.stringify(values, null, 2)}</pre>
+              {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
             </Form>
           )}
         </Formik>
