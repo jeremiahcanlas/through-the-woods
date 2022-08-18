@@ -18,7 +18,7 @@ import _ from "lodash";
 // import Fade from "react-reveal/Fade";
 
 const TrailBox = ({ trail, recent }) => {
-  let num = Math.floor(Math.random() * trail.images.length);
+  let randomNum = Math.floor(Math.random() * trail.images.length);
   const stars = [1, 2, 3, 4, 5];
 
   return (
@@ -83,7 +83,7 @@ const TrailBox = ({ trail, recent }) => {
 
           {trail.images.length >= 1 && (
             <Image
-              src={trail.images[num].formats.small.url}
+              src={trail.images[randomNum].formats.small.url}
               alt="trail image"
               layout="fill"
               objectFit="cover"

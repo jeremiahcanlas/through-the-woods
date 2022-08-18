@@ -38,9 +38,9 @@ const EditTrail = ({ trail }) => {
   const { data: session, status } = useSession();
   const [serverUrl, setUrl] = useState();
 
-  useEffect(() => {
-    setUrl(serverUrl);
-  }, []);
+  // useEffect(() => {
+  //   setUrl(serverUrl);
+  // });
 
   //uses next router
   const router = useRouter();
@@ -135,7 +135,7 @@ const EditTrail = ({ trail }) => {
       url,
     } = values;
 
-    console.log("IMAGES", images, session.jwt, serverUrl);
+    // console.log("IMAGES", images, session.jwt, serverUrl);
 
     try {
       let files = [];
@@ -248,6 +248,7 @@ const EditTrail = ({ trail }) => {
     type: Yup.string().required("Trail Type is Required"),
     distance: Yup.number(),
     elevation: Yup.number(),
+    duration: Yup.number().max(43200000),
     description: Yup.string().required("Description is Required"),
     url: Yup.string().matches(
       /((https?):\/\/)?(www.)?alltrails.([a-z]+)\/(explore\/recording)/,
@@ -436,7 +437,10 @@ const EditTrail = ({ trail }) => {
                     step={1000}
                     min={0}
                     max={4.32e7}
-                    onChange={(val) => convertDuration(val)}
+                    onChange={(val) => {
+                      convertDuration(val);
+                      setFieldValue("duration", val);
+                    }}
                   >
                     <SliderTrack>
                       <SliderFilledTrack />
@@ -491,7 +495,7 @@ const EditTrail = ({ trail }) => {
                     Delete
                   </Button>
                 </Stack>
-                {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
+                <pre>{JSON.stringify(values, null, 2)}</pre>
               </Form>
             )}
           </Formik>

@@ -80,9 +80,6 @@ const CreateTrail = () => {
       rating,
       distance,
       elevation,
-      days,
-      hours,
-      minutes,
       description,
       url,
     } = values;
@@ -122,11 +119,6 @@ const CreateTrail = () => {
         distance: parseInt(distance),
         elevation: parseInt(elevation),
         duration: duration,
-        trailLength: {
-          days: parseInt(days),
-          hours: parseInt(hours),
-          minutes: parseInt(minutes),
-        },
         allTrailsUrl: url,
         images: files,
         jwt: session.jwt,

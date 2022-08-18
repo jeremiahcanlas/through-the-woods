@@ -1,19 +1,22 @@
 @import "./breakpoints";
 
 .image {
-  z-index: -1;
-  border-radius: 1em;
   opacity: 0.3 !important;
+  transition: 4s ease;
+
+  &:hover {
+    transform: scale(1.2);
+  }
 }
 
 .trailBox {
+  border-radius: 1em;
+  overflow: hidden;
   border: 1px solid transparent !important;
   display: block;
+
   @include md {
     padding: 1em;
-    &:hover {
-      border: solid 1px #40916c !important;
-    }
   }
 }
 

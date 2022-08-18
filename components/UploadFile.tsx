@@ -43,7 +43,7 @@ const UploadFile = ({ images, setImages }) => {
   const dummyRequest: any = ({ file, onSuccess }) => {
     setTimeout(() => {
       onSuccess("ok");
-    }, 0);
+    }, 500);
   };
 
   return (
