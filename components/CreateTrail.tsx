@@ -138,7 +138,7 @@ const CreateTrail = () => {
         },
       });
 
-      // console.log(json);
+      console.log(json);
 
       toast({
         position: "top",
@@ -220,9 +220,7 @@ const CreateTrail = () => {
     type: Yup.string().required("Trail Type is Required"),
     distance: Yup.number().max(999),
     elevation: Yup.number().max(99999),
-    days: Yup.number().max(5),
-    hours: Yup.number().max(23),
-    minutes: Yup.number().max(59),
+    duration: Yup.number().max(43200000),
     description: Yup.string().required("Description is Required"),
     url: Yup.string().matches(
       /((https?):\/\/)?(www.)?alltrails.([a-z]+)\/(explore\/recording)/,
@@ -247,14 +245,12 @@ const CreateTrail = () => {
             title: "",
             location: "",
             city: "",
+            rating: 0,
             difficulty: "",
             type: "",
-            rating: 0,
             distance: 0,
             elevation: 0,
-            days: 0,
-            hours: 0,
-            minutes: 0,
+            duration: 0,
             description: "",
             url: "",
           }}
@@ -416,7 +412,10 @@ const CreateTrail = () => {
                   step={60000}
                   min={0}
                   max={4.32e7}
-                  onChange={(val) => convertDuration(val)}
+                  onChange={(val) => {
+                    convertDuration(val);
+                    setFieldValue("duration", val);
+                  }}
                 >
                   <SliderTrack>
                     <SliderFilledTrack />
@@ -468,7 +467,7 @@ const CreateTrail = () => {
                 </Stack>
               </Stack>
 
-              {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
+              <pre>{JSON.stringify(values, null, 2)}</pre>
             </Form>
           )}
         </Formik>
