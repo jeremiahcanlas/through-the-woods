@@ -81,9 +81,10 @@ const TrailBox = ({ trail, recent }) => {
             </Tag>
           </HStack>
 
-          {trail.images.length >= 1 && (
+          {/* {trail.images.length >= 1 && (
             <Image
-              src={trail.images[num].formats.small.url}
+              // src={trail.images[num].formats.small.url}
+              src={"https://"}
               alt="trail image"
               layout="fill"
               objectFit="cover"
@@ -96,7 +97,7 @@ const TrailBox = ({ trail, recent }) => {
               className={styles.image}
               priority={false}
             />
-          )}
+          )} */}
         </Container>
       </Link>
     </Skeleton>

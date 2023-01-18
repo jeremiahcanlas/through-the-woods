@@ -22,7 +22,7 @@ import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 const Trail = ({ trail }) => {
   const { data: session } = useSession();
   const [loading, triggerLoad] = useState(false);
-  const images = trail.images.map((img) => img.formats.medium.url);
+  // const images = trail.images.map((img) => img.formats.medium.url);
 
   console.log(trail);
   const authorButtons = () => {
@@ -91,7 +91,7 @@ const Trail = ({ trail }) => {
         </Text>
         <Divider orientation="horizontal" my="1em" />
 
-        {trail.images.length >= 1 && (
+        {/* {trail.images.length >= 1 && (
           <Flex
             position="relative"
             justifyContent={"center"}
@@ -102,7 +102,7 @@ const Trail = ({ trail }) => {
           >
             <Carousel images={images} />
           </Flex>
-        )}
+        )} */}
 
         <Text>{trail.description}</Text>
         <Divider orientation="horizontal" my="1em" />

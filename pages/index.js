@@ -24,7 +24,6 @@ export default function Home({ recent, trails }) {
         <Header />
         <Nav trails={trails} />
       </Flex>
-
       <Recent trails={recent} />
     </Flex>
   );

@@ -79,14 +79,14 @@ const Map = ({ trails, geojson }) => {
               closeButton={false}
             >
               <Flex className={styles.popupContent} p="0" height={"12vh"}>
-                {selectedTrail.thumbnail && (
+                {/* {selectedTrail.thumbnail && (
                   <Image
                     height={"100%"}
                     width={"100%"}
                     alt="thumbnail"
                     src={selectedTrail.thumbnail}
                   />
-                )}
+                )} */}
 
                 <Stack
                   margin={"0.5em"}
