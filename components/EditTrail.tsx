@@ -451,7 +451,7 @@ const EditTrail = ({ trail }) => {
                 </Box>
 
                 <TextField name="description" textbox={true} />
-                {session.user.name !== "guest" && (
+                {_.get(session, "user.name") !== "guest" && (
                   <TextField
                     placeholder="AllTrails URL"
                     type="url"

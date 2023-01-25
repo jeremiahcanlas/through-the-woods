@@ -173,7 +173,7 @@ const CreateTrail = () => {
             padding="2em"
             mx="auto"
           >
-            {session.user.name === "guest" ? (
+            {_.get(session, "user.name") === "guest" ? (
               <>
                 <Text color={"black"}>
                   {errorObj.error.response.data.message}
@@ -431,7 +431,7 @@ const CreateTrail = () => {
               </Box>
 
               <TextField name="description" textbox placeholder="Description" />
-              {session.user.name !== "guest" && (
+              {_.get(session, "user.name") !== "guest" && (
                 <TextField placeholder="AllTrails URL" type="url" name="url" />
               )}
 

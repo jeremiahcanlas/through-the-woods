@@ -18,6 +18,7 @@ import Carousel from "./Carousel";
 import allTrailsLogo from "../public/alltrailslogo.svg";
 import convert from "humanize-duration";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
+import _ from "lodash";
 
 const Trail = ({ trail }) => {
   const { data: session } = useSession();
@@ -146,7 +147,7 @@ const Trail = ({ trail }) => {
             <Button>&larr; Trails</Button>
           </Link>
           {session &&
-            trail.user.username === session.username &&
+            trail.user.username === _.get(session, "username") &&
             authorButtons()}
         </Stack>
       </Container>

@@ -15,6 +15,7 @@ import * as Yup from "yup";
 // import { useDispatch } from "react-redux";
 // import { setAlert, removeAlert } from "../features/alert";
 import { signIn, getSession } from "next-auth/react";
+import _ from "lodash";
 
 const LogIn = () => {
   // const dispatch = useDispatch();
@@ -48,7 +49,7 @@ const LogIn = () => {
 
       toast({
         position: "top",
-        title: `Hello, ${session.username}!`,
+        title: `Hello, ${_.get(session, "username")}!`,
         // isClosable: session.username !== "guest" ? false : true,
         render: () => (
           <Box
@@ -57,10 +58,10 @@ const LogIn = () => {
             padding="2em"
             mx="auto"
           >
-            {session.username !== "guest" ? (
+            {_.get(session, "username") !== "guest" ? (
               <>
                 <Text color={"black"} fontWeight={"700"}>
-                  Hello, {session.username}
+                  Hello, {_.get(session, "username")}
                 </Text>
                 <Text color={"black"}>You successfully logged in.</Text>
               </>
@@ -79,7 +80,7 @@ const LogIn = () => {
             )}
           </Box>
         ),
-        duration: session.username !== "guest" ? 3000 : 6000,
+        duration: _.get(session, "username") !== "guest" ? 3000 : 6000,
       });
 
       router.push("/");
