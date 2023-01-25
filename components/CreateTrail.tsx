@@ -33,6 +33,7 @@ import humanizeDuration from "humanize-duration";
 import axios from "axios";
 import * as Yup from "yup";
 import { server } from "../server";
+import _ from "lodash";
 
 const CreateTrail = () => {
   const { data: session, status } = useSession();
@@ -101,7 +102,7 @@ const CreateTrail = () => {
         // uploads images to strapi media library
         const res = await axios.post(`${server}/upload`, data, {
           headers: {
-            Authorization: `Bearer ${session.jwt}`,
+            Authorization: `Bearer ${_.get(session, "jwt")}`,
           },
         });
 
@@ -129,7 +130,7 @@ const CreateTrail = () => {
         },
         allTrailsUrl: url,
         images: files,
-        jwt: session.jwt,
+        jwt: _.get(session, "jwt"),
       });
 
       const response = await axios.post("/api/trail/create", json, {

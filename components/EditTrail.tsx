@@ -28,6 +28,7 @@ import TextField from "./TextField";
 import UploadFile from "./UploadFile";
 import { useSession } from "next-auth/react";
 import humanizeDuration from "humanize-duration";
+import _ from "lodash";
 
 import axios from "axios";
 import * as Yup from "yup";
@@ -60,7 +61,7 @@ const EditTrail = ({ trail }) => {
     try {
       await axios.post(`/api/trail/delete`, {
         id: trail.id,
-        jwt: session.jwt,
+        jwt: _.get(session, "jwt"),
       });
 
       // dispatch(
@@ -135,7 +136,7 @@ const EditTrail = ({ trail }) => {
       url,
     } = values;
 
-    console.log("IMAGES", images, session.jwt, serverUrl);
+    console.log("IMAGES", images, _.get(session, "jwt"), serverUrl);
 
     try {
       let files = [];
@@ -159,7 +160,7 @@ const EditTrail = ({ trail }) => {
         //uploads images to strapi media library
         const res = await axios.post(`${server}/upload`, data, {
           headers: {
-            Authorization: `Bearer ${session.jwt}`,
+            Authorization: `Bearer ${_.get(session, "jwt")}`,
           },
         });
         //this sets the image id in an array
@@ -183,7 +184,7 @@ const EditTrail = ({ trail }) => {
         allTrailsUrl: url,
         id: trail.id,
         images: files,
-        jwt: session.jwt,
+        jwt: _.get(session, "jwt"),
         deleted: deleted,
       });
 
