@@ -18,7 +18,7 @@ import _ from "lodash";
 // import Fade from "react-reveal/Fade";
 
 const TrailBox = ({ trail, recent }) => {
-  let num = Math.floor(Math.random() * trail.images.length);
+  // let num = Math.floor(Math.random() * trail.images.length);
   const stars = [1, 2, 3, 4, 5];
 
   return (
@@ -34,7 +34,8 @@ const TrailBox = ({ trail, recent }) => {
           p={recent ? "15px" : "40px"}
           maxW={recent && "100%"}
           borderRadius="1em"
-          backgroundColor={trail.images.length === 0 && "blackAlpha.900"}
+          // backgroundColor={trail.images.length === 0 && "blackAlpha.900"}
+          backgroundColor={"blackAlpha.900"}
           alignContent="center"
           cursor="pointer"
           textAlign="left"
